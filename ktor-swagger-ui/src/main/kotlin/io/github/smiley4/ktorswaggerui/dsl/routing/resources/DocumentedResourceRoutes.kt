@@ -15,7 +15,7 @@ import kotlinx.serialization.serializer
 
 inline fun <reified T : Any> Route.get(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
+    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -83,7 +83,7 @@ inline fun <reified T : Any> Route.delete(
 
 inline fun <reified T : Any> Route.patch(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
+    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -100,7 +100,7 @@ inline fun <reified T : Any> Route.patch(
 
 inline fun <reified T : Any> Route.options(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
+    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -117,7 +117,7 @@ inline fun <reified T : Any> Route.options(
 
 inline fun <reified T : Any> Route.head(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
+    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
