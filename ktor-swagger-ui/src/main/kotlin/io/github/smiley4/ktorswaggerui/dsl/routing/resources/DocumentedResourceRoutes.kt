@@ -7,15 +7,17 @@ import io.ktor.http.HttpMethod
 import io.ktor.server.resources.*
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.RoutingContext
+import io.ktor.utils.io.KtorDsl
 import kotlinx.serialization.serializer
 
 //============================//
 //             GET            //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.get(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -30,9 +32,10 @@ inline fun <reified T : Any> Route.get(
 //            POST            //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.post(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -47,9 +50,10 @@ inline fun <reified T : Any> Route.post(
 //             PUT            //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.put(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -64,9 +68,10 @@ inline fun <reified T : Any> Route.put(
 //           DELETE           //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.delete(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -81,9 +86,10 @@ inline fun <reified T : Any> Route.delete(
 //            PATCH           //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.patch(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -98,9 +104,10 @@ inline fun <reified T : Any> Route.patch(
 //           OPTIONS          //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.options(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -115,9 +122,10 @@ inline fun <reified T : Any> Route.options(
 //            HEAD            //
 //============================//
 
+@KtorDsl
 inline fun <reified T : Any> Route.head(
     noinline builder: OpenApiRoute.() -> Unit = { },
-    noinline body: suspend io.ktor.server.routing.RoutingContext.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
         resource<T> {
@@ -129,7 +137,7 @@ inline fun <reified T : Any> Route.head(
 }
 
 
-public inline fun <reified T : Any> Route.handle(
+inline fun <reified T : Any> Route.handle(
     noinline body: suspend RoutingContext.(T) -> Unit
 ) {
     val serializer = serializer<T>()
