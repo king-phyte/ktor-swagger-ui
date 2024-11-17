@@ -42,6 +42,7 @@ private fun Application.myModule() {
 
     // Install and configure the "SwaggerUI"-Plugin
     install(SwaggerUI) {
+        schemas {  }
         security {
             // configure a basic-auth security scheme
             securityScheme("MySecurityScheme") {
@@ -53,6 +54,7 @@ private fun Application.myModule() {
             // if no other response is documented for "401 Unauthorized", this information is used instead
             defaultUnauthorizedResponse {
                 description = "Username or password is invalid"
+                body<AuthRequired>()
             }
         }
     }
@@ -70,6 +72,12 @@ private fun Application.myModule() {
         authenticate {
             // route is in an "authenticate"-block -> default security-scheme will be used (if not specified otherwise)
             get("protected", {
+                // response for "401 Unauthorized" is automatically added if configured in the plugin-config and not specified otherwise
+            }) {
+                call.respondText("Hello World!")
+            }
+
+            get("protected2", {
                 // response for "401 Unauthorized" is automatically added if configured in the plugin-config and not specified otherwise
             }) {
                 call.respondText("Hello World!")
@@ -96,3 +104,6 @@ private fun Application.myModule() {
     }
 
 }
+
+
+class AuthRequired(val message: String)
