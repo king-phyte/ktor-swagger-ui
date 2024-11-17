@@ -29,6 +29,7 @@ dependencies {
     val versionKotest: String by project
     val versionKotlinTest: String by project
     val versionMockk: String by project
+    val versionJackson: String by project
 
     implementation("io.ktor:ktor-server-core-jvm:$versionKtor")
     implementation("io.ktor:ktor-server-auth:$versionKtor")
@@ -37,6 +38,8 @@ dependencies {
     implementation("org.webjars:swagger-ui:$versionSwaggerUI")
 
     implementation("io.swagger.parser.v3:swagger-parser:$versionSwaggerParser")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$versionJackson")
 
     implementation("io.github.smiley4:schema-kenerator-core:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-reflection:$versionSchemaKenerator")
@@ -54,6 +57,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$versionKotest")
     testImplementation("org.jetbrains.kotlin:kotlin-test:$versionKotlinTest")
     testImplementation("io.mockk:mockk:$versionMockk")
+
 }
 
 kotlin {

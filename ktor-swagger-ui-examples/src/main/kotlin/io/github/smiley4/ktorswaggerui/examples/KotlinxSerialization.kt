@@ -1,6 +1,7 @@
 package io.github.smiley4.ktorswaggerui.examples
 
 import io.github.smiley4.ktorswaggerui.SwaggerUI
+import io.github.smiley4.ktorswaggerui.data.kotlinxExampleEncoder
 import io.github.smiley4.ktorswaggerui.dsl.routing.get
 import io.github.smiley4.ktorswaggerui.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
@@ -14,7 +15,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import io.ktor.server.response.respond
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import kotlinx.serialization.Serializable
@@ -25,55 +26,69 @@ fun main() {
 
 private fun Application.myModule() {
 
-    // Install and configure the "SwaggerUI"-Plugin
     install(SwaggerUI) {
         schemas {
-            // replace default schema-generator with customized one
+            // configure the schema generator to use kotlinx-serializer
+            // (see https://github.com/SMILEY4/schema-kenerator/wiki for more information)
             generator = { type ->
                 type
-                    // process type using kotlinx-serialization instead of reflection
-                    // requires additional dependency "io.github.smiley4:schema-kenerator-kotlinx-serialization:<VERSION>"
-                    // see https://github.com/SMILEY4/schema-kenerator for more information
                     .processKotlinxSerialization()
                     .generateSwaggerSchema()
                     .withTitle(TitleType.SIMPLE)
                     .compileReferencingRoot()
             }
         }
+        examples {
+            // configure the example encoder to encode kotlin objects using kotlinx-serializer
+            exampleEncoder = kotlinxExampleEncoder
+        }
     }
 
     routing {
 
-        // Create a route for the swagger-ui using the openapi-spec at "/api.json".
-        // This route will not be included in the spec.
+        // add the routes for swagger-ui and api-spec
         route("swagger") {
             swaggerUI("/api.json")
         }
-        // Create a route for the openapi-spec file.
-        // This route will not be included in the spec.
         route("api.json") {
             openApiSpec()
         }
 
         // a documented route
         get("hello", {
-            // information about the request
+            description = "A Hello-World route"
+            request {
+                queryParameter<String>("name") {
+                    description = "the name to greet"
+                    example("Name Parameter") {
+                        value = "Mr. Example"
+                    }
+                }
+            }
             response {
-                // information about a "200 OK" response
                 code(HttpStatusCode.OK) {
-                    // body of the response
-                    body<MyResponseBody>()
+                    description = "successful request - always returns 'Hello World!'"
+                    body<TestResponse> {
+                        example("Success Response") {
+                            value = TestResponse(
+                                name = "Mr. Example",
+                                length = 11
+                            )
+                        }
+                    }
                 }
             }
         }) {
-            call.respond(HttpStatusCode.NotImplemented, "...")
+            call.respondText("Hello ${call.request.queryParameters["name"]}")
         }
 
     }
 
 }
 
+
 @Serializable
-private class MyResponseBody(
+data class TestResponse(
     val name: String,
+    val length: Int,
 )
