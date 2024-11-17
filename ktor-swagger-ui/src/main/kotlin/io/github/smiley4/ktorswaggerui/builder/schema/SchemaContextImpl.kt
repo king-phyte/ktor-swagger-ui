@@ -15,31 +15,18 @@ class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : SchemaCont
 
     fun addGlobal(config: SchemaConfigData) {
         config.securitySchemas.forEach { typeDescriptor ->
-            val schema = collapseRootRef(generateSchema(typeDescriptor))
+            val schema = generateSchema(typeDescriptor)
             rootSchemas[typeDescriptor] = schema.swagger
-        }
-        config.schemas.forEach { (schemaId, typeDescriptor) ->
-            val schema = collapseRootRef(generateSchema(typeDescriptor))
-            componentSchemas[schemaId] = schema.swagger
             schema.componentSchemas.forEach { (k, v) ->
                 componentSchemas[k] = v
             }
         }
-    }
-
-    private fun collapseRootRef(schema: CompiledSwaggerSchema): CompiledSwaggerSchema {
-        if (schema.swagger.`$ref` == null) {
-            return schema
-        } else {
-            val referencedSchemaId = schema.swagger.`$ref`!!.replace("#/components/schemas/", "")
-            val referencedSchema = schema.componentSchemas[referencedSchemaId]!!
-            return CompiledSwaggerSchema(
-                typeData = schema.typeData,
-                swagger = referencedSchema,
-                componentSchemas = schema.componentSchemas.toMutableMap().also {
-                    it.remove(referencedSchemaId)
-                }
-            )
+        config.schemas.forEach { (schemaId, typeDescriptor) ->
+            val schema = generateSchema(typeDescriptor)
+            componentSchemas[schemaId] = schema.swagger
+            schema.componentSchemas.forEach { (k, v) ->
+                componentSchemas[k] = v
+            }
         }
     }
 

@@ -754,7 +754,7 @@ class OperationBuilderTest : StringSpec({
                         ?.also { response ->
                             val content = response.content["application/json"]
                             content.shouldNotBeNull()
-                            content.schema.title shouldBe "SimpleObject"
+                            content.schema.`$ref` shouldBe "#/components/schemas/${SimpleObject::class.qualifiedName}"
                             val example = content.examples["Example 1"]
                             example.shouldNotBeNull()
                             example.value shouldBeEqual SimpleObject(text = "Some text", number = 123)
