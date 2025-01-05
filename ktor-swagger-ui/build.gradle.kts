@@ -36,6 +36,7 @@ dependencies {
     implementation("io.ktor:ktor-server-resources:$versionKtor")
 
     implementation("org.webjars:swagger-ui:$versionSwaggerUI")
+    implementation("org.webjars:redoc:2.1.5")
 
     implementation("io.swagger.parser.v3:swagger-parser:$versionSwaggerParser")
 

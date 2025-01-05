@@ -30,3 +30,28 @@ class ResourceContent(private val resource: URL) : OutgoingContent.ByteArrayCont
 
     override fun toString() = "ResourceContent \"$resource\""
 }
+
+
+
+class HtmlSource(source: String) : OutgoingContent.ByteArrayContent() {
+
+    private val contentTypes = mapOf(
+        "html" to ContentType.Text.Html,
+        "css" to ContentType.Text.CSS,
+        "js" to ContentType.Application.JavaScript,
+        "json" to ContentType.Application.Json,
+        "png" to ContentType.Image.PNG
+    )
+
+    private val bytes by lazy { source.toByteArray() }
+
+    override val contentType: ContentType? by lazy { ContentType.Text.Html }
+
+    override val contentLength: Long? by lazy {
+        bytes.size.toLong()
+    }
+
+    override fun bytes(): ByteArray = bytes
+
+    override fun toString() = "HtmlSource"
+}
