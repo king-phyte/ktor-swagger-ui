@@ -1,7 +1,8 @@
-rootProject.name = "ktor-swagger-ui"
+rootProject.name = "ktor-openapi"
 
-include("ktor-swagger-ui-examples")
+include("ktor-openapi")
 include("ktor-swagger-ui")
+include("ktor-swagger-ui-examples")
 
 pluginManagement {
     repositories {

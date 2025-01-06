@@ -1,5 +1,8 @@
 package io.github.smiley4.ktorswaggerui.examples
 
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.dsl.routing.post
+import io.github.smiley4.ktoropenapi.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.data.array
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
@@ -8,7 +11,6 @@ import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -25,7 +27,7 @@ fun main() {
 private fun Application.myModule() {
 
     // Install the "SwaggerUI"-Plugin and use the default configuration
-    install(SwaggerUI) {
+    install(OpenApi) {
         schemas {
             // overwrite type "File" with custom schema for binary data
             overwrite<File>(Schema<Any>().also {
@@ -34,6 +36,7 @@ private fun Application.myModule() {
             })
         }
     }
+    install(SwaggerUI)
 
     routing {
 
@@ -102,7 +105,7 @@ private fun Application.myModule() {
         }) {
             call.respond(HttpStatusCode.NotImplemented, "...")
         }
-        
+
     }
 
 }

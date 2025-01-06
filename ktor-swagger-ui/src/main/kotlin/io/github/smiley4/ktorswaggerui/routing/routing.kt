@@ -1,36 +1,21 @@
 package io.github.smiley4.ktorswaggerui.routing
 
+import io.github.smiley4.ktoropenapi.dsl.routing.route
+import io.github.smiley4.ktorswaggerui.PLUGIN_CONFIG
 import io.github.smiley4.ktorswaggerui.SWAGGER_UI_WEBJARS_VERSION
 import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.data.OutputFormat
 import io.github.smiley4.ktorswaggerui.data.SwaggerUIData
 import io.github.smiley4.ktorswaggerui.data.SwaggerUiSort
 import io.github.smiley4.ktorswaggerui.data.SwaggerUiSyntaxHighlight
-import io.github.smiley4.ktorswaggerui.dsl.config.PluginConfigDsl
-import io.github.smiley4.ktorswaggerui.dsl.routing.route
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-/**
- * Registers the route for serving an openapi-spec. When multiple specs are configured, the id of the one to serve has to be provided.
- */
-fun Route.openApiSpec(specId: String = PluginConfigDsl.DEFAULT_SPEC_ID) {
-    route({ hidden = true }) {
-        get {
-            val contentType = when(ApiSpec.getFormat(specId)) {
-                OutputFormat.JSON -> ContentType.Application.Json
-                OutputFormat.YAML -> ContentType.Text.Plain
-            }
-            call.respondText(contentType, HttpStatusCode.OK) { ApiSpec.get(specId) }
-        }
-    }
-}
 
 /**
- * Registers the route for serving all swagger-ui resources. The path to the openapi-spec file to use has to be given.
+ * Registers the route for serving all swagger-ui resources. The url to the openapi-spec file to use has to be specified.
  */
 fun Route.swaggerUI(apiUrl: String) {
     route({ hidden = true }) {
@@ -41,7 +26,7 @@ fun Route.swaggerUI(apiUrl: String) {
             serveStaticResource(call.parameters["filename"]!!, SWAGGER_UI_WEBJARS_VERSION, call)
         }
         get("swagger-initializer.js") {
-            serveSwaggerInitializer(call, ApiSpec.swaggerUiConfig, apiUrl)
+            serveSwaggerInitializer(call, PLUGIN_CONFIG!!, apiUrl)
         }
     }
 }
@@ -55,7 +40,7 @@ private suspend fun serveSwaggerInitializer(call: ApplicationCall, swaggerUiConf
             if (swaggerUiConfig.sort == SwaggerUiSort.NONE) "undefined"
             else "\"${swaggerUiConfig.sort.value}\""
     val propSyntaxHighlight = "syntaxHighlight: " +
-            if(swaggerUiConfig.syntaxHighlight == SwaggerUiSyntaxHighlight.DISABLED) "false"
+            if (swaggerUiConfig.syntaxHighlight == SwaggerUiSyntaxHighlight.DISABLED) "false"
             else "{ theme: \"${swaggerUiConfig.syntaxHighlight.value}\" }"
     val content = """
 			window.onload = function() {

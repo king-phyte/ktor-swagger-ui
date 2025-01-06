@@ -1,8 +1,9 @@
 package io.github.smiley4.ktorswaggerui.examples
 
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.dsl.routing.get
+import io.github.smiley4.ktoropenapi.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.dsl.routing.get
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
@@ -26,7 +27,7 @@ fun main() {
 private fun Application.myModule() {
 
     // Install and configure the "SwaggerUI"-Plugin
-    install(SwaggerUI) {
+    install(OpenApi) {
         schemas {
             // replace default schema-generator with customized one
             generator = { type ->
@@ -41,6 +42,7 @@ private fun Application.myModule() {
             }
         }
     }
+    install(SwaggerUI)
 
     routing {
 

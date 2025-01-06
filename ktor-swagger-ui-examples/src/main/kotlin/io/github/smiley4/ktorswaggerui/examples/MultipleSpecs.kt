@@ -1,9 +1,10 @@
 package io.github.smiley4.ktorswaggerui.examples
 
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.dsl.routing.get
+import io.github.smiley4.ktoropenapi.dsl.routing.route
+import io.github.smiley4.ktoropenapi.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.dsl.routing.get
-import io.github.smiley4.ktorswaggerui.dsl.routing.route
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -20,7 +21,7 @@ fun main() {
 private fun Application.myModule() {
 
     // Install and configure the "SwaggerUI"-Plugin
-    install(SwaggerUI) {
+    install(OpenApi) {
         // "global" configuration for all specs
         info {
             title = "Example API"
@@ -40,6 +41,7 @@ private fun Application.myModule() {
         // assign all unassigned routes to spec "v2" (here only route '/greet')
         specAssigner = { _, _ -> "version2" }
     }
+    install(SwaggerUI)
 
     routing {
 

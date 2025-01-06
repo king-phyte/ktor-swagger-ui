@@ -19,6 +19,7 @@ dependencies {
     val versionKotlinLogging: String by project
     val versionLogback: String by project
 
+    implementation(project(":ktor-openapi"))
     implementation(project(":ktor-swagger-ui"))
 
     implementation("io.ktor:ktor-server-netty-jvm:$versionKtor")
