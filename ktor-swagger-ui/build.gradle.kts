@@ -31,6 +31,8 @@ dependencies {
     val versionMockk: String by project
     val versionJackson: String by project
 
+    implementation(project(":ktor-openapi"))
+
     implementation("io.ktor:ktor-server-core-jvm:$versionKtor")
     implementation("io.ktor:ktor-server-auth:$versionKtor")
     implementation("io.ktor:ktor-server-resources:$versionKtor")
