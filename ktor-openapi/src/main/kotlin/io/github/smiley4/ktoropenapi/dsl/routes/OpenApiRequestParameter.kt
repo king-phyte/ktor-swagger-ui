@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.ExampleDescriptor
-import io.github.smiley4.ktoropenapi.data.OpenApiRequestParameterData
+import io.github.smiley4.ktoropenapi.data.RequestParameterData
 import io.github.smiley4.ktoropenapi.data.ParameterLocation
 import io.github.smiley4.ktoropenapi.data.SwaggerExampleDescriptor
 import io.github.smiley4.ktoropenapi.data.TypeDescriptor
@@ -110,7 +110,7 @@ class OpenApiRequestParameter(
     /**
      * Build the data object for this config.
      */
-    fun build() = OpenApiRequestParameterData(
+    internal fun build() = RequestParameterData(
         name = name,
         type = type,
         location = location,

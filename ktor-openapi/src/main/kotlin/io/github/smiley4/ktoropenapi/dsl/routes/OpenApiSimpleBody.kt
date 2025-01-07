@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.ExampleDescriptor
-import io.github.smiley4.ktoropenapi.data.OpenApiSimpleBodyData
+import io.github.smiley4.ktoropenapi.data.SimpleBodyData
 import io.github.smiley4.ktoropenapi.data.RefExampleDescriptor
 import io.github.smiley4.ktoropenapi.data.SwaggerExampleDescriptor
 import io.github.smiley4.ktoropenapi.data.TypeDescriptor
@@ -68,7 +68,7 @@ class OpenApiSimpleBody(
      */
     fun exampleRef(name: String) = example(RefExampleDescriptor(name, name))
 
-    override fun build() = OpenApiSimpleBodyData(
+    override fun build() = SimpleBodyData(
         description = description,
         required = required ?: false,
         mediaTypes = mediaTypes.toSet(),

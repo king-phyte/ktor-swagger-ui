@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.data
 /**
  * See [OpenAPI Specification - Info Object](https://swagger.io/specification/#info-object).
  */
-data class InfoData(
+internal data class InfoData(
     val title: String,
     val version: String?,
     val description: String?,

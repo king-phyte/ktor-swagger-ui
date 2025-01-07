@@ -8,7 +8,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme
  * Build the openapi [SecurityScheme]-objects with their names. Holds information defining security schemes that can be used by operations.
  * See [OpenAPI Specification - Security Scheme Object](https://swagger.io/specification/#security-scheme-object).
  */
-class SecuritySchemesBuilder(
+internal class SecuritySchemesBuilder(
     private val oAuthFlowsBuilder: OAuthFlowsBuilder
 ) {
 

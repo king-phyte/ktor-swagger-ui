@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.ExternalDocumentation
  * Build the openapi [ExternalDocumentation]-object. Allows referencing an external resource for extended documentation.
  * See [OpenAPI Specification - External Documentation Object](https://swagger.io/specification/#external-documentation-object).
  */
-class ExternalDocumentationBuilder {
+internal class ExternalDocumentationBuilder {
 
     fun build(externalDocs: ExternalDocsData): ExternalDocumentation =
         ExternalDocumentation().also {

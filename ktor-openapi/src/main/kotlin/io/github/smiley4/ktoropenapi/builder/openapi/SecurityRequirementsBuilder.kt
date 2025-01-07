@@ -8,7 +8,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement
  * Build the openapi [SecurityRequirement]-objects.
  * See [OpenAPI Specification - Security Requirement Object](https://swagger.io/specification/#security-requirement-object).
  */
-class SecurityRequirementsBuilder(
+internal class SecurityRequirementsBuilder(
     private val config: PluginConfigData
 ) {
 

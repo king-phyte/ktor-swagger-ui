@@ -9,12 +9,12 @@ import kotlinx.serialization.serializer
  * Encoder to produce the final example value.
  * Return the unmodified example to fall back to the default encoder.
  */
-typealias ExampleEncoder = (type: TypeDescriptor?, example: Any?) -> Any?
+internal typealias ExampleEncoder = (type: TypeDescriptor?, example: Any?) -> Any?
 
 /**
  * [ExampleEncoder] using kotlinx-serialization to encode example objects.
  */
-val kotlinxExampleEncoder: ExampleEncoder = { type, example ->
+internal val kotlinxExampleEncoder: ExampleEncoder = { type, example ->
     if (type is KTypeDescriptor) {
         val jsonString = Json.encodeToString(serializer(type.type), example)
         val jsonObj = jacksonObjectMapper().readValue(jsonString, object : TypeReference<Any>() {})
@@ -24,9 +24,9 @@ val kotlinxExampleEncoder: ExampleEncoder = { type, example ->
     }
 }
 
-class ExampleConfigData(
+internal class ExampleConfigData(
     val sharedExamples: Map<String, ExampleDescriptor>,
-    val securityExamples: OpenApiSimpleBodyData?,
+    val securityExamples: SimpleBodyData?,
     val exampleEncoder: ExampleEncoder?
 ) {
 

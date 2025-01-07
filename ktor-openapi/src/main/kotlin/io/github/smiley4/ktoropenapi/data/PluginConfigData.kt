@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 /**
  * Complete plugin configuration
  */
-data class PluginConfigData(
+internal data class PluginConfigData(
     val specAssigner: SpecAssigner,
     val pathFilter: PathFilter,
     val ignoredRouteSelectors: Set<KClass<*>>,
@@ -20,7 +20,8 @@ data class PluginConfigData(
     val exampleConfig: ExampleConfigData,
     val securityConfig: SecurityData,
     val tagsConfig: TagsData,
-    val outputFormat: OutputFormat
+    val outputFormat: OutputFormat,
+    val rootPath: String?
 ) {
 
     companion object {
@@ -38,7 +39,8 @@ data class PluginConfigData(
             exampleConfig = ExampleConfigData.DEFAULT,
             securityConfig = SecurityData.DEFAULT,
             tagsConfig = TagsData.DEFAULT,
-            outputFormat = OutputFormat.JSON
+            outputFormat = OutputFormat.JSON,
+            rootPath = "todo" // TODO
         )
     }
 

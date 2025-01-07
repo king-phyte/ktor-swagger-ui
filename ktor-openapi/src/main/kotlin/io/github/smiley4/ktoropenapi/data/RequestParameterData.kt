@@ -5,7 +5,7 @@ import io.swagger.v3.oas.models.parameters.Parameter
 /**
  * Information about a request (query, path or header) parameter.
  */
-data class OpenApiRequestParameterData(
+internal data class RequestParameterData(
     val name: String,
     val type: TypeDescriptor,
     val location: ParameterLocation,

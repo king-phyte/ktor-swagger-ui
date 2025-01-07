@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.info.Info
  * Build the openapi [Info]-object. Holds metadata about the API.
  * See [OpenAPI Specification - Info Object](https://swagger.io/specification/#info-object).
  */
-class InfoBuilder(
+internal class InfoBuilder(
     private val contactBuilder: ContactBuilder,
     private val licenseBuilder: LicenseBuilder
 ) {

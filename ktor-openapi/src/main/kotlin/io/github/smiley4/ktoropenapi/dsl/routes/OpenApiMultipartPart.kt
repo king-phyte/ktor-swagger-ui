@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.KTypeDescriptor
-import io.github.smiley4.ktoropenapi.data.OpenApiMultipartPartData
+import io.github.smiley4.ktoropenapi.data.MultipartPartData
 import io.github.smiley4.ktoropenapi.data.SwaggerTypeDescriptor
 import io.github.smiley4.ktoropenapi.data.TypeDescriptor
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
@@ -80,7 +80,7 @@ class OpenApiMultipartPart(
     /**
      * Build the data object for this config.
      */
-    fun build() = OpenApiMultipartPartData(
+    internal fun build() = MultipartPartData(
         name = name,
         type = type,
         mediaTypes = mediaTypes.toSet(),

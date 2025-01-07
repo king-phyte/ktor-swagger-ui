@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.examples.Example
 /**
  * Implementation of an [ExampleContext].
  */
-class ExampleContextImpl(private val encoder: ExampleEncoder?) : ExampleContext {
+internal class ExampleContextImpl(private val encoder: ExampleEncoder?) : ExampleContext {
 
     private val rootExamples = mutableMapOf<ExampleDescriptor, Example>()
     private val componentExamples = mutableMapOf<String, Example>()
@@ -54,14 +54,14 @@ class ExampleContextImpl(private val encoder: ExampleEncoder?) : ExampleContext 
                             parameter.example?.also { add(it to parameter.type) }
                         }
                         request.body?.also { body ->
-                            if (body is OpenApiSimpleBodyData) {
+                            if (body is SimpleBodyData) {
                                 addAll(body.examples.map { it to body.type })
                             }
                         }
                     }
                     route.documentation.responses.forEach { response ->
                         response.body?.also { body ->
-                            if (body is OpenApiSimpleBodyData) {
+                            if (body is SimpleBodyData) {
                                 addAll(body.examples.map { it to body.type })
                             }
                         }

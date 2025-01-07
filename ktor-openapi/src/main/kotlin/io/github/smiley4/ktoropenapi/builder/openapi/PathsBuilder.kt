@@ -8,7 +8,7 @@ import io.swagger.v3.oas.models.Paths
  * Build the openapi [Paths]-object. Holds the relative paths to the individual endpoints and their operations.
  * See [OpenAPI Specification - Paths Object](https://swagger.io/specification/#paths-object).
  */
-class PathsBuilder(
+internal class PathsBuilder(
     private val pathBuilder: PathBuilder
 ) {
 

@@ -2,7 +2,7 @@ package io.github.smiley4.ktoropenapi.builder.openapi
 
 import io.github.smiley4.ktoropenapi.builder.example.ExampleContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
-import io.github.smiley4.ktoropenapi.data.OpenApiRequestParameterData
+import io.github.smiley4.ktoropenapi.data.RequestParameterData
 import io.github.smiley4.ktoropenapi.data.ParameterLocation
 import io.swagger.v3.oas.models.parameters.Parameter
 
@@ -10,12 +10,12 @@ import io.swagger.v3.oas.models.parameters.Parameter
  * Build the openapi [Parameter]-object. Holds information describing a single operation (query, path or header) parameter.
  * See [OpenAPI Specification - Parameter Object](https://swagger.io/specification/#parameter-object).
  */
-class ParameterBuilder(
+internal class ParameterBuilder(
     private val schemaContext: SchemaContext,
     private val exampleContext: ExampleContext
 ) {
 
-    fun build(parameter: OpenApiRequestParameterData): Parameter =
+    fun build(parameter: RequestParameterData): Parameter =
         Parameter().also {
             it.`in` = when (parameter.location) {
                 ParameterLocation.QUERY -> "query"

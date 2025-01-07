@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.SpecVersion
  * Build the openapi [OpenAPI]-object. Is the root of the openapi document.
  * See [OpenAPI Specification - OpenAPI Object](https://swagger.io/specification/#openapi-object).
  */
-class OpenApiBuilder(
+internal class OpenApiBuilder(
     private val config: PluginConfigData,
     private val schemaContext: SchemaContext,
     private val exampleContext: ExampleContext,

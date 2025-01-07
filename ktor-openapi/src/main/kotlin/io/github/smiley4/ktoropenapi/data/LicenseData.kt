@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.data
 /**
  * See [OpenAPI Specification - License Object](https://swagger.io/specification/#license-object).
  */
-data class LicenseData(
+internal data class LicenseData(
     val name: String?,
     val url: String?,
     val identifier: String?

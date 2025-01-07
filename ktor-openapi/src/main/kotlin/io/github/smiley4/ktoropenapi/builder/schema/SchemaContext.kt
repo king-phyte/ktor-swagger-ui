@@ -6,7 +6,7 @@ import io.swagger.v3.oas.models.media.Schema
 /**
  * Provides schemas for an openapi-spec
  */
-interface SchemaContext {
+internal interface SchemaContext {
 
     /**
      * Get a [Schema] (or a ref to a schema) by its [TypeDescriptor]

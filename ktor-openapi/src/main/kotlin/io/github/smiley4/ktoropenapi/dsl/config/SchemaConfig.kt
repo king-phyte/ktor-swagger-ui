@@ -90,7 +90,7 @@ class SchemaConfig {
      * Build the data object for this config.
      * @param securityConfig configuration that might contain additional schemas
      */
-    fun build(base: SchemaConfigData, securityConfig: SecurityData) = SchemaConfigData(
+    internal fun build(base: SchemaConfigData, securityConfig: SecurityData) = SchemaConfigData(
         generator = mergeDefault(base.generator, generator, SchemaConfigData.DEFAULT.generator),
         schemas = mutableMapOf<String, TypeDescriptor>().apply {
             this.putAll(base.schemas)
@@ -102,8 +102,8 @@ class SchemaConfig {
         },
         securitySchemas = securityConfig.defaultUnauthorizedResponse?.body?.let { body ->
             when (body) {
-                is OpenApiSimpleBodyData -> listOf(body.type)
-                is OpenApiMultipartBodyData -> body.parts.map { it.type }
+                is SimpleBodyData -> listOf(body.type)
+                is MultipartBodyData -> body.parts.map { it.type }
             }
         } ?: emptyList()
     )

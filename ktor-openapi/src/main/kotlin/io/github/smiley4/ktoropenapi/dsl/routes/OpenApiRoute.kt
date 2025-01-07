@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.ExternalDocsData
-import io.github.smiley4.ktoropenapi.data.OpenApiRouteData
+import io.github.smiley4.ktoropenapi.data.RouteData
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
 import io.github.smiley4.ktoropenapi.dsl.config.OpenApiExternalDocs
@@ -152,7 +152,7 @@ class OpenApiRoute {
     /**
      * Build the data object for this config.
      */
-    fun build() = OpenApiRouteData(
+    internal fun build() = RouteData(
         specId = specId,
         tags = tags.toSet(),
         summary = summary,

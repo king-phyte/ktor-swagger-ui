@@ -8,7 +8,7 @@ import io.github.smiley4.schemakenerator.swagger.steps.SwaggerSchemaUtils
 import io.swagger.v3.oas.models.media.Schema
 import kotlin.reflect.KType
 
-class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : SchemaContext {
+internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : SchemaContext {
 
     private val rootSchemas = mutableMapOf<TypeDescriptor, Schema<*>>()
     private val componentSchemas = mutableMapOf<String, Schema<*>>()
@@ -114,10 +114,10 @@ class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : SchemaCont
                     }
                     request.body?.also { body ->
                         when (body) {
-                            is OpenApiSimpleBodyData -> {
+                            is SimpleBodyData -> {
                                 descriptors.add(body.type)
                             }
-                            is OpenApiMultipartBodyData -> {
+                            is MultipartBodyData -> {
                                 body.parts.forEach { part ->
                                     descriptors.add(part.type)
                                 }
@@ -131,10 +131,10 @@ class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : SchemaCont
                     }
                     response.body?.also { body ->
                         when (body) {
-                            is OpenApiSimpleBodyData -> {
+                            is SimpleBodyData -> {
                                 descriptors.add(body.type)
                             }
-                            is OpenApiMultipartBodyData -> {
+                            is MultipartBodyData -> {
                                 body.parts.forEach { part ->
                                     descriptors.add(part.type)
                                 }

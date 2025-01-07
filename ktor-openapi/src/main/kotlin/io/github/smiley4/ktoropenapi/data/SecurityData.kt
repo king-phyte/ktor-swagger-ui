@@ -3,8 +3,8 @@ package io.github.smiley4.ktoropenapi.data
 /**
  * Common security configuration information.
  */
-data class SecurityData(
-    val defaultUnauthorizedResponse: OpenApiResponseData?,
+internal data class SecurityData(
+    val defaultUnauthorizedResponse: ResponseData?,
     val defaultSecuritySchemeNames: Set<String>,
     val securitySchemes: List<SecuritySchemeData>,
 ) {

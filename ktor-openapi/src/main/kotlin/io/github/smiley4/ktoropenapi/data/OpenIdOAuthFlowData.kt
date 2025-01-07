@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.data
 /**
  * See [OpenAPI Specification - OAuth Flow Object](https://swagger.io/specification/#oauth-flow-object).
  */
-data class OpenIdOAuthFlowData(
+internal data class OpenIdOAuthFlowData(
     val authorizationUrl: String? = null,
     val tokenUrl: String? = null,
     val refreshUrl: String? = null,

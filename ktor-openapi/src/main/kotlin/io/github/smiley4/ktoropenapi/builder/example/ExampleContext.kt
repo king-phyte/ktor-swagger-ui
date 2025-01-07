@@ -6,7 +6,7 @@ import io.swagger.v3.oas.models.examples.Example
 /**
  * Provides examples for an openapi-spec
  */
-interface ExampleContext {
+internal interface ExampleContext {
 
     /**
      * Get an [Example] (or a ref to an example) by its [ExampleDescriptor].

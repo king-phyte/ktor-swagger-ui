@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
-import io.github.smiley4.ktoropenapi.data.OpenApiResponseData
+import io.github.smiley4.ktoropenapi.data.ResponseData
 import io.github.smiley4.ktoropenapi.data.PluginConfigData
 import io.ktor.http.HttpStatusCode
 import io.swagger.v3.oas.models.responses.ApiResponses
@@ -9,12 +9,12 @@ import io.swagger.v3.oas.models.responses.ApiResponses
  * Build the openapi [ApiResponses]-object. A container for the expected responses of an operation.
  * See [OpenAPI Specification - Responses Object](https://swagger.io/specification/#responses-object).
  */
-class ResponsesBuilder(
+internal class ResponsesBuilder(
     private val responseBuilder: ResponseBuilder,
     private val config: PluginConfigData
 ) {
 
-    fun build(responses: List<OpenApiResponseData>, isProtected: Boolean): ApiResponses =
+    fun build(responses: List<ResponseData>, isProtected: Boolean): ApiResponses =
         ApiResponses().also {
             responses
                 .map { response -> responseBuilder.build(response) }
@@ -26,7 +26,7 @@ class ResponsesBuilder(
             }
         }
 
-    private fun shouldAddUnauthorized(responses: List<OpenApiResponseData>, isProtected: Boolean): Boolean {
+    private fun shouldAddUnauthorized(responses: List<ResponseData>, isProtected: Boolean): Boolean {
         val unauthorizedCode = HttpStatusCode.Unauthorized.value.toString()
         return config.securityConfig.defaultUnauthorizedResponse != null
                 && isProtected

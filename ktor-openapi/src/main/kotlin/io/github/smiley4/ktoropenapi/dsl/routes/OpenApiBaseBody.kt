@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
-import io.github.smiley4.ktoropenapi.data.OpenApiBaseBodyData
+import io.github.smiley4.ktoropenapi.data.BaseBodyData
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
 import io.ktor.http.ContentType
 
@@ -42,5 +42,5 @@ sealed class OpenApiBaseBody {
     /**
      * Build the data object for this config.
      */
-    abstract fun build(): OpenApiBaseBodyData
+    internal abstract fun build(): BaseBodyData
 }
