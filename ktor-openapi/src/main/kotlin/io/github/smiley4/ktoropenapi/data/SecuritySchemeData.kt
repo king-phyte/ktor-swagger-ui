@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.data
 /**
  * See [OpenAPI Specification - Security Scheme Object](https://swagger.io/specification/#security-scheme-object).
  */
-data class SecuritySchemeData(
+internal data class SecuritySchemeData(
     val schemeName: String,
     val type: AuthType?,
     val name: String?,

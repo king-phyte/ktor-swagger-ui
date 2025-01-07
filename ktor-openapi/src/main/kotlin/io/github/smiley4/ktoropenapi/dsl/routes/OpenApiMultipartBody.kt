@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.KTypeDescriptor
-import io.github.smiley4.ktoropenapi.data.OpenApiMultipartBodyData
+import io.github.smiley4.ktoropenapi.data.MultipartBodyData
 import io.github.smiley4.ktoropenapi.data.SwaggerTypeDescriptor
 import io.github.smiley4.ktoropenapi.data.TypeDescriptor
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
@@ -47,7 +47,7 @@ class OpenApiMultipartBody : OpenApiBaseBody() {
         part(name, KTypeDescriptor(typeOf<T>()), block)
 
 
-    override fun build() = OpenApiMultipartBodyData(
+    override fun build() = MultipartBodyData(
         description = description,
         required = required ?: false,
         mediaTypes = mediaTypes.toSet(),

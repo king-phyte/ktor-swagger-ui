@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.data
 /**
  * See [OpenAPI Specification - External Documentation Object](https://swagger.io/specification/#external-documentation-object).
  */
-data class ExternalDocsData(
+internal data class ExternalDocsData(
     val url: String,
     val description: String?,
 ) {

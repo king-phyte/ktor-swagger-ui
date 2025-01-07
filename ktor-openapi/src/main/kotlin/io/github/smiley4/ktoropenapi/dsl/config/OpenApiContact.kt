@@ -32,7 +32,7 @@ class OpenApiContact {
      * Build the data object for this config.
      * @param base the base config to "inherit" from. Values from the base should be copied, replaced or merged together.
      */
-    fun build(base: ContactData) = ContactData(
+    internal fun build(base: ContactData) = ContactData(
         name = merge(base.name, name),
         url = merge(base.url, url),
         email = merge(base.email, email)

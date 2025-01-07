@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.tags.Tag
  * Build the openapi [Tag]-object. Holds metadata of a single tag.
  * See [OpenAPI Specification - Tag Object](https://swagger.io/specification/#tag-object).
  */
-class TagBuilder(
+internal class TagBuilder(
     private val tagExternalDocumentationBuilder: TagExternalDocumentationBuilder
 ) {
 

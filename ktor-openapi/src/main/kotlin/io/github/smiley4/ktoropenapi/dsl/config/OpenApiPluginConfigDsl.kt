@@ -169,7 +169,8 @@ class OpenApiPluginConfigDsl {
             },
             specConfigs = mutableMapOf(),
             postBuild = merge(base.postBuild, postBuild),
-            outputFormat = outputFormat
+            outputFormat = outputFormat,
+            rootPath = "todo" // todo
         ).also {
             specConfigs.forEach { (specId, config) ->
                 it.specConfigs[specId] = config.build(it)

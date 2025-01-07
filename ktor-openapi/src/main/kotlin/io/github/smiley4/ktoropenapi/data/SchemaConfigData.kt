@@ -15,7 +15,7 @@ import kotlin.reflect.KType
 /**
  * Common configuration for schemas.
  */
-data class SchemaConfigData(
+internal data class SchemaConfigData(
     val schemas: Map<String, TypeDescriptor>,
     val generator: (type: KType) -> CompiledSwaggerSchema,
     val overwrite: Map<KType, TypeDescriptor>,

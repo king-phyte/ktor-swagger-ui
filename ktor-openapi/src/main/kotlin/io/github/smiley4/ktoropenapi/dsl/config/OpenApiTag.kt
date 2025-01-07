@@ -31,7 +31,7 @@ class OpenApiTag(
     var externalDocUrl: String? = null
 
 
-    fun build(base: TagData) = TagData(
+    internal fun build(base: TagData) = TagData(
         name = name,
         description = merge(base.description, description),
         externalDocDescription = merge(base.externalDocDescription, externalDocDescription),

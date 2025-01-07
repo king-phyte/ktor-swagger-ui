@@ -2,7 +2,7 @@ package io.github.smiley4.ktoropenapi.builder.route
 
 import io.github.smiley4.ktoropenapi.dsl.routes.OpenApiRoute
 
-class RouteDocumentationMerger {
+internal class RouteDocumentationMerger {
 
     /**
      * Merges "a" with "b" and returns the result as a new [OpenApiRoute]. "a" has priority over "b".

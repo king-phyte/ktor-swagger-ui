@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.data
 /**
  *  See [OpenAPI Specification - Contact Object](https://swagger.io/specification/#contact-object).
  */
-data class ContactData(
+internal data class ContactData(
     val name: String?,
     val url: String?,
     val email: String?

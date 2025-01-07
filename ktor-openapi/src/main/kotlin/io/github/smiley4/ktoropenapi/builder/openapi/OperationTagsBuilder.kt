@@ -6,7 +6,7 @@ import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 /**
  * Builds the list of tags for a single route.
  */
-class OperationTagsBuilder(
+internal class OperationTagsBuilder(
     private val config: PluginConfigData
 ) {
 

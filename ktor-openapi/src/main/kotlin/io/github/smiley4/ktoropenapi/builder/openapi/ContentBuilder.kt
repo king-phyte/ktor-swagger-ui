@@ -2,9 +2,9 @@ package io.github.smiley4.ktoropenapi.builder.openapi
 
 import io.github.smiley4.ktoropenapi.builder.example.ExampleContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
-import io.github.smiley4.ktoropenapi.data.OpenApiBaseBodyData
-import io.github.smiley4.ktoropenapi.data.OpenApiMultipartBodyData
-import io.github.smiley4.ktoropenapi.data.OpenApiSimpleBodyData
+import io.github.smiley4.ktoropenapi.data.BaseBodyData
+import io.github.smiley4.ktoropenapi.data.MultipartBodyData
+import io.github.smiley4.ktoropenapi.data.SimpleBodyData
 import io.ktor.http.*
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.Encoding
@@ -17,26 +17,26 @@ import kotlin.collections.set
  * See [OpenAPI Specification - Request Body Object](https://swagger.io/specification/#request-body-object)
  * and [OpenAPI Specification - Response Object](https://swagger.io/specification/#response-object).
  */
-class ContentBuilder(
+internal class ContentBuilder(
     private val schemaContext: SchemaContext,
     private val exampleContext: ExampleContext,
     private val headerBuilder: HeaderBuilder
 ) {
 
-    fun build(body: OpenApiBaseBodyData): Content =
+    fun build(body: BaseBodyData): Content =
         when (body) {
-            is OpenApiSimpleBodyData -> buildSimpleBody(body)
-            is OpenApiMultipartBodyData -> buildMultipartBody(body)
+            is SimpleBodyData -> buildSimpleBody(body)
+            is MultipartBodyData -> buildMultipartBody(body)
         }
 
-    private fun buildSimpleBody(body: OpenApiSimpleBodyData): Content =
+    private fun buildSimpleBody(body: SimpleBodyData): Content =
         Content().also { content ->
             buildSimpleMediaTypes(body, schemaContext.getSchema(body.type)).forEach { (contentType, mediaType) ->
                 content.addMediaType(contentType.toString(), mediaType)
             }
         }
 
-    private fun buildMultipartBody(body: OpenApiMultipartBodyData): Content {
+    private fun buildMultipartBody(body: MultipartBodyData): Content {
         return Content().also { content ->
             buildMultipartMediaTypes(body).forEach { (contentType, mediaType) ->
                 content.addMediaType(contentType.toString(), mediaType)
@@ -44,12 +44,12 @@ class ContentBuilder(
         }
     }
 
-    private fun buildSimpleMediaTypes(body: OpenApiSimpleBodyData, schema: Schema<*>?): Map<ContentType, MediaType> {
+    private fun buildSimpleMediaTypes(body: SimpleBodyData, schema: Schema<*>?): Map<ContentType, MediaType> {
         val mediaTypes = body.mediaTypes.ifEmpty { schema?.let { setOf(chooseMediaType(schema)) } ?: setOf() }
         return mediaTypes.associateWith { buildSimpleMediaType(schema, body) }
     }
 
-    private fun buildSimpleMediaType(schema: Schema<*>?, body: OpenApiSimpleBodyData): MediaType {
+    private fun buildSimpleMediaType(schema: Schema<*>?, body: SimpleBodyData): MediaType {
         return MediaType().also {
             it.schema = schema
             body.examples.forEach { descriptor ->
@@ -58,12 +58,12 @@ class ContentBuilder(
         }
     }
 
-    private fun buildMultipartMediaTypes(body: OpenApiMultipartBodyData): Map<ContentType, MediaType> {
+    private fun buildMultipartMediaTypes(body: MultipartBodyData): Map<ContentType, MediaType> {
         val mediaTypes = body.mediaTypes.ifEmpty { setOf(ContentType.MultiPart.FormData) }
         return mediaTypes.associateWith { buildMultipartMediaType(body) }
     }
 
-    private fun buildMultipartMediaType(body: OpenApiMultipartBodyData): MediaType {
+    private fun buildMultipartMediaType(body: MultipartBodyData): MediaType {
         return MediaType().also { mediaType ->
             mediaType.schema = Schema<Any>().also { schema ->
                 schema.type = "object"
@@ -77,7 +77,7 @@ class ContentBuilder(
         }
     }
 
-    private fun buildMultipartEncoding(body: OpenApiMultipartBodyData): MutableMap<String, Encoding>? {
+    private fun buildMultipartEncoding(body: MultipartBodyData): MutableMap<String, Encoding>? {
         return if (body.parts.flatMap { it.mediaTypes }.isEmpty()) {
             null
         } else {

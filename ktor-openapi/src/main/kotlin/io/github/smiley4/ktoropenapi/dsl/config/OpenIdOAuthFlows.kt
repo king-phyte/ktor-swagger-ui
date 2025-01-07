@@ -57,7 +57,7 @@ class OpenIdOAuthFlows {
      * Build the data object for this config.
      * @param base the base config to "inherit" from. Values from the base should be copied, replaced or merged together.
      */
-    fun build(base: OpenIdOAuthFlowsData) = OpenIdOAuthFlowsData(
+    internal fun build(base: OpenIdOAuthFlowsData) = OpenIdOAuthFlowsData(
         implicit = implicit?.build(base.implicit ?: OpenIdOAuthFlowData.DEFAULT) ?: base.implicit,
         password = password?.build(base.password ?: OpenIdOAuthFlowData.DEFAULT) ?: base.password,
         clientCredentials = clientCredentials?.build(base.clientCredentials ?: OpenIdOAuthFlowData.DEFAULT) ?: base.clientCredentials,

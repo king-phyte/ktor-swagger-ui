@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.KTypeDescriptor
-import io.github.smiley4.ktoropenapi.data.OpenApiResponseData
+import io.github.smiley4.ktoropenapi.data.ResponseData
 import io.github.smiley4.ktoropenapi.data.SwaggerTypeDescriptor
 import io.github.smiley4.ktoropenapi.data.TypeDescriptor
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
@@ -91,7 +91,7 @@ class OpenApiResponse(val statusCode: String) {
     /**
      * Build the data object for this config.
      */
-    fun build() = OpenApiResponseData(
+    internal fun build() = ResponseData(
         statusCode = statusCode,
         description = description,
         headers = headers.mapValues { it.value.build() },

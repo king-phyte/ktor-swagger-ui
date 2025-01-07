@@ -1,6 +1,9 @@
 package io.github.smiley4.ktoropenapi.data
 
-//  https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml
+/**
+ * The authentication scheme.
+ * https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml
+ */
 enum class AuthScheme(val swaggerType: String) {
     BASIC("Basic"),
     BEARER("bearer"),

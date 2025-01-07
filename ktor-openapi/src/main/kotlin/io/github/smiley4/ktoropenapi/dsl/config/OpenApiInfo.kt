@@ -66,7 +66,7 @@ class OpenApiInfo {
      * Build the data object for this config.
      * @param base the base config to "inherit" from. Values from the base should be copied, replaced or merged together.
      */
-    fun build(base: InfoData): InfoData {
+    internal fun build(base: InfoData): InfoData {
         return InfoData(
             title = mergeDefault(base.title, this.title, InfoData.DEFAULT.title),
             version = merge(base.version, this.version),

@@ -59,12 +59,12 @@ class ExampleConfig {
      * Build the data object for this config.
      * @param securityConfig the data for security config that might contain additional examples
      */
-    fun build(securityConfig: SecurityData) = ExampleConfigData(
+    internal fun build(securityConfig: SecurityData) = ExampleConfigData(
         sharedExamples = sharedExamples,
         securityExamples = securityConfig.defaultUnauthorizedResponse?.body?.let {
             when (it) {
-                is OpenApiSimpleBodyData -> it
-                is OpenApiMultipartBodyData -> null
+                is SimpleBodyData -> it
+                is MultipartBodyData -> null
             }
         },
         exampleEncoder = exampleEncoder

@@ -16,29 +16,30 @@ import io.ktor.server.routing.TrailingSlashRouteSelector
 import kotlin.reflect.full.isSubclassOf
 
 /**
- * Collect all routes from the given application
+ * Collect all routes of the given application.
  */
-class RouteCollector(
-    private val routeDocumentationMerger: RouteDocumentationMerger
-) {
+internal class RouteCollector {
+
+    private val routeDocumentationMerger = RouteDocumentationMerger()
 
     /**
      * Collect all routes from the given application
      */
-    fun collectRoutes(routeProvider: () -> RoutingNode, config: PluginConfigData): Sequence<RouteMeta> {
+    fun collect(routeProvider: () -> RoutingNode, config: PluginConfigData): List<RouteMeta> {
         return allRoutes(routeProvider())
             .asSequence()
             .map { route ->
                 val documentation = getDocumentation(route, OpenApiRoute())
                 RouteMeta(
                     method = getMethod(route),
-                    path = getPath(route, config),
+                    path = getPath(route, config).let { "${config.rootPath ?: ""}${it}" },
                     documentation = documentation.build(),
                     protected = documentation.protected ?: isProtected(route)
                 )
             }
             .filter { !it.documentation.hidden }
             .filter { path -> config.pathFilter(path.method, path.path.split("/").filter { it.isNotEmpty() }) }
+            .toList()
     }
 
 

@@ -1,13 +1,12 @@
 package io.github.smiley4.ktoropenapi.data
 
-object DataUtils {
+internal object DataUtils {
 
     /**
      * Merges the two boolean values.
      * @return true if "value" is true, value of "base" otherwise
      */
     fun mergeBoolean(base: Boolean, value: Boolean) = if (value) true else base
-
 
     /**
      * Merges the two values.

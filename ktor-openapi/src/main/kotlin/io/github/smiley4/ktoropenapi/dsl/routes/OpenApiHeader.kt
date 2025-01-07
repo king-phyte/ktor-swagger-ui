@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
 import io.github.smiley4.ktoropenapi.data.KTypeDescriptor
-import io.github.smiley4.ktoropenapi.data.OpenApiHeaderData
+import io.github.smiley4.ktoropenapi.data.HeaderData
 import io.github.smiley4.ktoropenapi.data.SwaggerTypeDescriptor
 import io.github.smiley4.ktoropenapi.data.TypeDescriptor
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
@@ -73,7 +73,7 @@ class OpenApiHeader {
     /**
      * Build the data object for this config.
      */
-    fun build() = OpenApiHeaderData(
+    internal fun build() = HeaderData(
         description = description,
         type = type,
         required = required ?: false,

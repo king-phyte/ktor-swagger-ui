@@ -5,7 +5,7 @@ import io.ktor.http.ContentType
 /**
  * The common information for request and response bodies.
  */
-sealed class BaseBodyData(
+internal sealed class BaseBodyData(
     val description: String?,
     val required: Boolean,
     val mediaTypes: Set<ContentType>,
@@ -15,7 +15,7 @@ sealed class BaseBodyData(
 /**
  * Information for a "simple" request or response body.
  */
-class OpenApiSimpleBodyData(
+internal class SimpleBodyData(
     description: String?,
     required: Boolean,
     mediaTypes: Set<ContentType>,
@@ -27,9 +27,9 @@ class OpenApiSimpleBodyData(
 /**
  * Information for a multipart request or response body.
  */
-class OpenApiMultipartBodyData(
+internal class MultipartBodyData(
     description: String?,
     required: Boolean,
     mediaTypes: Set<ContentType>,
-    val parts: List<OpenApiMultipartPartData>
+    val parts: List<MultipartPartData>
 ) : BaseBodyData(description, required, mediaTypes)
