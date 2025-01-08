@@ -1,8 +1,8 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.dsl.routing.DocumentedRouteSelector
 import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
+import io.github.smiley4.ktoropenapi.dsl.routing.DocumentedRouteSelector
 import io.ktor.http.HttpMethod
 import io.ktor.server.auth.AuthenticationRouteSelector
 import io.ktor.server.routing.ConstantParameterRouteSelector
@@ -22,6 +22,11 @@ internal class RouteCollector {
 
     private val routeDocumentationMerger = RouteDocumentationMerger()
 
+    private val hiddenRouteMarkers = setOf(
+        "io.github.smiley4.ktorswaggerui.SwaggerUIRouteSelector"
+    )
+
+
     /**
      * Collect all routes from the given application
      */
@@ -38,6 +43,7 @@ internal class RouteCollector {
                 )
             }
             .filter { !it.documentation.hidden }
+            .filter { path -> hiddenRouteMarkers.none { path.path.contains(it) } }
             .filter { path -> config.pathFilter(path.method, path.path.split("/").filter { it.isNotEmpty() }) }
             .toList()
     }
