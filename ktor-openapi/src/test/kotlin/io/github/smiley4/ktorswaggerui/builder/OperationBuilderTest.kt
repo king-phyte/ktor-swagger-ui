@@ -1002,7 +1002,7 @@ class OperationBuilderTest : StringSpec({
 
 
         private fun schemaContext(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig = defaultPluginConfig): SchemaContext {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return SchemaContextImpl(pluginConfigData.schemaConfig).also {
                 it.addGlobal(pluginConfigData.schemaConfig)
                 it.add(routes)
@@ -1010,7 +1010,7 @@ class OperationBuilderTest : StringSpec({
         }
 
         private fun exampleContext(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig = defaultPluginConfig): ExampleContext {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return ExampleContextImpl(pluginConfigData.exampleConfig.exampleEncoder).also {
                 it.addShared(pluginConfigData.exampleConfig)
                 it.add(routes)
@@ -1023,7 +1023,7 @@ class OperationBuilderTest : StringSpec({
             exampleContext: ExampleContext,
             pluginConfig: OpenApiPluginConfig = defaultPluginConfig
         ): Operation {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return OperationBuilder(
                 operationTagsBuilder = OperationTagsBuilder(pluginConfigData),
                 parameterBuilder = ParameterBuilder(

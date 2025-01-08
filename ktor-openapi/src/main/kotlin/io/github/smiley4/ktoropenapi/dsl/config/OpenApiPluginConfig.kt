@@ -10,9 +10,9 @@ import io.github.smiley4.ktorswaggerui.data.ServerData
 import io.github.smiley4.ktorswaggerui.data.SpecAssigner
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiDslMarker
 import io.github.smiley4.ktoropenapi.data.DataUtils.merge
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.data.OutputFormat
 import io.github.smiley4.ktoropenapi.data.PathFilter
-import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.data.PostBuild
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.github.smiley4.ktoropenapi.data.SpecAssigner
@@ -132,10 +132,12 @@ class OpenApiPluginConfig {
      */
     var ignoredRouteSelectors: Set<KClass<*>> = OpenApiPluginData.DEFAULT.ignoredRouteSelectors
 
+
     /**
      * List of all [RouteSelector] class names that should be ignored in the resulting url of any route.
      */
     var ignoredRouteSelectorClassNames: Set<String> = emptySet()
+
 
     /**
      * The format of the generated api-spec
@@ -150,10 +152,16 @@ class OpenApiPluginConfig {
 
 
     /**
+     * Root path of the ktor-application to prepend to the paths. "null" to automatically fetch from ktor configuration.
+     */
+    var rootPath: String? = OpenApiPluginData.DEFAULT.rootPath
+
+
+    /**
      * Build the data object for this config.
      * @param base the base config to "inherit" from. Values from the base should be copied, replaced or merged together.
      */
-    internal fun build(base: OpenApiPluginData): OpenApiPluginData {
+    internal fun build(base: OpenApiPluginData, ktorRootPath: String?): OpenApiPluginData {
         val securityConfig = security.build(base.securityConfig)
         return OpenApiPluginData(
             info = info.build(base.info),
@@ -179,11 +187,12 @@ class OpenApiPluginConfig {
             specConfigs = mutableMapOf(),
             postBuild = merge(base.postBuild, postBuild),
             outputFormat = mergeDefault(base.outputFormat, outputFormat, PluginConfigData.DEFAULT.outputFormat)
-            rootPath = "todo" // todo
+            rootPath = merge(rootPath ?: ktorRootPath, base.rootPath)
         ).also {
             specConfigs.forEach { (specName, config) ->
-                it.specConfigs[specName] = config.build(it)
+                it.specConfigs[specName] = config.build(it, ktorRootPath)
             }
         }
     }
+
 }

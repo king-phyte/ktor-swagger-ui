@@ -40,7 +40,7 @@ internal data class OpenApiPluginData(
             securityConfig = SecurityData.DEFAULT,
             tagsConfig = TagsData.DEFAULT,
             outputFormat = OutputFormat.JSON,
-            rootPath = "todo" // TODO
+            rootPath = null
         )
     }
 

@@ -37,7 +37,7 @@ internal class RouteCollector {
                 val documentation = getDocumentation(route, RouteConfig())
                 RouteMeta(
                     method = getMethod(route),
-                    path = getPath(route, config).let { "${config.rootPath ?: ""}${it}" },
+                    path = getPath(route, config),
                     documentation = documentation.build(),
                     protected = documentation.protected ?: isProtected(route)
                 )

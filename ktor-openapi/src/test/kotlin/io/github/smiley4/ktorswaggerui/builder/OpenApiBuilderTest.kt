@@ -107,7 +107,7 @@ class OpenApiBuilderTest : StringSpec({
         private val defaultPluginConfig = OpenApiPluginConfig()
 
         private fun schemaContext(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig): SchemaContext {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return SchemaContextImpl(pluginConfigData.schemaConfig).also {
                 it.addGlobal(pluginConfigData.schemaConfig)
                 it.add(routes)
@@ -115,7 +115,7 @@ class OpenApiBuilderTest : StringSpec({
         }
 
         private fun exampleContext(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig): ExampleContext {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return ExampleContextImpl(pluginConfigData.exampleConfig.exampleEncoder).also {
                 it.addShared(pluginConfigData.exampleConfig)
                 it.add(routes)
@@ -125,7 +125,7 @@ class OpenApiBuilderTest : StringSpec({
         private fun buildOpenApiObject(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig = defaultPluginConfig): OpenAPI {
             val schemaContext = schemaContext(routes, pluginConfig)
             val exampleContext = exampleContext(routes, pluginConfig)
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return OpenApiBuilder(
                 config = pluginConfigData,
                 schemaContext = schemaContext,
@@ -140,6 +140,7 @@ class OpenApiBuilderTest : StringSpec({
                     tagExternalDocumentationBuilder = TagExternalDocumentationBuilder()
                 ),
                 pathsBuilder = PathsBuilder(
+                    config = pluginConfigData,
                     pathBuilder = PathBuilder(
                         operationBuilder = OperationBuilder(
                             operationTagsBuilder = OperationTagsBuilder(pluginConfigData),

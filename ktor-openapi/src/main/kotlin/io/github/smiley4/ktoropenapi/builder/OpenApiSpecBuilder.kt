@@ -102,6 +102,7 @@ internal class OpenApiSpecBuilder {
                 tagExternalDocumentationBuilder = TagExternalDocumentationBuilder()
             ),
             pathsBuilder = PathsBuilder(
+                config = config,
                 pathBuilder = PathBuilder(
                     operationBuilder = OperationBuilder(
                         operationTagsBuilder = OperationTagsBuilder(config),
