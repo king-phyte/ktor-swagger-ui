@@ -13,15 +13,9 @@ repositories {
 }
 
 dependencies {
-    val versionKtor: String by project
-    val versionSwaggerParser: String by project
-    val versionSchemaKenerator: String by project
-    val versionKotlinLogging: String by project
-    val versionLogback: String by project
-
     implementation(project(":ktor-openapi"))
-    implementation(project(":ktor-swagger-ui"))
 
+    val versionKtor: String by project
     implementation("io.ktor:ktor-server-netty-jvm:$versionKtor")
     implementation("io.ktor:ktor-server-content-negotiation:$versionKtor")
     implementation("io.ktor:ktor-serialization-jackson:$versionKtor")
@@ -29,14 +23,20 @@ dependencies {
     implementation("io.ktor:ktor-server-call-logging:$versionKtor")
     implementation("io.ktor:ktor-server-test-host:$versionKtor")
 
+    val versionSchemaKenerator: String by project
     implementation("io.github.smiley4:schema-kenerator-core:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-reflection:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-serialization:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-swagger:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-jackson:$versionSchemaKenerator")
-
+//
+    val versionSwaggerParser: String by project
     implementation("io.swagger.parser.v3:swagger-parser:$versionSwaggerParser")
+
+    val versionKotlinLogging: String by project
     implementation("io.github.oshai:kotlin-logging-jvm:$versionKotlinLogging")
+
+    val versionLogback: String by project
     implementation("ch.qos.logback:logback-classic:$versionLogback")
 }
 
