@@ -5,7 +5,7 @@ import io.ktor.http.content.OutgoingContent
 import io.ktor.http.withCharset
 import java.net.URL
 
-class ResourceContent(private val resource: URL) : OutgoingContent.ByteArrayContent() {
+internal class ResourceContent(private val resource: URL) : OutgoingContent.ByteArrayContent() {
 
     private val contentTypes = mapOf(
         "html" to ContentType.Text.Html,
