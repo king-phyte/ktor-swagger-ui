@@ -22,7 +22,10 @@ import io.ktor.server.routing.get
 private val logger = KotlinLogging.logger {}
 
 val OpenApi = createApplicationPlugin(name = "OpenApi", createConfiguration = ::OpenApiPluginConfig) {
-    OpenApiPlugin.config = pluginConfig.build(OpenApiPluginData.DEFAULT)
+    OpenApiPlugin.config = pluginConfig.build(
+        OpenApiPluginData.DEFAULT,
+        application.environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString()
+    )
     on(MonitoringEvent(ApplicationStarted)) { application ->
         try {
             OpenApiPlugin.generateOpenApiSpecs(application)
@@ -37,7 +40,8 @@ object OpenApiPlugin {
 
     internal var config = OpenApiPluginData.DEFAULT
 
-    internal val openApiSpecs = mutableMapOf<String, Pair<String, OutputFormat>>()
+    private val openApiSpecs = mutableMapOf<String, Pair<String, OutputFormat>>()
+
 
     /**
      * Generates new openapi
@@ -48,8 +52,6 @@ object OpenApiPlugin {
         openApiSpecs.clear()
         openApiSpecs.putAll(specs)
     }
-
-    fun getOpenApiSpecNames(): Set<String> = openApiSpecs.keys.toSet()
 
     fun getOpenApiSpec(name: String): String = openApiSpecs[name]?.first
         ?: throw IllegalArgumentException("No OpenAPI documentation exists with name '$name'")

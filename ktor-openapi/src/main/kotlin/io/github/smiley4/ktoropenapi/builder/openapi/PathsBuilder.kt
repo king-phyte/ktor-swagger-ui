@@ -1,6 +1,7 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.swagger.v3.oas.models.PathItem
 import io.swagger.v3.oas.models.Paths
 
@@ -9,23 +10,29 @@ import io.swagger.v3.oas.models.Paths
  * See [OpenAPI Specification - Paths Object](https://swagger.io/specification/#paths-object).
  */
 internal class PathsBuilder(
+    private val config: OpenApiPluginData,
     private val pathBuilder: PathBuilder
 ) {
 
     fun build(routes: Collection<RouteMeta>): Paths =
         Paths().also {
             routes.forEach { route ->
-                val existingPath = it[route.path]
+                val url = createUrl(route)
+                val existingPath = it[url]
                 if (existingPath != null) {
                     addToExistingPath(existingPath, route)
                 } else {
-                    addAsNewPath(it, route)
+                    addAsNewPath(url, it, route)
                 }
             }
         }
 
-    private fun addAsNewPath(paths: Paths, route: RouteMeta) {
-        paths.addPathItem(route.path, pathBuilder.build(route))
+    private fun createUrl(route: RouteMeta): String {
+        return "${config.rootPath ?: ""}${route.path}"
+    }
+
+    private fun addAsNewPath(url: String, paths: Paths, route: RouteMeta) {
+        paths.addPathItem(url, pathBuilder.build(route))
     }
 
     private fun addToExistingPath(existing: PathItem, route: RouteMeta) {

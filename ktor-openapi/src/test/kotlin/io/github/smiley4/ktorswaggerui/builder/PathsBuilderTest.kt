@@ -72,6 +72,29 @@ class PathsBuilderTest : StringSpec({
         }
     }
 
+    "custom root path" {
+        val config = defaultPluginConfig.apply {
+            rootPath = "custom/root/path"
+        }
+        val routes = listOf(
+            route(HttpMethod.Get, "/different/path"),
+            route(HttpMethod.Get, "/test/path"),
+            route(HttpMethod.Post, "/test/path"),
+        )
+        val schemaContext = schemaContext(routes, config)
+        val exampleContext = exampleContext(routes, config)
+        buildPathsObject(routes, schemaContext, exampleContext, config).also { paths ->
+            paths shouldHaveSize 2
+            paths.keys shouldContainExactlyInAnyOrder listOf(
+                "custom/root/path/different/path",
+                "custom/root/path/test/path"
+            )
+            paths["custom/root/path/different/path"]!!.get.shouldNotBeNull()
+            paths["custom/root/path/test/path"]!!.get.shouldNotBeNull()
+            paths["custom/root/path/test/path"]!!.post.shouldNotBeNull()
+        }
+    }
+
 }) {
 
     companion object {
@@ -86,7 +109,7 @@ class PathsBuilderTest : StringSpec({
         private val defaultPluginConfig = OpenApiPluginConfig()
 
         private fun schemaContext(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig): SchemaContext {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return SchemaContextImpl(pluginConfigData.schemaConfig).also {
                 it.addGlobal(pluginConfigData.schemaConfig)
                 it.add(routes)
@@ -94,7 +117,7 @@ class PathsBuilderTest : StringSpec({
         }
 
         private fun exampleContext(routes: List<RouteMeta>, pluginConfig: OpenApiPluginConfig): ExampleContext {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return ExampleContextImpl(pluginConfigData.exampleConfig.exampleEncoder).also {
                 it.addShared(pluginConfigData.exampleConfig)
                 it.add(routes)
@@ -107,8 +130,9 @@ class PathsBuilderTest : StringSpec({
             exampleContext: ExampleContext,
             pluginConfig: OpenApiPluginConfig = defaultPluginConfig
         ): Paths {
-            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT)
+            val pluginConfigData = pluginConfig.build(OpenApiPluginData.DEFAULT, null)
             return PathsBuilder(
+                config = pluginConfigData,
                 pathBuilder = PathBuilder(
                     operationBuilder = OperationBuilder(
                         operationTagsBuilder = OperationTagsBuilder(pluginConfigData),
