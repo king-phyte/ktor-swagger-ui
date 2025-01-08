@@ -1,5 +1,7 @@
 package io.github.smiley4.ktoropenapi.data
 
+import io.github.smiley4.ktoropenapi.config.ExampleDescriptor
+import io.github.smiley4.ktoropenapi.config.TypeDescriptor
 import io.ktor.http.ContentType
 
 /**

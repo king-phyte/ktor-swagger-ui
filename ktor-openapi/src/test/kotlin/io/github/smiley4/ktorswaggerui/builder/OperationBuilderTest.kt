@@ -16,12 +16,13 @@ import io.github.smiley4.ktoropenapi.builder.openapi.ServerBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContextImpl
-import io.github.smiley4.ktoropenapi.data.KTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.KTypeDescriptor
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.data.RefTypeDescriptor
-import io.github.smiley4.ktoropenapi.data.SwaggerTypeDescriptor
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfig
-import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
+import io.github.smiley4.ktoropenapi.config.RefTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.SwaggerTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.RouteConfig
+import io.github.smiley4.ktoropenapi.config.ValueExampleDescriptor
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
@@ -400,7 +401,7 @@ class OperationBuilderTest : StringSpec({
                 route.request {
                     queryParameter("param", KTypeDescriptor(typeOf<String>())) {
                         description = "test parameter"
-                        example = io.github.smiley4.ktoropenapi.data.ValueExampleDescriptor(name = "Example", value = "MyExample")
+                        example = ValueExampleDescriptor(name = "Example", value = "MyExample")
                         required = true
                         deprecated = true
                         allowEmptyValue = true
@@ -452,7 +453,7 @@ class OperationBuilderTest : StringSpec({
                             ContentType.Application.Xml
                         )
                         example(
-                            io.github.smiley4.ktoropenapi.data.ValueExampleDescriptor(
+                            ValueExampleDescriptor(
                                 name = "example 1",
                                 value = "MyExample1",
                                 summary = "the example 1",

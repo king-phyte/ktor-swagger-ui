@@ -2,7 +2,7 @@ package io.github.smiley4.ktorswaggerui.builder
 
 import io.github.smiley4.ktoropenapi.builder.openapi.ServerBuilder
 import io.github.smiley4.ktoropenapi.data.ServerData
-import io.github.smiley4.ktoropenapi.dsl.config.ServerConfig
+import io.github.smiley4.ktoropenapi.config.ServerConfig
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe

@@ -3,7 +3,7 @@ import io.github.smiley4.ktoropenapi.builder.openapi.ContactBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.InfoBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.LicenseBuilder
 import io.github.smiley4.ktoropenapi.data.InfoData
-import io.github.smiley4.ktoropenapi.dsl.config.InfoConfig
+import io.github.smiley4.ktoropenapi.config.InfoConfig
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

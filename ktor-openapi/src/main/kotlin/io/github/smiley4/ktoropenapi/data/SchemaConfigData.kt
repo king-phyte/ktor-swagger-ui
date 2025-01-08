@@ -1,5 +1,6 @@
 package io.github.smiley4.ktoropenapi.data
 
+import io.github.smiley4.ktoropenapi.config.TypeDescriptor
 import io.github.smiley4.schemakenerator.core.connectSubTypes
 import io.github.smiley4.schemakenerator.core.handleNameAnnotation
 import io.github.smiley4.schemakenerator.reflection.collectSubTypes

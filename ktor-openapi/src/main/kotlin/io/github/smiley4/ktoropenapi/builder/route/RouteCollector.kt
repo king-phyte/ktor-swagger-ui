@@ -1,8 +1,8 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
-import io.github.smiley4.ktoropenapi.dsl.routing.DocumentedRouteSelector
+import io.github.smiley4.ktoropenapi.config.RouteConfig
+import io.github.smiley4.ktoropenapi.DocumentedRouteSelector
 import io.ktor.http.HttpMethod
 import io.ktor.server.auth.AuthenticationRouteSelector
 import io.ktor.server.routing.ConstantParameterRouteSelector

@@ -4,9 +4,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.github.smiley4.ktoropenapi.builder.OpenApiSpecBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteCollector
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.data.OutputFormat
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfig
-import io.github.smiley4.ktoropenapi.dsl.routing.route
+import io.github.smiley4.ktoropenapi.config.OutputFormat
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
