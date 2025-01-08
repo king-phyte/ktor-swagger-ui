@@ -11,6 +11,7 @@ version = projectVersion
 plugins {
     kotlin("jvm")
     id("org.owasp.dependencycheck")
+    id("com.github.ben-manes.versions")
     id("io.gitlab.arturbosch.detekt")
     id("com.vanniktech.maven.publish")
     id("org.jetbrains.dokka")
@@ -21,38 +22,40 @@ repositories {
 }
 
 dependencies {
-    val versionKtor: String by project
-    val versionSwaggerParser: String by project
-    val versionSchemaKenerator: String by project
-    val versionKotlinLogging: String by project
-    val versionKotest: String by project
-    val versionKotlinTest: String by project
-    val versionMockk: String by project
-    val versionJackson: String by project
 
+    val versionKtor: String by project
     implementation("io.ktor:ktor-server-core-jvm:$versionKtor")
     implementation("io.ktor:ktor-server-auth:$versionKtor")
     implementation("io.ktor:ktor-server-resources:$versionKtor")
-
-    implementation("io.swagger.parser.v3:swagger-parser:$versionSwaggerParser")
-
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$versionJackson")
-
-    implementation("io.github.smiley4:schema-kenerator-core:$versionSchemaKenerator")
-    implementation("io.github.smiley4:schema-kenerator-reflection:$versionSchemaKenerator")
-    implementation("io.github.smiley4:schema-kenerator-swagger:$versionSchemaKenerator")
-
-    implementation("io.github.oshai:kotlin-logging-jvm:$versionKotlinLogging")
-
     testImplementation("io.ktor:ktor-server-netty-jvm:$versionKtor")
     testImplementation("io.ktor:ktor-server-content-negotiation:$versionKtor")
     testImplementation("io.ktor:ktor-serialization-jackson:$versionKtor")
     testImplementation("io.ktor:ktor-server-auth:$versionKtor")
     testImplementation("io.ktor:ktor-server-call-logging:$versionKtor")
     testImplementation("io.ktor:ktor-server-test-host:$versionKtor")
+
+    val versionSwaggerParser: String by project
+    implementation("io.swagger.parser.v3:swagger-parser:$versionSwaggerParser")
+
+    val versionJackson: String by project
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$versionJackson")
+
+    val versionSchemaKenerator: String by project
+    implementation("io.github.smiley4:schema-kenerator-core:$versionSchemaKenerator")
+    implementation("io.github.smiley4:schema-kenerator-reflection:$versionSchemaKenerator")
+    implementation("io.github.smiley4:schema-kenerator-swagger:$versionSchemaKenerator")
+
+    val versionKotlinLogging: String by project
+    implementation("io.github.oshai:kotlin-logging-jvm:$versionKotlinLogging")
+
+    val versionKotest: String by project
     testImplementation("io.kotest:kotest-runner-junit5:$versionKotest")
     testImplementation("io.kotest:kotest-assertions-core:$versionKotest")
+
+    val versionKotlinTest: String by project
     testImplementation("org.jetbrains.kotlin:kotlin-test:$versionKotlinTest")
+
+    val versionMockk: String by project
     testImplementation("io.mockk:mockk:$versionMockk")
 
 }
@@ -84,9 +87,6 @@ tasks.withType<Detekt>().configureEach {
 mavenPublishing {
     val projectGroupId: String by project
     val projectVersion: String by project
-    val projectArtifactIdBase: String by project
-    val projectNameBase: String by project
-    val projectDescriptionBase: String by project
     val projectScmUrl: String by project
     val projectScmConnection: String by project
     val projectLicenseName: String by project
@@ -97,10 +97,10 @@ mavenPublishing {
     configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
     publishToMavenCentral(SonatypeHost.S01)
     signAllPublications()
-    coordinates(projectGroupId, projectArtifactIdBase, projectVersion)
+    coordinates(projectGroupId, "ktor-openapi", projectVersion)
     pom {
-        name.set(projectNameBase)
-        description.set(projectDescriptionBase)
+        name.set("Ktor OpenApi")
+        description.set("Ktor plugin to automatically generate and provide OpenApi")
         url.set(projectScmUrl)
         licenses {
             license {
