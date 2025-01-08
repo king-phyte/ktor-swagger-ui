@@ -3,7 +3,7 @@ package io.github.smiley4.ktoropenapi.builder.openapi
 import io.github.smiley4.ktoropenapi.builder.example.ExampleContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.github.smiley4.ktoropenapi.data.RequestParameterData
-import io.github.smiley4.ktoropenapi.data.ParameterLocation
+import io.github.smiley4.ktoropenapi.config.ParameterLocation
 import io.swagger.v3.oas.models.parameters.Parameter
 
 /**

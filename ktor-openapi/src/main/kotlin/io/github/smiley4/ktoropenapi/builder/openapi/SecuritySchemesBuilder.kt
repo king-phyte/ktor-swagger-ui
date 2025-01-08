@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
-import io.github.smiley4.ktoropenapi.data.AuthType
+import io.github.smiley4.ktoropenapi.config.AuthType
 import io.github.smiley4.ktoropenapi.data.SecuritySchemeData
 import io.swagger.v3.oas.models.security.SecurityScheme
 

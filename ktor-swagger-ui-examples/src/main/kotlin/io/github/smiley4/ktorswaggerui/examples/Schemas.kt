@@ -2,10 +2,10 @@ package io.github.smiley4.ktorswaggerui.examples
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.data.anyOf
-import io.github.smiley4.ktoropenapi.data.array
-import io.github.smiley4.ktoropenapi.data.ref
-import io.github.smiley4.ktoropenapi.dsl.routing.get
+import io.github.smiley4.ktoropenapi.config.anyOf
+import io.github.smiley4.ktoropenapi.config.array
+import io.github.smiley4.ktoropenapi.config.ref
+import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.core.connectSubTypes

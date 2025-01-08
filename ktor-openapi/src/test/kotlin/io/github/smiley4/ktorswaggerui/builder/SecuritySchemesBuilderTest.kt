@@ -2,11 +2,11 @@ package io.github.smiley4.ktorswaggerui.builder
 
 import io.github.smiley4.ktoropenapi.builder.openapi.OAuthFlowsBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.SecuritySchemesBuilder
-import io.github.smiley4.ktoropenapi.data.AuthKeyLocation
-import io.github.smiley4.ktoropenapi.data.AuthScheme
-import io.github.smiley4.ktoropenapi.data.AuthType
+import io.github.smiley4.ktoropenapi.config.AuthKeyLocation
+import io.github.smiley4.ktoropenapi.config.AuthScheme
+import io.github.smiley4.ktoropenapi.config.AuthType
 import io.github.smiley4.ktoropenapi.data.SecuritySchemeData
-import io.github.smiley4.ktoropenapi.dsl.config.SecuritySchemeConfig
+import io.github.smiley4.ktoropenapi.config.SecuritySchemeConfig
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.maps.shouldBeEmpty

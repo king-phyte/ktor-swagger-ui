@@ -3,7 +3,7 @@ package io.github.smiley4.ktorswaggerui.builder
 import io.github.smiley4.ktoropenapi.builder.openapi.TagBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.TagExternalDocumentationBuilder
 import io.github.smiley4.ktoropenapi.data.TagData
-import io.github.smiley4.ktoropenapi.dsl.config.TagConfig
+import io.github.smiley4.ktoropenapi.config.TagConfig
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

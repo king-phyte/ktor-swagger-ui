@@ -1,6 +1,13 @@
 package io.github.smiley4.ktoropenapi.builder.schema
 
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
+import io.github.smiley4.ktoropenapi.config.AnyOfTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.ArrayTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.EmptyTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.KTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.RefTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.SwaggerTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.TypeDescriptor
 import io.github.smiley4.ktoropenapi.data.*
 import io.github.smiley4.schemakenerator.core.data.WildcardTypeData
 import io.github.smiley4.schemakenerator.swagger.data.CompiledSwaggerSchema

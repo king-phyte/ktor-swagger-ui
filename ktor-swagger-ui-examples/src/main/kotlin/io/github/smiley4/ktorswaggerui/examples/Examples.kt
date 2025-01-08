@@ -1,8 +1,8 @@
 package io.github.smiley4.ktorswaggerui.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.data.KTypeDescriptor
-import io.github.smiley4.ktoropenapi.dsl.routing.get
+import io.github.smiley4.ktoropenapi.config.KTypeDescriptor
+import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.server.application.Application

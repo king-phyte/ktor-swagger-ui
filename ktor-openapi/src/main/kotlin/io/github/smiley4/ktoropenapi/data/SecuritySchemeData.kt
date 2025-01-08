@@ -1,5 +1,9 @@
 package io.github.smiley4.ktoropenapi.data
 
+import io.github.smiley4.ktoropenapi.config.AuthKeyLocation
+import io.github.smiley4.ktoropenapi.config.AuthScheme
+import io.github.smiley4.ktoropenapi.config.AuthType
+
 /**
  * See [OpenAPI Specification - Security Scheme Object](https://swagger.io/specification/#security-scheme-object).
  */

@@ -28,7 +28,7 @@ import io.github.smiley4.ktoropenapi.builder.openapi.TagExternalDocumentationBui
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContextImpl
-import io.github.smiley4.ktoropenapi.data.OutputFormat
+import io.github.smiley4.ktoropenapi.config.OutputFormat
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.swagger.v3.core.util.Json31
 import io.swagger.v3.core.util.Yaml31

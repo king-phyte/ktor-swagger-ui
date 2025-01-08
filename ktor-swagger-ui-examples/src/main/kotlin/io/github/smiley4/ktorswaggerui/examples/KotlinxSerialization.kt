@@ -1,8 +1,8 @@
 package io.github.smiley4.ktorswaggerui.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.data.kotlinxExampleEncoder
-import io.github.smiley4.ktoropenapi.dsl.routing.get
+import io.github.smiley4.ktoropenapi.config.kotlinxExampleEncoder
+import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization

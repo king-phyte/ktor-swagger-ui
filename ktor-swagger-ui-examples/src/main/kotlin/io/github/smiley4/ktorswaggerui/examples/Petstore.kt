@@ -1,9 +1,9 @@
 package io.github.smiley4.ktorswaggerui.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.dsl.routing.delete
-import io.github.smiley4.ktoropenapi.dsl.routing.get
-import io.github.smiley4.ktoropenapi.dsl.routing.post
+import io.github.smiley4.ktoropenapi.delete
+import io.github.smiley4.ktoropenapi.get
+import io.github.smiley4.ktoropenapi.post
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpStatusCode

@@ -1,10 +1,10 @@
 package io.github.smiley4.ktorswaggerui.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.data.AuthScheme
-import io.github.smiley4.ktoropenapi.data.AuthType
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfig
-import io.github.smiley4.ktoropenapi.dsl.routing.get
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.AuthScheme
+import io.github.smiley4.ktoropenapi.config.AuthType
+import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
@@ -13,7 +13,6 @@ import io.github.smiley4.schemakenerator.reflection.processReflection
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
 import io.github.smiley4.schemakenerator.swagger.generateSwaggerSchema
-import io.github.smiley4.schemakenerator.swagger.withAutoTitle
 import io.github.smiley4.schemakenerator.swagger.withTitle
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -35,11 +34,11 @@ class Greeting(
     val name: String
 )
 
+
 /**
  * A (nearly) complete - and mostly nonsensical - plugin configuration
  */
 private fun Application.myModule() {
-
 
     install(OpenApi) {
         info {
@@ -158,7 +157,7 @@ private fun Application.myModule() {
             summary = "hello world route"
             description = "A Hello-World route as an example."
             tags("hello", "example")
-            specName = OpenApiPluginConfig.DEFAULT_SPEC_ID
+            specName = io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig.DEFAULT_SPEC_ID
             deprecated = false
             hidden = false
             protected = false

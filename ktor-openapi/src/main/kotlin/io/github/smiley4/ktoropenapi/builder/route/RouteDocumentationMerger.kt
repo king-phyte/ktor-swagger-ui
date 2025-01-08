@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
-import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
+import io.github.smiley4.ktoropenapi.config.RouteConfig
 
 internal class RouteDocumentationMerger {
 

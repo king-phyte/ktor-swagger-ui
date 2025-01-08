@@ -1,6 +1,10 @@
 package io.github.smiley4.ktoropenapi.data
 
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.OutputFormat
+import io.github.smiley4.ktoropenapi.config.PathFilter
+import io.github.smiley4.ktoropenapi.config.PostBuild
+import io.github.smiley4.ktoropenapi.config.SpecAssigner
 import kotlin.reflect.KClass
 
 /**
