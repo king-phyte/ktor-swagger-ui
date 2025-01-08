@@ -8,7 +8,7 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * An object representing external documentation.
  */
 @OpenApiDslMarker
-class OpenApiExternalDocs {
+class ExternalDocsConfig {
 
     /**
      * A short description of the external documentation

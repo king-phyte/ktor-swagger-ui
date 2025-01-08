@@ -8,49 +8,49 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * An object containing configuration information for the oauth flow types supported
  */
 @OpenApiDslMarker
-class OpenIdOAuthFlows {
+class OpenIdOAuthFlowsConfig {
 
-    private var implicit: OpenIdOAuthFlow? = null
+    private var implicit: OpenIdOAuthFlowConfig? = null
 
 
     /**
      * Configuration for the OAuth Implicit flow
      */
-    fun implicit(block: OpenIdOAuthFlow.() -> Unit) {
-        implicit = OpenIdOAuthFlow().apply(block)
+    fun implicit(block: OpenIdOAuthFlowConfig.() -> Unit) {
+        implicit = OpenIdOAuthFlowConfig().apply(block)
     }
 
 
-    private var password: OpenIdOAuthFlow? = null
+    private var password: OpenIdOAuthFlowConfig? = null
 
 
     /**
      * Configuration for the OAuth Resource Owner Password flow
      */
-    fun password(block: OpenIdOAuthFlow.() -> Unit) {
-        password = OpenIdOAuthFlow().apply(block)
+    fun password(block: OpenIdOAuthFlowConfig.() -> Unit) {
+        password = OpenIdOAuthFlowConfig().apply(block)
     }
 
 
-    private var clientCredentials: OpenIdOAuthFlow? = null
+    private var clientCredentials: OpenIdOAuthFlowConfig? = null
 
 
     /**
      * Configuration for the OAuth Client Credentials flow.
      */
-    fun clientCredentials(block: OpenIdOAuthFlow.() -> Unit) {
-        clientCredentials = OpenIdOAuthFlow().apply(block)
+    fun clientCredentials(block: OpenIdOAuthFlowConfig.() -> Unit) {
+        clientCredentials = OpenIdOAuthFlowConfig().apply(block)
     }
 
 
-    private var authorizationCode: OpenIdOAuthFlow? = null
+    private var authorizationCode: OpenIdOAuthFlowConfig? = null
 
 
     /**
      * Configuration for the OAuth Authorization Code flow.
      */
-    fun authorizationCode(block: OpenIdOAuthFlow.() -> Unit) {
-        authorizationCode = OpenIdOAuthFlow().apply(block)
+    fun authorizationCode(block: OpenIdOAuthFlowConfig.() -> Unit) {
+        authorizationCode = OpenIdOAuthFlowConfig().apply(block)
     }
 
     /**

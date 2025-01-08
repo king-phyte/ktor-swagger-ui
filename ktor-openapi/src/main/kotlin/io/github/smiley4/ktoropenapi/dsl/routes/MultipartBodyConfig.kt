@@ -15,35 +15,35 @@ import kotlin.reflect.typeOf
  * See https://swagger.io/docs/specification/describing-request-body/multipart-requests/ for more info
  */
 @OpenApiDslMarker
-class OpenApiMultipartBody : OpenApiBaseBody() {
+class MultipartBodyConfig : BaseBodyConfig() {
 
-    private val parts = mutableListOf<OpenApiMultipartPart>()
+    private val parts = mutableListOf<MultipartPartConfig>()
 
 
     /**
      * One part of a multipart-body
      */
-    fun part(name: String, type: TypeDescriptor, block: OpenApiMultipartPart.() -> Unit = {}) {
-        parts.add(OpenApiMultipartPart(name, type).apply(block))
+    fun part(name: String, type: TypeDescriptor, block: MultipartPartConfig.() -> Unit = {}) {
+        parts.add(MultipartPartConfig(name, type).apply(block))
     }
 
 
     /**
      * One part of a multipart-body
      */
-    fun part(name: String, type: Schema<*>, block: OpenApiMultipartPart.() -> Unit = {}) = part(name, SwaggerTypeDescriptor(type), block)
+    fun part(name: String, type: Schema<*>, block: MultipartPartConfig.() -> Unit = {}) = part(name, SwaggerTypeDescriptor(type), block)
 
 
     /**
      * One part of a multipart-body
      */
-    fun part(name: String, type: KType, block: OpenApiMultipartPart.() -> Unit = {}) = part(name, KTypeDescriptor(type), block)
+    fun part(name: String, type: KType, block: MultipartPartConfig.() -> Unit = {}) = part(name, KTypeDescriptor(type), block)
 
 
     /**
      * One part of a multipart-body
      */
-    inline fun <reified T> part(name: String, noinline block: OpenApiMultipartPart.() -> Unit = {}) =
+    inline fun <reified T> part(name: String, noinline block: MultipartPartConfig.() -> Unit = {}) =
         part(name, KTypeDescriptor(typeOf<T>()), block)
 
 

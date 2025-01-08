@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.dsl.routes
 
-class ValueExampleDescriptorDsl {
+class ValueExampleDescriptorConfig {
 
     /**
      * the example value

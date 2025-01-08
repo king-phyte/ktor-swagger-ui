@@ -29,7 +29,7 @@ import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContextImpl
 import io.github.smiley4.ktoropenapi.data.OutputFormat
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.swagger.v3.core.util.Json31
 import io.swagger.v3.core.util.Yaml31
 
@@ -45,7 +45,7 @@ internal class OpenApiSpecBuilder {
      * Create the openapi-spec in json and yaml for the with the given routes and configuration
      * @return a map of "specName" to pairs ("api-spec", "json"|"yaml")
      */
-    fun build(config: PluginConfigData, routes: List<RouteMeta>): Map<String, Pair<String, OutputFormat>> {
+    fun build(config: OpenApiPluginData, routes: List<RouteMeta>): Map<String, Pair<String, OutputFormat>> {
         val routesBySpec = buildMap<String, MutableList<RouteMeta>> {
             routes.forEach { route ->
                 val specName =
@@ -61,7 +61,7 @@ internal class OpenApiSpecBuilder {
         }
     }
 
-    private fun buildOpenApiSpec(specName: String, pluginConfig: PluginConfigData, routes: List<RouteMeta>): Pair<String, OutputFormat> {
+    private fun buildOpenApiSpec(specName: String, pluginConfig: OpenApiPluginData, routes: List<RouteMeta>): Pair<String, OutputFormat> {
         return try {
             val schemaContext = SchemaContextImpl(pluginConfig.schemaConfig).also {
                 it.addGlobal(pluginConfig.schemaConfig)
@@ -84,7 +84,7 @@ internal class OpenApiSpecBuilder {
     }
 
     private fun builder(
-        config: PluginConfigData,
+        config: OpenApiPluginData,
         schemaContext: SchemaContext,
         exampleContext: ExampleContext,
     ): OpenApiBuilder {

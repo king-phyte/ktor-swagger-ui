@@ -14,7 +14,7 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * a cookie parameter or as a query parameter), OAuth2's common flows (implicit, password, client credentials and authorization code)
  */
 @OpenApiDslMarker
-class OpenApiSecurityScheme(
+class SecuritySchemeConfig(
     /**
      * The name of the security scheme.
      */
@@ -51,15 +51,15 @@ class OpenApiSecurityScheme(
      */
     var bearerFormat: String? = null
 
-    private var flows: OpenIdOAuthFlows? = null
+    private var flows: OpenIdOAuthFlowsConfig? = null
 
 
     /**
      * Information for the oauth flow types supported.
      * Required for type [AuthType.OAUTH2]
      */
-    fun flows(block: OpenIdOAuthFlows.() -> Unit) {
-        flows = OpenIdOAuthFlows().apply(block)
+    fun flows(block: OpenIdOAuthFlowsConfig.() -> Unit) {
+        flows = OpenIdOAuthFlowsConfig().apply(block)
     }
 
 

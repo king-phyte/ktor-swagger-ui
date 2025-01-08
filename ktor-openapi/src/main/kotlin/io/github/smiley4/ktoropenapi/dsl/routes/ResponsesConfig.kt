@@ -7,47 +7,47 @@ import io.ktor.http.HttpStatusCode
  * All possible responses of an operation
  */
 @OpenApiDslMarker
-class OpenApiResponses {
+class ResponsesConfig {
 
-    private val responses = mutableMapOf<String, OpenApiResponse>()
+    private val responses = mutableMapOf<String, ResponseConfig>()
 
 
     /**
      * Information of response for a given http status code
      */
-    infix fun String.to(block: OpenApiResponse.() -> Unit) {
-        responses[this] = OpenApiResponse(this).apply(block)
+    infix fun String.to(block: ResponseConfig.() -> Unit) {
+        responses[this] = ResponseConfig(this).apply(block)
     }
 
 
     /**
      * Information of response for a given http status code
      */
-    infix fun HttpStatusCode.to(block: OpenApiResponse.() -> Unit) = this.value.toString() to block
+    infix fun HttpStatusCode.to(block: ResponseConfig.() -> Unit) = this.value.toString() to block
 
     /**
      * Information of response for a given http status code
      */
-    fun code(statusCode: String, block: OpenApiResponse.() -> Unit) {
-        responses[statusCode] = OpenApiResponse(statusCode).apply(block)
+    fun code(statusCode: String, block: ResponseConfig.() -> Unit) {
+        responses[statusCode] = ResponseConfig(statusCode).apply(block)
     }
 
     /**
      * Information of response for a given http status code
      */
-    fun code(statusCode: HttpStatusCode, block: OpenApiResponse.() -> Unit) = code(statusCode.value.toString(), block)
+    fun code(statusCode: HttpStatusCode, block: ResponseConfig.() -> Unit) = code(statusCode.value.toString(), block)
 
 
     /**
      * Information of the default response
      */
-    fun default(block: OpenApiResponse.() -> Unit) = "default" to block
+    fun default(block: ResponseConfig.() -> Unit) = "default" to block
 
 
     /**
      * Add the given response. Intended for internal use.
      */
-    fun addResponse(response: OpenApiResponse) {
+    fun addResponse(response: ResponseConfig) {
         responses[response.statusCode] = response
     }
 

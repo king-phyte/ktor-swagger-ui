@@ -1,8 +1,8 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.dsl.routing.DocumentedRouteSelector
-import io.github.smiley4.ktoropenapi.dsl.routes.OpenApiRoute
+import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
 import io.ktor.http.HttpMethod
 import io.ktor.server.auth.AuthenticationRouteSelector
 import io.ktor.server.routing.ConstantParameterRouteSelector
@@ -25,11 +25,11 @@ internal class RouteCollector {
     /**
      * Collect all routes from the given application
      */
-    fun collect(routeProvider: () -> RoutingNode, config: PluginConfigData): List<RouteMeta> {
+    fun collect(routeProvider: () -> RoutingNode, config: OpenApiPluginData): List<RouteMeta> {
         return allRoutes(routeProvider())
             .asSequence()
             .map { route ->
-                val documentation = getDocumentation(route, OpenApiRoute())
+                val documentation = getDocumentation(route, RouteConfig())
                 RouteMeta(
                     method = getMethod(route),
                     path = getPath(route, config).let { "${config.rootPath ?: ""}${it}" },
@@ -43,7 +43,7 @@ internal class RouteCollector {
     }
 
 
-    private fun getDocumentation(route: RoutingNode, base: OpenApiRoute): OpenApiRoute {
+    private fun getDocumentation(route: RoutingNode, base: RouteConfig): RouteConfig {
         var documentation = base
         if (route.selector is DocumentedRouteSelector) {
             documentation = routeDocumentationMerger.merge(documentation, (route.selector as DocumentedRouteSelector).documentation)
@@ -62,7 +62,7 @@ internal class RouteCollector {
 
 
     @Suppress("CyclomaticComplexMethod")
-    private fun getPath(route: RoutingNode, config: PluginConfigData): String {
+    private fun getPath(route: RoutingNode, config: OpenApiPluginData): String {
         val selector = route.selector
         return if (isIgnoredSelector(selector, config)) {
             route.parent?.let { getPath(it, config) } ?: ""
@@ -82,7 +82,7 @@ internal class RouteCollector {
     }
 
 
-    private fun isIgnoredSelector(selector: RouteSelector, config: PluginConfigData): Boolean {
+    private fun isIgnoredSelector(selector: RouteSelector, config: OpenApiPluginData): Boolean {
         return when (selector) {
             is TrailingSlashRouteSelector -> false
             is RootRouteSelector -> false

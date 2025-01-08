@@ -8,7 +8,7 @@ import io.ktor.http.ContentType
  * Describes a single request/response body with a single schema.
  */
 @OpenApiDslMarker
-sealed class OpenApiBaseBody {
+sealed class BaseBodyConfig {
 
     /**
      * A brief description of the request body

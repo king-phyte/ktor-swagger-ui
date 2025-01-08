@@ -4,24 +4,24 @@ import io.github.smiley4.ktoropenapi.data.DataUtils.merge
 import io.github.smiley4.ktoropenapi.data.SecurityData
 import io.github.smiley4.ktoropenapi.data.SecuritySchemeData
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
-import io.github.smiley4.ktoropenapi.dsl.routes.OpenApiResponse
+import io.github.smiley4.ktoropenapi.dsl.routes.ResponseConfig
 import io.ktor.http.HttpStatusCode
 
 /**
  * Configuration for security and authentication.
  */
 @OpenApiDslMarker
-class OpenApiSecurity {
+class SecurityConfig {
 
     /**
      * Default response to automatically add to each protected route for the "Unauthorized"-Response-Code.
      * Generated response can be overwritten with custom response.
      */
-    fun defaultUnauthorizedResponse(block: OpenApiResponse.() -> Unit) {
-        defaultUnauthorizedResponse = OpenApiResponse(HttpStatusCode.Unauthorized.value.toString()).apply(block)
+    fun defaultUnauthorizedResponse(block: ResponseConfig.() -> Unit) {
+        defaultUnauthorizedResponse = ResponseConfig(HttpStatusCode.Unauthorized.value.toString()).apply(block)
     }
 
-    private var defaultUnauthorizedResponse: OpenApiResponse? = null
+    private var defaultUnauthorizedResponse: ResponseConfig? = null
 
 
     /**
@@ -46,11 +46,11 @@ class OpenApiSecurity {
     /**
      * Defines security schemes that can be used by operations
      */
-    fun securityScheme(name: String, block: OpenApiSecurityScheme.() -> Unit) {
-        securitySchemes.add(OpenApiSecurityScheme(name).apply(block))
+    fun securityScheme(name: String, block: SecuritySchemeConfig.() -> Unit) {
+        securitySchemes.add(SecuritySchemeConfig(name).apply(block))
     }
 
-    private val securitySchemes = mutableListOf<OpenApiSecurityScheme>()
+    private val securitySchemes = mutableListOf<SecuritySchemeConfig>()
 
     /**
      * Build the data object for this config.

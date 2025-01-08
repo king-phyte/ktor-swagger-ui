@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
 import io.github.smiley4.ktoropenapi.builder.example.ExampleContext
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.swagger.v3.oas.models.OpenAPI
@@ -12,7 +12,7 @@ import io.swagger.v3.oas.models.SpecVersion
  * See [OpenAPI Specification - OpenAPI Object](https://swagger.io/specification/#openapi-object).
  */
 internal class OpenApiBuilder(
-    private val config: PluginConfigData,
+    private val config: OpenApiPluginData,
     private val schemaContext: SchemaContext,
     private val exampleContext: ExampleContext,
     private val infoBuilder: InfoBuilder,

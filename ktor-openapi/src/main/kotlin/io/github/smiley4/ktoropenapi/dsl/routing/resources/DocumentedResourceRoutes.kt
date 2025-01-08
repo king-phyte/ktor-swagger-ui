@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.dsl.routing.resources
 
-import io.github.smiley4.ktoropenapi.dsl.routes.OpenApiRoute
+import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
 import io.github.smiley4.ktoropenapi.dsl.routing.documentation
 import io.github.smiley4.ktoropenapi.dsl.routing.method
 import io.ktor.http.HttpMethod
@@ -16,7 +16,7 @@ import kotlinx.serialization.serializer
 
 @KtorDsl
 inline fun <reified T : Any> Route.get(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
@@ -34,7 +34,7 @@ inline fun <reified T : Any> Route.get(
 
 @KtorDsl
 inline fun <reified T : Any> Route.post(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
@@ -52,7 +52,7 @@ inline fun <reified T : Any> Route.post(
 
 @KtorDsl
 inline fun <reified T : Any> Route.put(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
@@ -70,7 +70,7 @@ inline fun <reified T : Any> Route.put(
 
 @KtorDsl
 inline fun <reified T : Any> Route.delete(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
@@ -88,7 +88,7 @@ inline fun <reified T : Any> Route.delete(
 
 @KtorDsl
 inline fun <reified T : Any> Route.patch(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
@@ -106,7 +106,7 @@ inline fun <reified T : Any> Route.patch(
 
 @KtorDsl
 inline fun <reified T : Any> Route.options(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {
@@ -124,7 +124,7 @@ inline fun <reified T : Any> Route.options(
 
 @KtorDsl
 inline fun <reified T : Any> Route.head(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
     return documentation(builder) {

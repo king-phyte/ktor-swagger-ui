@@ -1,14 +1,14 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
-import io.github.smiley4.ktoropenapi.dsl.routes.OpenApiRoute
+import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
 
 internal class RouteDocumentationMerger {
 
     /**
-     * Merges "a" with "b" and returns the result as a new [OpenApiRoute]. "a" has priority over "b".
+     * Merges "a" with "b" and returns the result as a new [RouteConfig]. "a" has priority over "b".
      */
-    fun merge(a: OpenApiRoute, b: OpenApiRoute): OpenApiRoute {
-        return OpenApiRoute().apply {
+    fun merge(a: RouteConfig, b: RouteConfig): RouteConfig {
+        return RouteConfig().apply {
             specId = a.specId ?: b.specId
             tags = mutableListOf<String>().also {
                 it.addAll(a.tags)

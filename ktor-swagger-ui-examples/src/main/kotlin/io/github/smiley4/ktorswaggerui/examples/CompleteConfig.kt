@@ -3,9 +3,9 @@ package io.github.smiley4.ktorswaggerui.examples
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.data.AuthScheme
 import io.github.smiley4.ktoropenapi.data.AuthType
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfigDsl
+import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.dsl.routing.get
-import io.github.smiley4.ktoropenapi.routing.openApiSpec
+import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.data.SwaggerUiSort
 import io.github.smiley4.ktorswaggerui.data.SwaggerUiSyntaxHighlight
@@ -128,7 +128,7 @@ private fun Application.myModule() {
 
             }
         }
-        specAssigner = { _, _ -> OpenApiPluginConfigDsl.DEFAULT_SPEC_ID }
+        specAssigner = { _, _ -> OpenApiPluginConfig.DEFAULT_SPEC_ID }
         pathFilter = { _, url -> url.firstOrNull() != "hidden" }
         ignoredRouteSelectors = emptySet()
         ignoredRouteSelectorClassNames = emptySet()
@@ -150,7 +150,7 @@ private fun Application.myModule() {
             swaggerUI("/api.json")
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
         // a documented route
@@ -159,7 +159,7 @@ private fun Application.myModule() {
             summary = "hello world route"
             description = "A Hello-World route as an example."
             tags("hello", "example")
-            specId = OpenApiPluginConfigDsl.DEFAULT_SPEC_ID
+            specId = OpenApiPluginConfig.DEFAULT_SPEC_ID
             deprecated = false
             hidden = false
             protected = false

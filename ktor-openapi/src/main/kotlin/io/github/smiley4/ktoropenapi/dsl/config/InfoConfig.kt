@@ -11,7 +11,7 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * Basic information for the exposed API.
  */
 @OpenApiDslMarker
-class OpenApiInfo {
+class InfoConfig {
 
     /**
      * The title of the api
@@ -41,25 +41,25 @@ class OpenApiInfo {
      */
     var termsOfService: String? = null
 
-    private var contact: OpenApiContact? = null
+    private var contact: ContactConfig? = null
 
 
     /**
      * The contact information for the exposed API.
      */
-    fun contact(block: OpenApiContact.() -> Unit) {
-        contact = OpenApiContact().apply(block)
+    fun contact(block: ContactConfig.() -> Unit) {
+        contact = ContactConfig().apply(block)
     }
 
 
-    private var license: OpenApiLicense? = null
+    private var license: LicenseConfig? = null
 
 
     /**
      * The license information for the exposed API.
      */
-    fun license(block: OpenApiLicense.() -> Unit) {
-        license = OpenApiLicense().apply(block)
+    fun license(block: LicenseConfig.() -> Unit) {
+        license = LicenseConfig().apply(block)
     }
 
     /**

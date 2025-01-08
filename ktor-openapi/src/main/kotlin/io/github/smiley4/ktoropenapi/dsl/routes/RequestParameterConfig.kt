@@ -14,7 +14,7 @@ import io.swagger.v3.oas.models.parameters.Parameter
  * Describes a single request parameter.
  */
 @OpenApiDslMarker
-class OpenApiRequestParameter(
+class RequestParameterConfig(
     /**
      * The name (case-sensitive) of the parameter
      */
@@ -55,8 +55,8 @@ class OpenApiRequestParameter(
     /**
      * An example value for this parameter
      */
-    fun example(name: String, example: ValueExampleDescriptorDsl.() -> Unit) = example(
-        ValueExampleDescriptorDsl()
+    fun example(name: String, example: ValueExampleDescriptorConfig.() -> Unit) = example(
+        ValueExampleDescriptorConfig()
             .apply(example)
             .let { result ->
                 ValueExampleDescriptor(

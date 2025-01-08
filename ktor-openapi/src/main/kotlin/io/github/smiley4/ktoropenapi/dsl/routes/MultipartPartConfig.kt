@@ -15,7 +15,7 @@ import kotlin.reflect.typeOf
  * See https://swagger.io/docs/specification/describing-request-body/multipart-requests/ for more info
  */
 @OpenApiDslMarker
-class OpenApiMultipartPart(
+class MultipartPartConfig(
     /**
      * The name of this part
      */
@@ -46,14 +46,14 @@ class OpenApiMultipartPart(
     /**
      * List of headers of this part
      */
-    val headers = mutableMapOf<String, OpenApiHeader>()
+    val headers = mutableMapOf<String, HeaderConfig>()
 
 
     /**
      * Possible headers for this part
      */
-    fun header(name: String, type: TypeDescriptor, block: OpenApiHeader.() -> Unit = {}) {
-        headers[name] = OpenApiHeader().apply(block).apply {
+    fun header(name: String, type: TypeDescriptor, block: HeaderConfig.() -> Unit = {}) {
+        headers[name] = HeaderConfig().apply(block).apply {
             this.type = type
         }
     }
@@ -62,19 +62,19 @@ class OpenApiMultipartPart(
     /**
      * Possible headers for this part
      */
-    fun header(name: String, type: Schema<*>, block: OpenApiHeader.() -> Unit = {}) = header(name, SwaggerTypeDescriptor(type), block)
+    fun header(name: String, type: Schema<*>, block: HeaderConfig.() -> Unit = {}) = header(name, SwaggerTypeDescriptor(type), block)
 
 
     /**
      * Possible headers for this part
      */
-    fun header(name: String, type: KType, block: OpenApiHeader.() -> Unit = {}) = header(name, KTypeDescriptor(type), block)
+    fun header(name: String, type: KType, block: HeaderConfig.() -> Unit = {}) = header(name, KTypeDescriptor(type), block)
 
 
     /**
      * Possible headers for this part
      */
-    inline fun <reified T> header(name: String, noinline block: OpenApiHeader.() -> Unit = {}) =
+    inline fun <reified T> header(name: String, noinline block: HeaderConfig.() -> Unit = {}) =
         header(name, KTypeDescriptor(typeOf<T>()), block)
 
     /**
