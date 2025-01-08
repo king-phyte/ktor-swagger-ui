@@ -3,8 +3,7 @@ package io.github.smiley4.ktorswaggerui.examples
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.dsl.routing.get
 import io.github.smiley4.ktoropenapi.openApi
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
@@ -42,7 +41,6 @@ private fun Application.myModule() {
             }
         }
     }
-    install(SwaggerUI)
 
     routing {
 

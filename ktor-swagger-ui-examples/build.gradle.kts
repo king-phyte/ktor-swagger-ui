@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":ktor-swagger-ui"))
     implementation(project(":ktor-openapi"))
 
     val versionKtor: String by project
@@ -29,7 +30,7 @@ dependencies {
     implementation("io.github.smiley4:schema-kenerator-serialization:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-swagger:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-jackson:$versionSchemaKenerator")
-//
+
     val versionSwaggerParser: String by project
     implementation("io.swagger.parser.v3:swagger-parser:$versionSwaggerParser")
 

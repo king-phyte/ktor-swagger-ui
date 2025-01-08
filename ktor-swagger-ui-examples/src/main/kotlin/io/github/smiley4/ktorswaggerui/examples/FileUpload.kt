@@ -3,6 +3,7 @@ package io.github.smiley4.ktorswaggerui.examples
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.dsl.routing.post
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.data.array
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
@@ -36,7 +37,6 @@ private fun Application.myModule() {
             })
         }
     }
-    install(SwaggerUI)
 
     routing {
 

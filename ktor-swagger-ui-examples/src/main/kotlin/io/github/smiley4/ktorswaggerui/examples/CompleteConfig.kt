@@ -6,10 +6,9 @@ import io.github.smiley4.ktoropenapi.data.AuthType
 import io.github.smiley4.ktoropenapi.dsl.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.dsl.routing.get
 import io.github.smiley4.ktoropenapi.openApi
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.data.SwaggerUiSort
-import io.github.smiley4.ktorswaggerui.data.SwaggerUiSyntaxHighlight
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
+import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.reflection.processReflection
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
@@ -135,20 +134,19 @@ private fun Application.myModule() {
         ignoredRouteSelectorClassNames = emptySet()
         postBuild = { api, name -> println("Completed api '$name': $api") }
     }
-    install(SwaggerUI) {
-        displayOperationId = true
-        showTagFilterInput = true
-        sort = SwaggerUiSort.HTTP_METHOD
-        syntaxHighlight = SwaggerUiSyntaxHighlight.MONOKAI
-        withCredentials = false
-    }
 
 
     routing {
 
         // add the routes for swagger-ui and api-spec
         route("swagger") {
-            swaggerUI("/api.json")
+            swaggerUI("/api.json") {
+                displayOperationId = true
+                showTagFilterInput = true
+                sort = SwaggerUISort.HTTP_METHOD
+                syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
+                withCredentials = false
+            }
         }
         route("api.json") {
             openApi()
