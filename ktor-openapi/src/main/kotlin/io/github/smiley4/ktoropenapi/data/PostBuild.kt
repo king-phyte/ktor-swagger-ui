@@ -5,4 +5,4 @@ import io.swagger.v3.oas.models.OpenAPI
 /**
  * Function executed after building the openapi-spec.
  */
-internal typealias PostBuild = (openApi: OpenAPI, specId: String) -> Unit
+typealias PostBuild = (openApi: OpenAPI, specId: String) -> Unit

@@ -3,8 +3,8 @@ package io.github.smiley4.ktorswaggerui.examples
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.dsl.routing.get
 import io.github.smiley4.ktoropenapi.openApi
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktorswaggerui.swaggerUI
+import io.ktor.client.request.request
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -42,7 +42,6 @@ private fun Application.myModule() {
             description = "Production Server"
         }
     }
-    install(SwaggerUI)
 
     routing {
 

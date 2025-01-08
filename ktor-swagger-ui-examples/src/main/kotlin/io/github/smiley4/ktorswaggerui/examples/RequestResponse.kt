@@ -6,8 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.dsl.routing.post
 import io.github.smiley4.ktoropenapi.openApi
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.jackson.jackson
 import io.ktor.server.application.Application
@@ -38,7 +37,6 @@ private fun Application.myModule() {
             })
         }
     }
-    install(SwaggerUI)
 
     routing {
 
