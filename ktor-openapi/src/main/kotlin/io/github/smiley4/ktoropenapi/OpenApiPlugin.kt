@@ -52,10 +52,10 @@ object OpenApiPlugin {
     fun getOpenApiSpecNames(): Set<String> = openApiSpecs.keys.toSet()
 
     fun getOpenApiSpec(name: String): String = openApiSpecs[name]?.first
-        ?: throw Exception("No OpenAPI documentation exists with name '$name'")
+        ?: throw IllegalArgumentException("No OpenAPI documentation exists with name '$name'")
 
     fun getOpenApiSpecFormat(name: String): OutputFormat = openApiSpecs[name]?.second
-        ?: throw Exception("No OpenAPI documentation exists with name '$name'")
+        ?: throw IllegalArgumentException("No OpenAPI documentation exists with name '$name'")
 
 }
 
