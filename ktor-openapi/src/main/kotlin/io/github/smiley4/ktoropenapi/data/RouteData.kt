@@ -4,7 +4,7 @@ package io.github.smiley4.ktoropenapi.data
  * Information about a single route.
  */
 internal data class RouteData(
-    val specId: String?,
+    val specName: String?,
     val tags: Set<String>,
     val summary: String?,
     val description: String?,

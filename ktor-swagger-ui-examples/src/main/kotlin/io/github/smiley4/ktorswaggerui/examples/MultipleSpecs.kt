@@ -70,7 +70,7 @@ private fun Application.myModule() {
 
         // version 1.0 routes
         route("v1", {
-            specId = "version1"
+            specName = "version1"
         }) {
 
             // "hello"-route in version 1.0
@@ -84,7 +84,7 @@ private fun Application.myModule() {
 
         // version 2.0 routes
         route("v2", {
-            specId = "version2"
+            specName = "version2"
         }) {
 
             // "hello"-route in version 2.0
