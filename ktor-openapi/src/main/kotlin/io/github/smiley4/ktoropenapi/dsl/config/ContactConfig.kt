@@ -8,7 +8,7 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * Contact information for the exposed API.
  */
 @OpenApiDslMarker
-class OpenApiContact {
+class ContactConfig {
 
     /**
      * The identifying name of the contact person/organization.

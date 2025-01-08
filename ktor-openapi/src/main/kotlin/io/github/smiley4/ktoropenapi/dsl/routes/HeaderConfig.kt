@@ -13,7 +13,7 @@ import kotlin.reflect.typeOf
  * Describes a single header.
  */
 @OpenApiDslMarker
-class OpenApiHeader {
+class HeaderConfig {
 
     /**
      * A description of the header

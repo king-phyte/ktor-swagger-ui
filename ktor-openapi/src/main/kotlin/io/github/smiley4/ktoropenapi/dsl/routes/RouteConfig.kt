@@ -4,14 +4,14 @@ import io.github.smiley4.ktoropenapi.data.ExternalDocsData
 import io.github.smiley4.ktoropenapi.data.RouteData
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiExternalDocs
-import io.github.smiley4.ktoropenapi.dsl.config.OpenApiServer
+import io.github.smiley4.ktoropenapi.dsl.config.ExternalDocsConfig
+import io.github.smiley4.ktoropenapi.dsl.config.ServerConfig
 
 /**
  * Describes a single route including request and responses.
  */
 @OpenApiDslMarker
-class OpenApiRoute {
+class RouteConfig {
 
     /**
      * the id of the openapi-spec this route belongs to. 'Null' to use default spec.
@@ -105,25 +105,25 @@ class OpenApiRoute {
     }
 
 
-    private val request = OpenApiRequest()
+    private val request = RequestConfig()
 
 
     /**
      * Information about the request
      */
-    fun request(block: OpenApiRequest.() -> Unit) {
+    fun request(block: RequestConfig.() -> Unit) {
         request.apply(block)
     }
 
     fun getRequest() = request
 
-    private val responses = OpenApiResponses()
+    private val responses = ResponsesConfig()
 
 
     /**
      * Possible responses as they are returned from executing this operation.
      */
-    fun response(block: OpenApiResponses.() -> Unit) {
+    fun response(block: ResponsesConfig.() -> Unit) {
         responses.apply(block)
     }
 
@@ -133,21 +133,21 @@ class OpenApiRoute {
     /**
      * OpenAPI external docs configuration - link and description of an external documentation
      */
-    fun externalDocs(block: OpenApiExternalDocs.() -> Unit) {
-        externalDocs = OpenApiExternalDocs().apply(block)
+    fun externalDocs(block: ExternalDocsConfig.() -> Unit) {
+        externalDocs = ExternalDocsConfig().apply(block)
     }
 
-    private var externalDocs: OpenApiExternalDocs? = null
+    private var externalDocs: ExternalDocsConfig? = null
 
 
     /**
      * OpenAPI server configuration - an array of servers, which provide connectivity information to a target server
      */
-    fun server(block: OpenApiServer.() -> Unit) {
-        servers.add(OpenApiServer().apply(block))
+    fun server(block: ServerConfig.() -> Unit) {
+        servers.add(ServerConfig().apply(block))
     }
 
-    private val servers = mutableListOf<OpenApiServer>()
+    private val servers = mutableListOf<ServerConfig>()
 
     /**
      * Build the data object for this config.

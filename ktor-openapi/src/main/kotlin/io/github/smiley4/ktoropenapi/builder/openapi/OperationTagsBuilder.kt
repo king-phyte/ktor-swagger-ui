@@ -1,13 +1,13 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 
 /**
  * Builds the list of tags for a single route.
  */
 internal class OperationTagsBuilder(
-    private val config: PluginConfigData
+    private val config: OpenApiPluginData
 ) {
 
     fun build(route: RouteMeta): List<String> {

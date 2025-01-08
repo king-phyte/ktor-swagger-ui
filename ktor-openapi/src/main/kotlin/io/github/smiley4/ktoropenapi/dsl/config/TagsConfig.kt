@@ -8,7 +8,6 @@ import io.github.smiley4.ktorswaggerui.data.TagGenerator
 import io.github.smiley4.ktorswaggerui.data.TagsData
 import io.github.smiley4.ktorswaggerui.dsl.OpenApiDslMarker
 import io.github.smiley4.ktoropenapi.data.DataUtils.merge
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
 import io.github.smiley4.ktoropenapi.data.TagData
 import io.github.smiley4.ktoropenapi.data.TagGenerator
 import io.github.smiley4.ktoropenapi.data.TagsData
@@ -18,16 +17,16 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * Configuration for tags
  */
 @OpenApiDslMarker
-class OpenApiTags {
+class TagsConfig {
 
-    private val tags = mutableListOf<OpenApiTag>()
+    private val tags = mutableListOf<TagConfig>()
 
 
     /**
      * Tags used by the specification with additional metadata. Not all tags that are used must be declared
      */
-    fun tag(name: String, block: OpenApiTag.() -> Unit) {
-        tags.add(OpenApiTag(name).apply(block))
+    fun tag(name: String, block: TagConfig.() -> Unit) {
+        tags.add(TagConfig(name).apply(block))
     }
 
 

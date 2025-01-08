@@ -9,7 +9,7 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * An object representing a Server.
  */
 @OpenApiDslMarker
-class OpenApiServer {
+class ServerConfig {
 
     /**
      * A URL to the target host. This URL supports Server Variables and MAY be relative, to indicate that the host location is relative to
@@ -22,14 +22,14 @@ class OpenApiServer {
      */
     var description: String? = ServerData.DEFAULT.description
 
-    private val variables = mutableMapOf<String, OpenApiServerVariable>()
+    private val variables = mutableMapOf<String, ServerVariableConfig>()
 
 
     /**
      * Adds a new server variable with the given name
      */
-    fun variable(name: String, block: OpenApiServerVariable.() -> Unit) {
-        variables[name] = OpenApiServerVariable(name).apply(block)
+    fun variable(name: String, block: ServerVariableConfig.() -> Unit) {
+        variables[name] = ServerVariableConfig(name).apply(block)
     }
 
     /**

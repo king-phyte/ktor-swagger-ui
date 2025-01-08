@@ -3,7 +3,7 @@ package io.github.smiley4.ktorswaggerui.examples
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.dsl.routing.get
 import io.github.smiley4.ktoropenapi.dsl.routing.route
-import io.github.smiley4.ktoropenapi.routing.openApiSpec
+import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.server.application.Application
@@ -53,7 +53,7 @@ private fun Application.myModule() {
             }
             route("api.json") {
                 // api-spec containing all routes assigned to "v1"
-                openApiSpec("version1")
+                openApi("version1")
             }
         }
 
@@ -65,7 +65,7 @@ private fun Application.myModule() {
             }
             route("api.json") {
                 // api-spec containing all routes assigned to "v2"
-                openApiSpec("version2")
+                openApi("version2")
             }
         }
 

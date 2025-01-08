@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.examples.Example
 import io.swagger.v3.oas.models.media.Schema
@@ -10,7 +10,7 @@ import io.swagger.v3.oas.models.media.Schema
  * See [OpenAPI Specification - Components Object](https://swagger.io/specification/#components-object).
  */
 internal class ComponentsBuilder(
-    private val config: PluginConfigData,
+    private val config: OpenApiPluginData,
     private val securitySchemesBuilder: SecuritySchemesBuilder
 ) {
 

@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.dsl.routing
 
-import io.github.smiley4.ktoropenapi.dsl.routes.OpenApiRoute
+import io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig
 import io.ktor.http.HttpMethod
 import io.ktor.server.routing.Route
 import io.ktor.server.routing.RouteSelector
@@ -17,7 +17,7 @@ import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import io.ktor.utils.io.KtorDsl
 
-class DocumentedRouteSelector(val documentation: OpenApiRoute) : RouteSelector() {
+class DocumentedRouteSelector(val documentation: RouteConfig) : RouteSelector() {
 
     companion object {
         private var includeDocumentedRouteInRouteToString = false
@@ -33,10 +33,10 @@ class DocumentedRouteSelector(val documentation: OpenApiRoute) : RouteSelector()
 
 @KtorDsl
 fun Route.documentation(
-    documentation: OpenApiRoute.() -> Unit = { },
+    documentation: RouteConfig.() -> Unit = { },
     build: Route.() -> Unit
 ): Route {
-    val documentedRoute = createChild(DocumentedRouteSelector(OpenApiRoute().apply(documentation)))
+    val documentedRoute = createChild(DocumentedRouteSelector(RouteConfig().apply(documentation)))
     documentedRoute.build()
     return documentedRoute
 }
@@ -47,7 +47,7 @@ fun Route.documentation(
 
 @KtorDsl
 fun Route.route(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     build: Route.() -> Unit
 ): Route {
     return documentation(builder) { route("", build) }
@@ -56,7 +56,7 @@ fun Route.route(
 @KtorDsl
 fun Route.route(
     method: HttpMethod,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     build: Route.() -> Unit
 ): Route {
     return documentation(builder) { route("", method, build) }
@@ -65,7 +65,7 @@ fun Route.route(
 @KtorDsl
 fun Route.route(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     build: Route.() -> Unit
 ): Route {
     return documentation(builder) { route(path, build) }
@@ -75,7 +75,7 @@ fun Route.route(
 fun Route.route(
     path: String,
     method: HttpMethod,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     build: Route.() -> Unit
 ): Route {
     return documentation(builder) { route(path, method, build) }
@@ -84,7 +84,7 @@ fun Route.route(
 @KtorDsl
 fun Route.method(
     method: HttpMethod,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: Route.() -> Unit
 ): Route {
     return documentation(builder) { method(method, body) }
@@ -97,7 +97,7 @@ fun Route.method(
 @KtorDsl
 fun Route.get(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { get(path, body) }
@@ -105,7 +105,7 @@ fun Route.get(
 
 @KtorDsl
 fun Route.get(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { get(body) }
@@ -119,7 +119,7 @@ fun Route.get(
 @KtorDsl
 fun Route.post(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { post(path, body) }
@@ -128,7 +128,7 @@ fun Route.post(
 @KtorDsl
 @JvmName("postTyped")
 inline fun <reified R : Any> Route.post(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     crossinline body: suspend io.ktor.server.routing.RoutingContext.(R) -> Unit
 ): Route {
     return documentation(builder) { post(body) }
@@ -138,7 +138,7 @@ inline fun <reified R : Any> Route.post(
 @JvmName("postTypedPath")
 inline fun <reified R : Any> Route.post(
     path: String,
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     crossinline body: suspend io.ktor.server.routing.RoutingContext.(R) -> Unit
 ): Route {
     return documentation(builder) { post(path, body) }
@@ -146,7 +146,7 @@ inline fun <reified R : Any> Route.post(
 
 @KtorDsl
 fun Route.post(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { post(body) }
@@ -160,7 +160,7 @@ fun Route.post(
 @KtorDsl
 fun Route.put(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { put(path, body) }
@@ -168,7 +168,7 @@ fun Route.put(
 
 @KtorDsl
 fun Route.put(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { put(body) }
@@ -177,7 +177,7 @@ fun Route.put(
 @KtorDsl
 @JvmName("putTyped")
 inline fun <reified R : Any> Route.put(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     crossinline body: suspend io.ktor.server.routing.RoutingContext.(R) -> Unit
 ): Route {
     return documentation(builder) { put(body) }
@@ -187,7 +187,7 @@ inline fun <reified R : Any> Route.put(
 @JvmName("putTypedPath")
 inline fun <reified R : Any> Route.put(
     path: String,
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     crossinline body: suspend io.ktor.server.routing.RoutingContext.(R) -> Unit
 ): Route {
     return documentation(builder) { put(path, body) }
@@ -201,7 +201,7 @@ inline fun <reified R : Any> Route.put(
 @KtorDsl
 fun Route.delete(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { delete(path, body) }
@@ -209,7 +209,7 @@ fun Route.delete(
 
 @KtorDsl
 fun Route.delete(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { delete(body) }
@@ -223,7 +223,7 @@ fun Route.delete(
 @KtorDsl
 fun Route.patch(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { patch(path, body) }
@@ -231,7 +231,7 @@ fun Route.patch(
 
 @KtorDsl
 fun Route.patch(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { patch(body) }
@@ -239,7 +239,7 @@ fun Route.patch(
 
 @JvmName("patchTyped")
 inline fun <reified R : Any> Route.patch(
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     crossinline body: suspend io.ktor.server.routing.RoutingContext.(R) -> Unit
 ): Route {
     return documentation(builder) { patch(body) }
@@ -249,7 +249,7 @@ inline fun <reified R : Any> Route.patch(
 @JvmName("patchTypedPath")
 inline fun <reified R : Any> Route.patch(
     path: String,
-    noinline builder: OpenApiRoute.() -> Unit = { },
+    noinline builder: RouteConfig.() -> Unit = { },
     crossinline body: suspend io.ktor.server.routing.RoutingContext.(R) -> Unit
 ): Route {
     return documentation(builder) { patch(path, body) }
@@ -263,7 +263,7 @@ inline fun <reified R : Any> Route.patch(
 @KtorDsl
 fun Route.options(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { options(path, body) }
@@ -271,7 +271,7 @@ fun Route.options(
 
 @KtorDsl
 fun Route.options(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { options(body) }
@@ -285,7 +285,7 @@ fun Route.options(
 @KtorDsl
 fun Route.head(
     path: String,
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { head(path, body) }
@@ -293,7 +293,7 @@ fun Route.head(
 
 @KtorDsl
 fun Route.head(
-    builder: OpenApiRoute.() -> Unit = { },
+    builder: RouteConfig.() -> Unit = { },
     body: suspend io.ktor.server.routing.RoutingContext.() -> Unit
 ): Route {
     return documentation(builder) { head(body) }

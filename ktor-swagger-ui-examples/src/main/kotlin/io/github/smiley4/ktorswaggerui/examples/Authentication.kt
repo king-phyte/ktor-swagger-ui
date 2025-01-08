@@ -4,7 +4,7 @@ import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.data.AuthScheme
 import io.github.smiley4.ktoropenapi.data.AuthType
 import io.github.smiley4.ktoropenapi.dsl.routing.get
-import io.github.smiley4.ktoropenapi.routing.openApiSpec
+import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.server.application.Application
@@ -67,7 +67,7 @@ private fun Application.myModule() {
             swaggerUI("/api.json")
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
         authenticate {

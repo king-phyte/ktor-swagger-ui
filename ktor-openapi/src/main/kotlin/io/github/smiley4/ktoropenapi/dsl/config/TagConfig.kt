@@ -8,7 +8,7 @@ import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
  * Adds metadata to a single tag.
  */
 @OpenApiDslMarker
-class OpenApiTag(
+class TagConfig(
     /**
      * The name of the tag.
      */

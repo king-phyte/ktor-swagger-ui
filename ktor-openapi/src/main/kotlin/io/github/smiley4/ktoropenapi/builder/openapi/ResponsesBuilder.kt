@@ -1,7 +1,7 @@
 package io.github.smiley4.ktoropenapi.builder.openapi
 
 import io.github.smiley4.ktoropenapi.data.ResponseData
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.ktor.http.HttpStatusCode
 import io.swagger.v3.oas.models.responses.ApiResponses
 
@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses
  */
 internal class ResponsesBuilder(
     private val responseBuilder: ResponseBuilder,
-    private val config: PluginConfigData
+    private val config: OpenApiPluginData
 ) {
 
     fun build(responses: List<ResponseData>, isProtected: Boolean): ApiResponses =

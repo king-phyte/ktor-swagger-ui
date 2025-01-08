@@ -12,7 +12,7 @@ import io.github.smiley4.ktorswaggerui.dsl.OpenApiDslMarker
 import io.github.smiley4.ktoropenapi.data.DataUtils.merge
 import io.github.smiley4.ktoropenapi.data.OutputFormat
 import io.github.smiley4.ktoropenapi.data.PathFilter
-import io.github.smiley4.ktoropenapi.data.PluginConfigData
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.data.PostBuild
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.github.smiley4.ktoropenapi.data.SpecAssigner
@@ -27,7 +27,7 @@ import kotlin.reflect.KClass
  * Main-Configuration of the "OpenApi"-Plugin
  */
 @OpenApiDslMarker
-class OpenApiPluginConfigDsl {
+class OpenApiPluginConfig {
 
     companion object {
         const val DEFAULT_SPEC_ID = "api"
@@ -37,51 +37,51 @@ class OpenApiPluginConfigDsl {
     /**
      * OpenAPI info configuration - provides metadata about the API
      */
-    fun info(block: OpenApiInfo.() -> Unit) {
-        info = OpenApiInfo().apply(block)
+    fun info(block: InfoConfig.() -> Unit) {
+        info = InfoConfig().apply(block)
     }
 
-    private var info = OpenApiInfo()
+    private var info = InfoConfig()
 
 
     /**
      * OpenAPI external docs configuration - link and description of an external documentation
      */
-    fun externalDocs(block: OpenApiExternalDocs.() -> Unit) {
-        externalDocs = OpenApiExternalDocs().apply(block)
+    fun externalDocs(block: ExternalDocsConfig.() -> Unit) {
+        externalDocs = ExternalDocsConfig().apply(block)
     }
 
-    private var externalDocs = OpenApiExternalDocs()
+    private var externalDocs = ExternalDocsConfig()
 
 
     /**
      * OpenAPI server configuration - an array of servers, which provide connectivity information to a target server
      */
-    fun server(block: OpenApiServer.() -> Unit) {
-        servers.add(OpenApiServer().apply(block))
+    fun server(block: ServerConfig.() -> Unit) {
+        servers.add(ServerConfig().apply(block))
     }
 
-    private val servers = mutableListOf<OpenApiServer>()
+    private val servers = mutableListOf<ServerConfig>()
 
 
     /**
      * Configuration for security and authentication.
      */
-    fun security(block: OpenApiSecurity.() -> Unit) {
+    fun security(block: SecurityConfig.() -> Unit) {
         security.apply(block)
     }
 
-    private val security = OpenApiSecurity()
+    private val security = SecurityConfig()
 
 
     /**
      * Configuration for openapi-tags
      */
-    fun tags(block: OpenApiTags.() -> Unit) {
+    fun tags(block: TagsConfig.() -> Unit) {
         tags.also(block)
     }
 
-    private val tags = OpenApiTags()
+    private val tags = TagsConfig()
 
 
     /**
@@ -107,30 +107,30 @@ class OpenApiPluginConfigDsl {
     /**
      * Configure specific separate specs
      */
-    fun spec(specId: String, block: OpenApiPluginConfigDsl.() -> Unit) {
-        specConfigs[specId] = OpenApiPluginConfigDsl().apply(block)
+    fun spec(specId: String, block: OpenApiPluginConfig.() -> Unit) {
+        specConfigs[specId] = OpenApiPluginConfig().apply(block)
     }
 
-    private val specConfigs = mutableMapOf<String, OpenApiPluginConfigDsl>()
+    private val specConfigs = mutableMapOf<String, OpenApiPluginConfig>()
 
 
     /**
-     * Assigns routes without an [io.github.smiley4.ktoropenapi.dsl.routes.OpenApiRoute.specId]] to a specified openapi-spec.
+     * Assigns routes without an [io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig.specId]] to a specified openapi-spec.
      */
-    var specAssigner: SpecAssigner? = PluginConfigData.DEFAULT.specAssigner
+    var specAssigner: SpecAssigner? = OpenApiPluginData.DEFAULT.specAssigner
 
 
     /**
      * Filter to apply to all routes. Return 'false' for routes to not include them in the OpenApi-Spec and Swagger-UI.
      * The url of the paths are already split at '/'.
      */
-    var pathFilter: PathFilter? = PluginConfigData.DEFAULT.pathFilter
+    var pathFilter: PathFilter? = OpenApiPluginData.DEFAULT.pathFilter
 
 
     /**
      * List of all [RouteSelector] types in that should be ignored in the resulting url of any route.
      */
-    var ignoredRouteSelectors: Set<KClass<*>> = PluginConfigData.DEFAULT.ignoredRouteSelectors
+    var ignoredRouteSelectors: Set<KClass<*>> = OpenApiPluginData.DEFAULT.ignoredRouteSelectors
 
     /**
      * List of all [RouteSelector] class names that should be ignored in the resulting url of any route.
@@ -140,7 +140,7 @@ class OpenApiPluginConfigDsl {
     /**
      * The format of the generated api-spec
      */
-    var outputFormat: OutputFormat = PluginConfigData.DEFAULT.outputFormat
+    var outputFormat: OutputFormat = OpenApiPluginData.DEFAULT.outputFormat
 
 
     /**
@@ -153,9 +153,9 @@ class OpenApiPluginConfigDsl {
      * Build the data object for this config.
      * @param base the base config to "inherit" from. Values from the base should be copied, replaced or merged together.
      */
-    internal fun build(base: PluginConfigData): PluginConfigData {
+    internal fun build(base: OpenApiPluginData): OpenApiPluginData {
         val securityConfig = security.build(base.securityConfig)
-        return PluginConfigData(
+        return OpenApiPluginData(
             info = info.build(base.info),
             externalDocs = externalDocs.build(base.externalDocs),
             servers = buildList {
@@ -166,8 +166,8 @@ class OpenApiPluginConfigDsl {
             tagsConfig = tags.build(base.tagsConfig),
             schemaConfig = schemaConfig.build(base.schemaConfig, securityConfig),
             exampleConfig = exampleConfig.build(securityConfig),
-            specAssigner = merge(base.specAssigner, specAssigner) ?: PluginConfigData.DEFAULT.specAssigner,
-            pathFilter = merge(base.pathFilter, pathFilter) ?: PluginConfigData.DEFAULT.pathFilter,
+            specAssigner = merge(base.specAssigner, specAssigner) ?: OpenApiPluginData.DEFAULT.specAssigner,
+            pathFilter = merge(base.pathFilter, pathFilter) ?: OpenApiPluginData.DEFAULT.pathFilter,
             ignoredRouteSelectors = buildSet {
                 addAll(base.ignoredRouteSelectors)
                 addAll(ignoredRouteSelectors)

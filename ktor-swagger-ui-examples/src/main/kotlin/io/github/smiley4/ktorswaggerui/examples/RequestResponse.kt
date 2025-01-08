@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
 import com.fasterxml.jackson.databind.SerializationFeature
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.dsl.routing.post
-import io.github.smiley4.ktoropenapi.routing.openApiSpec
+import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.http.HttpStatusCode
@@ -47,7 +47,7 @@ private fun Application.myModule() {
             swaggerUI("/api.json")
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
         // a documented route

@@ -2,7 +2,7 @@ package io.github.smiley4.ktoropenapi.dsl.config
 
 import io.github.smiley4.ktoropenapi.data.*
 import io.github.smiley4.ktoropenapi.dsl.OpenApiDslMarker
-import io.github.smiley4.ktoropenapi.dsl.routes.ValueExampleDescriptorDsl
+import io.github.smiley4.ktoropenapi.dsl.routes.ValueExampleDescriptorConfig
 import io.swagger.v3.oas.models.examples.Example
 
 /**
@@ -34,8 +34,8 @@ class ExampleConfig {
      * Add a shared example that can be referenced by all routes by the given name.
      * The provided name has to be unique among all shared examples and acts as its id.
      */
-    fun example(name: String, example: ValueExampleDescriptorDsl.() -> Unit) = example(
-        ValueExampleDescriptorDsl()
+    fun example(name: String, example: ValueExampleDescriptorConfig.() -> Unit) = example(
+        ValueExampleDescriptorConfig()
             .apply(example)
             .let { result ->
                 ValueExampleDescriptor(

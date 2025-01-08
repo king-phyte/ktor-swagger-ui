@@ -6,7 +6,7 @@ import io.github.smiley4.ktoropenapi.data.anyOf
 import io.github.smiley4.ktoropenapi.data.array
 import io.github.smiley4.ktoropenapi.data.ref
 import io.github.smiley4.ktoropenapi.dsl.routing.get
-import io.github.smiley4.ktoropenapi.routing.openApiSpec
+import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorswaggerui.SwaggerUI
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.github.smiley4.schemakenerator.core.connectSubTypes
@@ -73,7 +73,7 @@ private fun Application.myModule() {
             swaggerUI("/api.json")
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
 

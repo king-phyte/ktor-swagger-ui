@@ -14,12 +14,12 @@ import io.swagger.v3.oas.models.examples.Example
  * Describes the base of a single request/response body.
  */
 @OpenApiDslMarker
-class OpenApiSimpleBody(
+class SimpleBodyConfig(
     /**
      * The type defining the schema used for the body.
      */
     val type: TypeDescriptor,
-) : OpenApiBaseBody() {
+) : BaseBodyConfig() {
 
     /**
      * Examples for this body
@@ -41,8 +41,8 @@ class OpenApiSimpleBody(
     /**
      * Add the given example as an example to this body
      */
-    fun example(name: String, example: ValueExampleDescriptorDsl.() -> Unit) = example(
-        ValueExampleDescriptorDsl()
+    fun example(name: String, example: ValueExampleDescriptorConfig.() -> Unit) = example(
+        ValueExampleDescriptorConfig()
             .apply(example)
             .let { result ->
                 ValueExampleDescriptor(
