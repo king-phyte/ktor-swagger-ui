@@ -72,7 +72,7 @@ internal object SwaggerUI {
     }
 
     internal suspend fun serveStaticResource(filename: String, config: SwaggerUIConfig, call: ApplicationCall) {
-        val resourceName = "/META-INF/resources/webjars/swagger-ui/${config.staticResourcesPath}/$filename"
+        val resourceName = "${config.staticResourcesPath}/$filename"
         val resource = SwaggerUI::class.java.getResource(resourceName)
         if (resource != null) {
             call.respond(ResourceContent(resource))
