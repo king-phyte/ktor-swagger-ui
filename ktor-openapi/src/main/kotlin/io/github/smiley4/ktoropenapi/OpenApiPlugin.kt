@@ -37,7 +37,7 @@ object OpenApiPlugin {
 
     internal var config = OpenApiPluginData.DEFAULT
 
-    internal val openApiDocs = mutableMapOf<String, Pair<String, OutputFormat>>()
+    internal val openApiSpecs = mutableMapOf<String, Pair<String, OutputFormat>>()
 
     /**
      * Generates new openapi
@@ -45,32 +45,32 @@ object OpenApiPlugin {
     fun generateOpenApiSpecs(application: Application) {
         val routes = RouteCollector().collect({ application.plugin(RoutingRoot) }, config)
         val specs = OpenApiSpecBuilder().build(config, routes)
-        openApiDocs.clear()
-        openApiDocs.putAll(specs)
+        openApiSpecs.clear()
+        openApiSpecs.putAll(specs)
     }
 
-    fun getOpenApiDocNames(): Set<String> = openApiDocs.keys.toSet()
+    fun getOpenApiSpecNames(): Set<String> = openApiSpecs.keys.toSet()
 
-    fun getOpenApiDocument(name: String): String = openApiDocs[name]?.first
+    fun getOpenApiSpec(name: String): String = openApiSpecs[name]?.first
         ?: throw Exception("No OpenAPI documentation exists with name '$name'")
 
-    fun getOpenApiDocumentFormat(name: String): OutputFormat = openApiDocs[name]?.second
+    fun getOpenApiSpecFormat(name: String): OutputFormat = openApiSpecs[name]?.second
         ?: throw Exception("No OpenAPI documentation exists with name '$name'")
 
 }
 
 
 /**
- * Registers the route for serving an openapi-spec. When multiple specs are configured, the id of the one to serve has to be provided.
+ * Registers the route for serving an openapi-spec. When multiple specs are configured, the name of the one to serve has to be provided.
  */
-fun Route.openApi(specId: String = OpenApiPluginConfig.DEFAULT_SPEC_ID) {
+fun Route.openApi(specName: String = OpenApiPluginConfig.DEFAULT_SPEC_ID) {
     route({ hidden = true }) {
         get {
-            val contentType = when (OpenApiPlugin.getOpenApiDocumentFormat(specId)) {
+            val contentType = when (OpenApiPlugin.getOpenApiSpecFormat(specName)) {
                 OutputFormat.JSON -> ContentType.Application.Json
                 OutputFormat.YAML -> ContentType.Text.Plain
             }
-            call.respondText(contentType, HttpStatusCode.OK) { OpenApiPlugin.getOpenApiDocument(specId) }
+            call.respondText(contentType, HttpStatusCode.OK) { OpenApiPlugin.getOpenApiSpec(specName) }
         }
     }
 }

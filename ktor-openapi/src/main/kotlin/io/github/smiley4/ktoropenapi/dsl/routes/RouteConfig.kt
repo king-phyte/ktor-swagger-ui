@@ -16,7 +16,7 @@ class RouteConfig {
     /**
      * the id of the openapi-spec this route belongs to. 'Null' to use default spec.
      */
-    var specId: String? = null
+    var specName: String? = null
 
 
     /**
@@ -153,7 +153,7 @@ class RouteConfig {
      * Build the data object for this config.
      */
     internal fun build() = RouteData(
-        specId = specId,
+        specName = specName,
         tags = tags.toSet(),
         summary = summary,
         description = description,

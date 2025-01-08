@@ -158,7 +158,7 @@ private fun Application.myModule() {
             summary = "hello world route"
             description = "A Hello-World route as an example."
             tags("hello", "example")
-            specId = OpenApiPluginConfig.DEFAULT_SPEC_ID
+            specName = OpenApiPluginConfig.DEFAULT_SPEC_ID
             deprecated = false
             hidden = false
             protected = false

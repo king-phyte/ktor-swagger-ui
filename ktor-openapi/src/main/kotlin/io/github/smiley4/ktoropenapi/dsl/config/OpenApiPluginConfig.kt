@@ -107,15 +107,15 @@ class OpenApiPluginConfig {
     /**
      * Configure specific separate specs
      */
-    fun spec(specId: String, block: OpenApiPluginConfig.() -> Unit) {
-        specConfigs[specId] = OpenApiPluginConfig().apply(block)
+    fun spec(specName: String, block: OpenApiPluginConfig.() -> Unit) {
+        specConfigs[specName] = OpenApiPluginConfig().apply(block)
     }
 
     private val specConfigs = mutableMapOf<String, OpenApiPluginConfig>()
 
 
     /**
-     * Assigns routes without an [io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig.specId]] to a specified openapi-spec.
+     * Assigns routes without an [io.github.smiley4.ktoropenapi.dsl.routes.RouteConfig.specName]] to a specified openapi-spec.
      */
     var specAssigner: SpecAssigner? = OpenApiPluginData.DEFAULT.specAssigner
 
@@ -181,8 +181,8 @@ class OpenApiPluginConfig {
             outputFormat = mergeDefault(base.outputFormat, outputFormat, PluginConfigData.DEFAULT.outputFormat)
             rootPath = "todo" // todo
         ).also {
-            specConfigs.forEach { (specId, config) ->
-                it.specConfigs[specId] = config.build(it)
+            specConfigs.forEach { (specName, config) ->
+                it.specConfigs[specName] = config.build(it)
             }
         }
     }

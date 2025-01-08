@@ -9,7 +9,7 @@ internal class RouteDocumentationMerger {
      */
     fun merge(a: RouteConfig, b: RouteConfig): RouteConfig {
         return RouteConfig().apply {
-            specId = a.specId ?: b.specId
+            specName = a.specName ?: b.specName
             tags = mutableListOf<String>().also {
                 it.addAll(a.tags)
                 it.addAll(b.tags)

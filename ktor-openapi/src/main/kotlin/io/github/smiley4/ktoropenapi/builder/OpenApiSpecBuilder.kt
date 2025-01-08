@@ -49,7 +49,7 @@ internal class OpenApiSpecBuilder {
         val routesBySpec = buildMap<String, MutableList<RouteMeta>> {
             routes.forEach { route ->
                 val specName =
-                    route.documentation.specId ?: config.specAssigner(route.path, route.documentation.tags.toList())
+                    route.documentation.specName ?: config.specAssigner(route.path, route.documentation.tags.toList())
                 computeIfAbsent(specName) { mutableListOf() }.add(route)
             }
         }

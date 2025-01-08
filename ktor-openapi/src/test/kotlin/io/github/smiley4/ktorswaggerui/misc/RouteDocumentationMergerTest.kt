@@ -38,7 +38,7 @@ class RouteDocumentationMergerTest : StringSpec({
     "merge complete routes" {
         merge(
             route {
-                specId = "test-spec-a"
+                specName = "test-spec-a"
                 tags = listOf("a1", "a2")
                 summary = "Summary A"
                 description = "Description A"
@@ -61,7 +61,7 @@ class RouteDocumentationMergerTest : StringSpec({
                 }
             },
             route {
-                specId = "test-spec-b"
+                specName = "test-spec-b"
                 tags = listOf("b1", "b2")
                 summary = "Summary B"
                 description = "Description B"
@@ -84,7 +84,7 @@ class RouteDocumentationMergerTest : StringSpec({
                 }
             }
         ).also { route ->
-            route.specId shouldBe "test-spec-a"
+            route.specName shouldBe "test-spec-a"
             route.tags shouldContainExactlyInAnyOrder listOf("a1", "a2", "b1", "b2")
             route.summary shouldBe "Summary A"
             route.description shouldBe "Description A"
