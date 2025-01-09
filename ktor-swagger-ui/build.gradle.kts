@@ -25,9 +25,20 @@ dependencies {
     val versionKtor: String by project
     implementation("io.ktor:ktor-server-core-jvm:$versionKtor")
     implementation("io.ktor:ktor-server-content-negotiation:$versionKtor")
+    testImplementation("io.ktor:ktor-server-netty-jvm:$versionKtor")
+    testImplementation("io.ktor:ktor-server-content-negotiation:$versionKtor")
+    testImplementation("io.ktor:ktor-serialization-jackson:$versionKtor")
+    testImplementation("io.ktor:ktor-server-test-host:$versionKtor")
 
     val versionSwaggerUI: String by project
     implementation("org.webjars:swagger-ui:$versionSwaggerUI")
+
+    val versionKotest: String by project
+    testImplementation("io.kotest:kotest-runner-junit5:$versionKotest")
+    testImplementation("io.kotest:kotest-assertions-core:$versionKotest")
+
+    val versionKotlinTest: String by project
+    testImplementation("org.jetbrains.kotlin:kotlin-test:$versionKotlinTest")
 }
 
 kotlin {
