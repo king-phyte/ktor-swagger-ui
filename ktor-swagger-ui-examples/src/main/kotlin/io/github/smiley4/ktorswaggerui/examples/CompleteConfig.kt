@@ -1,23 +1,22 @@
 package io.github.smiley4.ktorswaggerui.examples
 
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.data.AuthScheme
-import io.github.smiley4.ktorswaggerui.data.AuthType
-import io.github.smiley4.ktorswaggerui.data.SwaggerUiSort
-import io.github.smiley4.ktorswaggerui.data.SwaggerUiSyntaxHighlight
-import io.github.smiley4.ktorswaggerui.dsl.config.PluginConfigDsl
-import io.github.smiley4.ktorswaggerui.dsl.routing.get
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.AuthScheme
+import io.github.smiley4.ktoropenapi.config.AuthType
+import io.github.smiley4.ktoropenapi.get
+import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
+import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.reflection.processReflection
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
 import io.github.smiley4.schemakenerator.swagger.generateSwaggerSchema
-import io.github.smiley4.schemakenerator.swagger.withAutoTitle
+import io.github.smiley4.schemakenerator.swagger.withTitle
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -35,13 +34,13 @@ class Greeting(
     val name: String
 )
 
+
 /**
  * A (nearly) complete - and mostly nonsensical - plugin configuration
  */
 private fun Application.myModule() {
 
-
-    install(SwaggerUI) {
+    install(OpenApi) {
         info {
             title = "Example API"
             version = "latest"
@@ -80,13 +79,6 @@ private fun Application.myModule() {
                 description = "the version of the server api"
             }
         }
-        swagger {
-            displayOperationId = true
-            showTagFilterInput = true
-            sort = SwaggerUiSort.HTTP_METHOD
-            syntaxHighlight = SwaggerUiSyntaxHighlight.MONOKAI
-            withCredentials = false
-        }
         security {
             defaultUnauthorizedResponse {
                 description = "Username or password is invalid"
@@ -116,7 +108,7 @@ private fun Application.myModule() {
                 type
                     .processReflection()
                     .generateSwaggerSchema()
-                    .withAutoTitle(TitleType.SIMPLE)
+                    .withTitle(TitleType.SIMPLE)
                     .compileReferencingRoot()
             }
             overwrite<File>(Schema<Any>().also {
@@ -135,7 +127,7 @@ private fun Application.myModule() {
 
             }
         }
-        specAssigner = { _, _ -> PluginConfigDsl.DEFAULT_SPEC_ID }
+        specAssigner = { _, _ -> OpenApiPluginConfig.DEFAULT_SPEC_ID }
         pathFilter = { _, url -> url.firstOrNull() != "hidden" }
         ignoredRouteSelectors = emptySet()
         ignoredRouteSelectorClassNames = emptySet()
@@ -147,10 +139,16 @@ private fun Application.myModule() {
 
         // add the routes for swagger-ui and api-spec
         route("swagger") {
-            swaggerUI("/api.json")
+            swaggerUI("/api.json") {
+                displayOperationId = true
+                showTagFilterInput = true
+                sort = SwaggerUISort.HTTP_METHOD
+                syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
+                withCredentials = false
+            }
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
         // a documented route
@@ -159,7 +157,7 @@ private fun Application.myModule() {
             summary = "hello world route"
             description = "A Hello-World route as an example."
             tags("hello", "example")
-            specId = PluginConfigDsl.DEFAULT_SPEC_ID
+            specName = io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig.DEFAULT_SPEC_ID
             deprecated = false
             hidden = false
             protected = false

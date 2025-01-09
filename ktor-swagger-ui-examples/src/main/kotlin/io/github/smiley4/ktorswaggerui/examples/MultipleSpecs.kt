@@ -1,12 +1,11 @@
 package io.github.smiley4.ktorswaggerui.examples
 
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.dsl.routing.get
-import io.github.smiley4.ktorswaggerui.dsl.routing.route
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.get
+import io.github.smiley4.ktoropenapi.route
+import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -21,7 +20,7 @@ fun main() {
 private fun Application.myModule() {
 
     // Install and configure the "SwaggerUI"-Plugin
-    install(SwaggerUI) {
+    install(OpenApi) {
         // "global" configuration for all specs
         info {
             title = "Example API"
@@ -52,7 +51,7 @@ private fun Application.myModule() {
             }
             route("api.json") {
                 // api-spec containing all routes assigned to "v1"
-                openApiSpec("version1")
+                openApi("version1")
             }
         }
 
@@ -64,14 +63,14 @@ private fun Application.myModule() {
             }
             route("api.json") {
                 // api-spec containing all routes assigned to "v2"
-                openApiSpec("version2")
+                openApi("version2")
             }
         }
 
 
         // version 1.0 routes
         route("v1", {
-            specId = "version1"
+            specName = "version1"
         }) {
 
             // "hello"-route in version 1.0
@@ -85,7 +84,7 @@ private fun Application.myModule() {
 
         // version 2.0 routes
         route("v2", {
-            specId = "version2"
+            specName = "version2"
         }) {
 
             // "hello"-route in version 2.0

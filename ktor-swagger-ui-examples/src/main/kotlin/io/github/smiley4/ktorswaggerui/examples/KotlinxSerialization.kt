@@ -1,10 +1,10 @@
 package io.github.smiley4.ktorswaggerui.examples
 
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.data.kotlinxExampleEncoder
-import io.github.smiley4.ktorswaggerui.dsl.routing.get
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.config.kotlinxExampleEncoder
+import io.github.smiley4.ktoropenapi.get
+import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
@@ -26,7 +26,7 @@ fun main() {
 
 private fun Application.myModule() {
 
-    install(SwaggerUI) {
+    install(OpenApi) {
         schemas {
             // configure the schema generator to use kotlinx-serializer
             // (see https://github.com/SMILEY4/schema-kenerator/wiki for more information)
@@ -51,7 +51,7 @@ private fun Application.myModule() {
             swaggerUI("/api.json")
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
         // a documented route

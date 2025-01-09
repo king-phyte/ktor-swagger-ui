@@ -1,12 +1,11 @@
 package io.github.smiley4.ktorswaggerui.examples
 
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.data.KTypeDescriptor
-import io.github.smiley4.ktorswaggerui.dsl.routing.get
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
+import io.github.smiley4.ktoropenapi.OpenApi
+import io.github.smiley4.ktoropenapi.config.KTypeDescriptor
+import io.github.smiley4.ktoropenapi.get
+import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
@@ -22,7 +21,7 @@ fun main() {
 private fun Application.myModule() {
 
     // Install and customize the "SwaggerUI"-Plugin
-    install(SwaggerUI) {
+    install(OpenApi) {
         examples {
 
             // specify two shared examples
@@ -58,7 +57,7 @@ private fun Application.myModule() {
             swaggerUI("/api.json")
         }
         route("api.json") {
-            openApiSpec()
+            openApi()
         }
 
 
