@@ -34,7 +34,7 @@ fun Route.swaggerUI(openApiUrl: String, config: SwaggerUIConfig.() -> Unit = {})
 
 internal object SwaggerUI {
 
-    internal suspend fun serveSwaggerInitializer(call: ApplicationCall, config: SwaggerUIConfig, apiUrl: String) {
+    internal suspend fun serveSwaggerInitializer(call: ApplicationCall, config: SwaggerUIConfig, openApiUrl: String) {
         // see https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md for reference
         val propValidatorUrl = config.validatorUrl?.let { "validatorUrl: \"$it\"" } ?: "validatorUrl: false"
         val propDisplayOperationId = "displayOperationId: ${config.displayOperationId}"
@@ -48,7 +48,7 @@ internal object SwaggerUI {
         val content = """
 			window.onload = function() {
 			  window.ui = SwaggerUIBundle({
-				url: "$apiUrl",
+				url: "$openApiUrl",
 				dom_id: '#swagger-ui',
 				deepLinking: true,
 				presets: [

@@ -58,7 +58,7 @@ class RoutingTests {
     private fun swaggerUITestApplication(format: OutputFormat = OutputFormat.JSON, block: suspend TestContext.() -> Unit) {
         testApplication {
             val client = createClient {
-                this.followRedirects = followRedirects
+                this.followRedirects = false
             }
             install(OpenApi) {
                 outputFormat = format
