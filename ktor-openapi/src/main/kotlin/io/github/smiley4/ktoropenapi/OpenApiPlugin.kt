@@ -21,10 +21,7 @@ import io.ktor.server.routing.get
 private val logger = KotlinLogging.logger {}
 
 val OpenApi = createApplicationPlugin(name = "OpenApi", createConfiguration = ::OpenApiPluginConfig) {
-    OpenApiPlugin.config = pluginConfig.build(
-        OpenApiPluginData.DEFAULT,
-        application.environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString()
-    )
+    OpenApiPlugin.config = pluginConfig.build(OpenApiPluginData.DEFAULT, getRootPath(application))
     on(MonitoringEvent(ApplicationStarted)) { application ->
         try {
             OpenApiPlugin.generateOpenApiSpecs(application)
@@ -32,6 +29,13 @@ val OpenApi = createApplicationPlugin(name = "OpenApi", createConfiguration = ::
             logger.error(e) { "Error during application startup in openapi-plugin" }
         }
     }
+}
+
+private fun getRootPath(application: Application): String? {
+    if(application.rootPath.isNotBlank()) {
+        return application.rootPath
+    }
+    return application.environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString()
 }
 
 
