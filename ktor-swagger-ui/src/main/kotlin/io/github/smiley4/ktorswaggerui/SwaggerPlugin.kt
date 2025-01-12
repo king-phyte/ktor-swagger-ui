@@ -119,8 +119,12 @@ private fun routes(application: Application, config: PluginConfigData): List<Rou
  * @receiver Application
  * @return String
  */
-private fun Application.rootPath(): String =
-    environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString() ?: ""
+private fun Application.rootPath(): String {
+    if(this.rootPath.isNotBlank()) {
+        return this.rootPath
+    }
+    return environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString() ?: ""
+}
 
 private fun builder(
     config: PluginConfigData,
