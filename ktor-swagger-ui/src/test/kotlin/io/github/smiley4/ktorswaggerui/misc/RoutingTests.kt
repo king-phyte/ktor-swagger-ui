@@ -14,7 +14,8 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import io.ktor.server.application.call
+import io.ktor.server.config.MapApplicationConfig
+import io.ktor.server.config.mergeWith
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.route
@@ -88,8 +89,71 @@ class RoutingTests {
         }
     }
 
-    private fun swaggerUITestApplication(format: OutputFormat = OutputFormat.JSON, block: suspend TestContext.() -> Unit) {
+
+    @Test
+    fun appRootPath() = swaggerUITestApplication(OutputFormat.YAML, "app" to "app/root/path") {
+        get("/api.yml").also {
+            it.status shouldBe HttpStatusCode.NotFound
+        }
+        get("/app/root/path/api.yml").also {
+            it.status shouldBe HttpStatusCode.OK
+            it.contentType shouldBe ContentType.Text.Plain.withParameter("charset", "utf-8")
+            it.body.shouldNotBeEmpty()
+            it.body shouldStartWith "openapi: 3.1.0\n"
+            it.body shouldContain "app/root/path/hello:"
+        }
+    }
+
+
+    @Test
+    fun envRootPath() = swaggerUITestApplication(OutputFormat.YAML, "env" to "env/root/path") {
+        // node: specifying rootPath via env in test does not apply to routes. It should still be added to routes in openapi documentation
+        get("/api.yml").also {
+            it.status shouldBe HttpStatusCode.OK
+            it.contentType shouldBe ContentType.Text.Plain.withParameter("charset", "utf-8")
+            it.body.shouldNotBeEmpty()
+            it.body shouldStartWith "openapi: 3.1.0\n"
+            it.body shouldContain "env/root/path/hello:"
+        }
+    }
+
+    @Test
+    fun envAndAppRootPath() = swaggerUITestApplication(OutputFormat.YAML, "both" to "*/root/path") {
+        get("/app/root/path/api.yml").also { // app root path takes priority
+            it.status shouldBe HttpStatusCode.OK
+            it.contentType shouldBe ContentType.Text.Plain.withParameter("charset", "utf-8")
+            it.body.shouldNotBeEmpty()
+            it.body shouldStartWith "openapi: 3.1.0\n"
+            it.body shouldContain "app/root/path/hello:"
+        }
+    }
+
+    private fun swaggerUITestApplication(
+        format: OutputFormat = OutputFormat.JSON,
+        rootPath: Pair<String, String>? = null,
+        block: suspend TestContext.() -> Unit
+    ) {
         testApplication {
+            application {
+                rootPath?.also {
+                    if (it.first == "app") {
+                        this.rootPath = it.second
+                    }
+                    if(it.first == "both") {
+                        this.rootPath = it.second.replace("*", "app")
+                    }
+                }
+            }
+            environment {
+                rootPath?.also {
+                    if (it.first == "env") {
+                        config = config.mergeWith(MapApplicationConfig("ktor.deployment.rootPath" to it.second))
+                    }
+                    if (it.first == "both") {
+                        config = config.mergeWith(MapApplicationConfig("ktor.deployment.rootPath" to it.second.replace("*", "env")))
+                    }
+                }
+            }
             val client = createClient {
                 this.followRedirects = followRedirects
             }
@@ -97,7 +161,7 @@ class RoutingTests {
                 outputFormat = format
             }
             routing {
-                val routeSuffix = when(format) {
+                val routeSuffix = when (format) {
                     OutputFormat.JSON -> "json"
                     OutputFormat.YAML -> "yml"
                 }
