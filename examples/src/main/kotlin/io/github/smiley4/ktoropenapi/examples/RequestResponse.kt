@@ -1,4 +1,4 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import com.fasterxml.jackson.core.util.DefaultIndenter
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.post
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.jackson.jackson
@@ -40,12 +41,15 @@ private fun Application.myModule() {
 
     routing {
 
-        // add the routes for swagger-ui and api-spec
+        // add the routes for  the api-spec, swagger-ui and redoc
         route("swagger") {
             swaggerUI("/api.json")
         }
         route("api.json") {
             openApi()
+        }
+        route("redoc") {
+            redoc("/api.json")
         }
 
         // a documented route

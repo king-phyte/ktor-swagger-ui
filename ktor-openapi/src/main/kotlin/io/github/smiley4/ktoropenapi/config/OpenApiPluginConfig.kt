@@ -1,7 +1,6 @@
 package io.github.smiley4.ktoropenapi.config
 
 import io.github.smiley4.ktoropenapi.data.DataUtils.merge
-import io.github.smiley4.ktoropenapi.data.DataUtils.mergeDefault
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.ktor.server.routing.RouteSelector
@@ -159,7 +158,7 @@ class OpenApiPluginConfig {
             },
             securityConfig = securityConfig,
             tagsConfig = tags.build(base.tagsConfig),
-            schemaConfig = schemaConfig.build(base.schemaConfig, securityConfig),
+            schemaConfig = schemaConfig.build(securityConfig),
             exampleConfig = exampleConfig.build(securityConfig),
             specAssigner = merge(base.specAssigner, specAssigner) ?: OpenApiPluginData.DEFAULT.specAssigner,
             pathFilter = merge(base.pathFilter, pathFilter) ?: OpenApiPluginData.DEFAULT.pathFilter,
@@ -173,7 +172,7 @@ class OpenApiPluginConfig {
             },
             specConfigs = mutableMapOf(),
             postBuild = merge(base.postBuild, postBuild),
-            outputFormat = mergeDefault(base.outputFormat, outputFormat, OpenApiPluginData.DEFAULT.outputFormat),
+            outputFormat = outputFormat,
             rootPath = merge(rootPath ?: ktorRootPath, base.rootPath)
         ).also {
             specConfigs.forEach { (specName, config) ->

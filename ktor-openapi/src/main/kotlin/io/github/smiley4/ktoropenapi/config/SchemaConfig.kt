@@ -1,7 +1,6 @@
 package io.github.smiley4.ktoropenapi.config
 
 import io.github.smiley4.ktoropenapi.data.*
-import io.github.smiley4.ktoropenapi.data.DataUtils.mergeDefault
 import io.github.smiley4.schemakenerator.swagger.data.CompiledSwaggerSchema
 import io.swagger.v3.oas.models.media.Schema
 import kotlin.reflect.KType
@@ -87,16 +86,10 @@ class SchemaConfig {
      * Build the data object for this config.
      * @param securityConfig configuration that might contain additional schemas
      */
-    internal fun build(base: SchemaConfigData, securityConfig: SecurityData) = SchemaConfigData(
-        generator = mergeDefault(base.generator, generator, SchemaConfigData.DEFAULT.generator),
-        schemas = mutableMapOf<String, TypeDescriptor>().apply {
-            this.putAll(base.schemas)
-            this.putAll(schemas)
-        },
-        overwrite = mutableMapOf<KType, TypeDescriptor>().apply {
-            this.putAll(base.overwrite)
-            this.putAll(overwrite)
-        },
+    internal fun build(securityConfig: SecurityData) = SchemaConfigData(
+        generator = generator,
+        schemas = schemas,
+        overwrite = overwrite,
         securitySchemas = securityConfig.defaultUnauthorizedResponse?.body?.let { body ->
             when (body) {
                 is SimpleBodyData -> listOf(body.type)
