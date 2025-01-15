@@ -1,9 +1,7 @@
 package io.github.smiley4.ktoropenapi.config
 
-import io.github.smiley4.ktorswaggerui.data.*
-import io.github.smiley4.ktorswaggerui.data.DataUtils.mergeDefault
-import io.github.smiley4.ktorswaggerui.dsl.OpenApiDslMarker
 import io.github.smiley4.ktoropenapi.data.*
+import io.github.smiley4.ktoropenapi.data.DataUtils.mergeDefault
 import io.github.smiley4.schemakenerator.swagger.data.CompiledSwaggerSchema
 import io.swagger.v3.oas.models.media.Schema
 import kotlin.reflect.KType

@@ -1,15 +1,7 @@
 package io.github.smiley4.ktoropenapi.config
 
-import io.github.smiley4.ktorswaggerui.data.DataUtils.merge
-import io.github.smiley4.ktorswaggerui.data.DataUtils.mergeDefault
-import io.github.smiley4.ktorswaggerui.data.OutputFormat
-import io.github.smiley4.ktorswaggerui.data.PathFilter
-import io.github.smiley4.ktorswaggerui.data.PluginConfigData
-import io.github.smiley4.ktorswaggerui.data.PostBuild
-import io.github.smiley4.ktorswaggerui.data.ServerData
-import io.github.smiley4.ktorswaggerui.data.SpecAssigner
-import io.github.smiley4.ktorswaggerui.dsl.OpenApiDslMarker
 import io.github.smiley4.ktoropenapi.data.DataUtils.merge
+import io.github.smiley4.ktoropenapi.data.DataUtils.mergeDefault
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.ktor.server.routing.RouteSelector
@@ -181,7 +173,7 @@ class OpenApiPluginConfig {
             },
             specConfigs = mutableMapOf(),
             postBuild = merge(base.postBuild, postBuild),
-            outputFormat = mergeDefault(base.outputFormat, outputFormat, PluginConfigData.DEFAULT.outputFormat)
+            outputFormat = mergeDefault(base.outputFormat, outputFormat, OpenApiPluginData.DEFAULT.outputFormat),
             rootPath = merge(rootPath ?: ktorRootPath, base.rootPath)
         ).also {
             specConfigs.forEach { (specName, config) ->
