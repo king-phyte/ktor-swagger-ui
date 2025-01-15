@@ -31,6 +31,7 @@ fun Route.redoc(openApiUrl: String, config: RedocConfig.() -> Unit = {}) {
 
 internal object Redoc {
 
+    @Suppress("LongMethod", "CyclomaticComplexMethod")
     internal suspend fun serveIndexHtml(call: ApplicationCall, config: RedocConfig, openApiUrl: String) {
         val redocProperties = buildMap {
             this["spec-url"] = "'$openApiUrl'"

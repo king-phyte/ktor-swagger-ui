@@ -166,7 +166,8 @@ class RedocConfig {
 
     /**
      * If set, the payload sample is inserted at the specified index.
-     * If there are N payload samples and the value configured here is bigger than N, the payload sample is inserted last. Indexes start from 0.
+     * If there are N payload samples and the value configured here is bigger than N, the payload sample is inserted last.
+     * Indexes start from 0.
      * https://redocly.com/docs/redoc/config#payloadsampleidx
      */
     var payloadSampleIdx: Int? = null
