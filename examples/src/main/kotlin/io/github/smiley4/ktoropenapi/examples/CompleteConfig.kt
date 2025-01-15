@@ -1,4 +1,4 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
@@ -6,6 +6,7 @@ import io.github.smiley4.ktoropenapi.config.AuthScheme
 import io.github.smiley4.ktoropenapi.config.AuthType
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
 import io.github.smiley4.ktorswaggerui.swaggerUI
@@ -112,7 +113,7 @@ private fun Application.myModule() {
                     .compileReferencingRoot()
             }
             overwrite<File>(Schema<Any>().also {
-                it.types = setOf("string")
+                it.type = "string"
                 it.format = "binary"
             })
         }
@@ -137,7 +138,9 @@ private fun Application.myModule() {
 
     routing {
 
-        // add the routes for swagger-ui and api-spec
+        route("api.json") {
+            openApi()
+        }
         route("swagger") {
             swaggerUI("/api.json") {
                 displayOperationId = true
@@ -146,9 +149,48 @@ private fun Application.myModule() {
                 syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
                 withCredentials = false
             }
-        }
-        route("api.json") {
-            openApi()
+            route("redoc") {
+                redoc("/api.json") {
+                    disableSearch = false
+                    minCharacterLengthToInitSearch = 1
+                    expandResponses = listOf("all")
+                    expandSingleSchemaField = true
+                    hideDownloadButton = false
+                    hideHostname = false
+                    hideLoading = false
+                    hideRequestPayloadSample = true
+                    hideOneOfDescription = false
+                    hideSchemaPattern = false
+                    hideSchemaTitles = true
+                    hideSecuritySection = false
+                    hideSingleRequestSampleTab = true
+                    jsonSampleExpandLevel = "1"
+                    maxDisplayedEnumValues = 3
+                    menuToggle = true
+                    nativeScrollbars = true
+                    onlyRequiredInSamples = false
+                    pathInMiddlePanel = true
+                    requiredPropsFirst = true
+                    schemaExpansionLevel = "all"
+                    showObjectSchemaExamples = true
+                    showWebhookVerb = true
+                    simpleOneOfTypeLabel = true
+                    sortEnumValuesAlphabetically = true
+                    sortOperationsAlphabetically = true
+                    sortPropsAlphabetically = true
+                    sortTagsAlphabetically = true
+                    theme = """
+                    {
+                      "sidebar": {
+                        "backgroundColor": "lightblue"
+                      },
+                      "rightPanel": {
+                        "backgroundColor": "darkblue"
+                      }
+                    }
+                    """.trimIndent()
+                }
+            }
         }
 
         // a documented route

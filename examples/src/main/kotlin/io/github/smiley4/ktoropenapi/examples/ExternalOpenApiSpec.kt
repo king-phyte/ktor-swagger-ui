@@ -1,5 +1,6 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.server.application.Application
 import io.ktor.server.engine.embeddedServer
@@ -18,6 +19,11 @@ private fun Application.myModule() {
         // Create a route for the swagger-ui using an external openapi-spec.
         route("swagger") {
             swaggerUI("https://petstore3.swagger.io/api/v3/openapi.json")
+        }
+
+        // Create a route for redoc using an external openapi-spec.
+        route("redoc") {
+            redoc("https://petstore3.swagger.io/api/v3/openapi.json")
         }
 
     }

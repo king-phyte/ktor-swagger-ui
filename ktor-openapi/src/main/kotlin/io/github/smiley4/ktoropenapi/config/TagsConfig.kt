@@ -1,6 +1,6 @@
 package io.github.smiley4.ktoropenapi.config
 
-import io.github.smiley4.ktoropenapi.data.DataUtils.mergeDefault
+import io.github.smiley4.ktoropenapi.data.DataUtils.merge
 import io.github.smiley4.ktoropenapi.data.TagData
 import io.github.smiley4.ktoropenapi.data.TagsData
 
@@ -36,7 +36,7 @@ class TagsConfig {
             addAll(base.tags)
             addAll(tags.map { it.build(TagData.DEFAULT) })
         },
-        generator = mergeDefault(base.generator, tagGenerator, TagsData.DEFAULT.generator)
+        generator = merge(base.generator, tagGenerator) ?: TagsData.DEFAULT.generator,
     )
 
 }

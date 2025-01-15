@@ -1,8 +1,9 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -44,15 +45,20 @@ private fun Application.myModule() {
 
     routing {
 
+        // Create a route for the openapi-spec file.
+        // This route will not be included in the spec.
+        route("api.json") {
+            openApi()
+        }
         // Create a route for the swagger-ui using the openapi-spec at "/api.json".
         // This route will not be included in the spec.
         route("swagger") {
             swaggerUI("/api.json")
         }
-        // Create a route for the openapi-spec file.
+        // Create a route for redoc using the openapi-spec at "/api.json".
         // This route will not be included in the spec.
-        route("api.json") {
-            openApi()
+        route("redoc") {
+            redoc("/api.json")
         }
 
         // a documented route

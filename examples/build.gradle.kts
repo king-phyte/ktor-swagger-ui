@@ -13,8 +13,9 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":ktor-swagger-ui"))
     implementation(project(":ktor-openapi"))
+    implementation(project(":ktor-swagger-ui"))
+    implementation(project(":ktor-redoc"))
 
     val versionKtor: String by project
     implementation("io.ktor:ktor-server-netty-jvm:$versionKtor")

@@ -23,7 +23,8 @@ internal class RouteCollector {
     private val routeDocumentationMerger = RouteDocumentationMerger()
 
     private val hiddenRouteMarkers = setOf(
-        "io.github.smiley4.ktorswaggerui.SwaggerUIRouteSelector"
+        "io.github.smiley4.ktorswaggerui.SwaggerUIRouteSelector",
+        "io.github.smiley4.ktorredoc.RedocRouteSelector"
     )
 
 

@@ -1,14 +1,10 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.post
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
-import io.github.smiley4.ktorswaggerui.SwaggerUI
-import io.github.smiley4.ktorswaggerui.data.array
-import io.github.smiley4.ktorswaggerui.dsl.routing.post
-import io.github.smiley4.ktorswaggerui.routing.openApiSpec
-import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -32,7 +28,7 @@ private fun Application.myModule() {
         schemas {
             // overwrite type "File" with custom schema for binary data
             overwrite<File>(Schema<Any>().also {
-                it.types = setOf("string")
+                it.type = "string"
                 it.format = "binary"
             })
         }
@@ -40,12 +36,15 @@ private fun Application.myModule() {
 
     routing {
 
-        // add the routes for swagger-ui and api-spec
+        // add the routes for  the api-spec, swagger-ui and redoc
         route("swagger") {
             swaggerUI("/api.json")
         }
         route("api.json") {
             openApi()
+        }
+        route("redoc") {
+            redoc("/api.json")
         }
 
         // upload a single file, either as png, jpeg or svg
@@ -63,7 +62,7 @@ private fun Application.myModule() {
             call.respond(HttpStatusCode.NotImplemented, "...")
         }
 
-        // upload multiple (two) files
+        // upload multiple files
         post("multipart", {
             request {
                 multipartBody {
@@ -76,24 +75,6 @@ private fun Application.myModule() {
                         )
                     }
                     part<File>("second-image") {
-                        mediaTypes(
-                            ContentType.Image.PNG,
-                            ContentType.Image.JPEG,
-                            ContentType.Image.SVG
-                        )
-                    }
-                }
-            }
-        }) {
-            call.respond(HttpStatusCode.NotImplemented, "...")
-        }
-
-        // upload multiple (any amount of) files
-        post("list", {
-            request {
-                multipartBody {
-                    mediaTypes(ContentType.MultiPart.FormData)
-                    part("images", array<File>()) {
                         mediaTypes(
                             ContentType.Image.PNG,
                             ContentType.Image.JPEG,

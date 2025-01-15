@@ -1,10 +1,11 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.delete
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.post
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -48,11 +49,15 @@ private fun Application.myModule() {
 
     routing {
 
+        // add the routes for  the api-spec, swagger-ui and redoc
         route("swagger") {
             swaggerUI("/api.json")
         }
         route("api.json") {
             openApi()
+        }
+        route("redoc") {
+            redoc("/api.json")
         }
 
         route("/pets") {

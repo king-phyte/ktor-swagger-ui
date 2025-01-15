@@ -573,7 +573,7 @@ class OperationBuilderTest : StringSpec({
                                     mediaType.schema
                                         .also { it.shouldNotBeNull() }
                                         ?.also { schema ->
-                                            schema.types.shouldContainExactlyInAnyOrder("object")
+                                            schema.type shouldBe "object"
                                             schema.properties.keys shouldContainExactlyInAnyOrder listOf(
                                                 "image",
                                                 "data"
@@ -975,7 +975,7 @@ class OperationBuilderTest : StringSpec({
                                     mediaType.schema
                                         .also { it.shouldNotBeNull() }
                                         ?.also { schema ->
-                                            schema.types.shouldContainExactlyInAnyOrder("object")
+                                            schema.type shouldBe "object"
                                             schema.properties.keys shouldContainExactlyInAnyOrder listOf("customData")
                                             schema.properties["customData"]!!.`$ref` shouldBe "#/components/schemas/myCustomSchema"
                                         }

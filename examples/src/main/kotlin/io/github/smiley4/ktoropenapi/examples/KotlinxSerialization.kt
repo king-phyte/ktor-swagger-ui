@@ -1,9 +1,10 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
 import io.github.smiley4.ktoropenapi.config.kotlinxExampleEncoder
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
@@ -46,12 +47,15 @@ private fun Application.myModule() {
 
     routing {
 
-        // add the routes for swagger-ui and api-spec
+        // add the routes for  the api-spec, swagger-ui and redoc
         route("swagger") {
             swaggerUI("/api.json")
         }
         route("api.json") {
             openApi()
+        }
+        route("redoc") {
+            redoc("/api.json")
         }
 
         // a documented route

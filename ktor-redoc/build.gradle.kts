@@ -30,8 +30,8 @@ dependencies {
     testImplementation("io.ktor:ktor-serialization-jackson:$versionKtor")
     testImplementation("io.ktor:ktor-server-test-host:$versionKtor")
 
-    val versionSwaggerUI: String by project
-    implementation("org.webjars:swagger-ui:$versionSwaggerUI")
+    val versionRedoc: String by project
+    implementation("org.webjars:redoc:$versionRedoc")
 
     val versionKotest: String by project
     testImplementation("io.kotest:kotest-runner-junit5:$versionKotest")
@@ -78,10 +78,10 @@ mavenPublishing {
     configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
     publishToMavenCentral(SonatypeHost.S01)
     signAllPublications()
-    coordinates(projectGroupId, "ktor-swagger-ui", projectVersion)
+    coordinates(projectGroupId, "ktor-redoc", projectVersion)
     pom {
-        name.set("Ktor Swagger-UI")
-        description.set("Ktor plugin to provide a Swagger-UI")
+        name.set("Ktor Redoc")
+        description.set("Ktor plugin to provide Redoc")
         url.set(projectScmUrl)
         licenses {
             license {

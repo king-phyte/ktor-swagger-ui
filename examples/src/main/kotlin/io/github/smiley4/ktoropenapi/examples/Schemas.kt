@@ -1,4 +1,4 @@
-package io.github.smiley4.ktorswaggerui.examples
+package io.github.smiley4.ktoropenapi.examples
 
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import io.github.smiley4.ktoropenapi.OpenApi
@@ -7,6 +7,7 @@ import io.github.smiley4.ktoropenapi.config.array
 import io.github.smiley4.ktoropenapi.config.ref
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.core.connectSubTypes
 import io.github.smiley4.schemakenerator.jackson.collectJacksonSubTypes
@@ -37,7 +38,7 @@ private fun Application.myModule() {
 
             // add a swagger schema to the component-section of the api-spec with the id "swagger-schema"
             schema("swagger-schema", Schema<Any>().also {
-                it.types = setOf("number")
+                it.type = "number"
                 it.title = "Custom Type"
             })
 
@@ -47,7 +48,7 @@ private fun Application.myModule() {
             // overwrite 'LocalDateTime' with custom schema (root only)
             overwrite<LocalDateTime>(Schema<Any>().also {
                 it.title = "timestamp"
-                it.types = setOf("integer")
+                it.type = "integer"
             })
 
             // customized schema generation pipeline
@@ -66,12 +67,15 @@ private fun Application.myModule() {
 
     routing {
 
-        // add the routes for swagger-ui and api-spec
+        // add the routes for  the api-spec, swagger-ui and redoc
         route("swagger") {
             swaggerUI("/api.json")
         }
         route("api.json") {
             openApi()
+        }
+        route("redoc") {
+            redoc("/api.json")
         }
 
 

@@ -1,9 +1,10 @@
 rootProject.name = "ktor-openapi"
 
 include("ktor-openapi")
-
 include("ktor-swagger-ui")
-include("ktor-swagger-ui-examples")
+include("ktor-redoc")
+
+include("examples")
 
 pluginManagement {
     repositories {
