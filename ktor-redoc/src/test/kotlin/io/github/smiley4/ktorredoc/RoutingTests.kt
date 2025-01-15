@@ -1,17 +1,15 @@
-package io.github.smiley4.ktorswaggerui.misc
+package io.github.smiley4.ktorredoc
 
-import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.config.OutputFormat
-import io.github.smiley4.ktoropenapi.openApi
+import io.github.smiley4.ktorredoc.config.RedocConfig
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldNotBeEmpty
-import io.kotest.matchers.string.shouldStartWith
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
+import io.ktor.client.request.*
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.http.withCharset
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.route
@@ -21,55 +19,30 @@ import kotlin.test.Test
 class RoutingTests {
 
     @Test
-    fun jsonSpec() = openApiTestApplication {
+    fun defaultConfig() = redocTestApplication {
         get("hello").also {
             it.status shouldBe HttpStatusCode.OK
             it.body shouldBe "Hello Test"
         }
-        get("/").also {
-            it.status shouldBe HttpStatusCode.NotFound
+        get("/redoc").also {
+            it.status shouldBe HttpStatusCode.Found
+            it.redirect shouldBe "/redoc/index.html"
         }
-        get("/api.json").also {
+        get("/redoc/index.html").also {
             it.status shouldBe HttpStatusCode.OK
-            it.contentType shouldBe ContentType.Application.Json
+            it.contentType shouldBe ContentType.Text.Html.withCharset(java.nio.charset.Charset.forName("UTF-8"))
             it.body.shouldNotBeEmpty()
-            it.body shouldStartWith "{\n  \"openapi\" : \"3.1.0\","
         }
     }
 
-
-    @Test
-    fun yamlSpec() = openApiTestApplication(OutputFormat.YAML) {
-        get("hello").also {
-            it.status shouldBe HttpStatusCode.OK
-            it.body shouldBe "Hello Test"
-        }
-        get("/").also {
-            it.status shouldBe HttpStatusCode.NotFound
-        }
-        get("/api.yml").also {
-            it.status shouldBe HttpStatusCode.OK
-            it.contentType shouldBe ContentType.Text.Plain.withParameter("charset", "utf-8")
-            it.body.shouldNotBeEmpty()
-            it.body shouldStartWith "openapi: 3.1.0\n"
-        }
-    }
-
-    private fun openApiTestApplication(format: OutputFormat = OutputFormat.JSON, block: suspend TestContext.() -> Unit) {
+    private fun redocTestApplication(config: RedocConfig.() -> Unit = {}, block: suspend TestContext.() -> Unit = {}) {
         testApplication {
             val client = createClient {
                 this.followRedirects = false
             }
-            install(OpenApi) {
-                outputFormat = format
-            }
             routing {
-                val routeSuffix = when(format) {
-                    OutputFormat.JSON -> "json"
-                    OutputFormat.YAML -> "yml"
-                }
-                route("api.$routeSuffix") {
-                    openApi()
+                route("redoc") {
+                    redoc("api.json", config)
                 }
                 get("hello") {
                     call.respondText("Hello Test")
