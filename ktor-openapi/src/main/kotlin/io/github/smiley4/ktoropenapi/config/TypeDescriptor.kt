@@ -1,6 +1,7 @@
 package io.github.smiley4.ktoropenapi.config
 
 import io.swagger.v3.oas.models.media.Schema
+import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
@@ -20,6 +21,11 @@ class SwaggerTypeDescriptor(val schema: Schema<*>) : TypeDescriptor
  * Describes a type from a kotlin [KType]
  */
 class KTypeDescriptor(val type: KType) : TypeDescriptor
+
+/**
+ * Describes a type from a kotlinx-serialization [SerialDescriptor]
+ */
+class SerialTypeDescriptor(val descriptor: SerialDescriptor) : TypeDescriptor
 
 /**
  * Describes an array of types.

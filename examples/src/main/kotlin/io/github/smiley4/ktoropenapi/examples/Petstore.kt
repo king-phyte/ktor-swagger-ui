@@ -27,6 +27,21 @@ fun main() {
  */
 private fun Application.myModule() {
 
+    data class Pet(
+        val id: Long,
+        val name: String,
+        val tag: String
+    )
+
+    data class NewPet(
+        val name: String,
+        val tag: String
+    )
+
+    data class ErrorModel(
+        val message: String
+    )
+
     install(OpenApi) {
         info {
             title = "Swagger Petstore"
@@ -248,18 +263,3 @@ private fun Application.myModule() {
     }
 
 }
-
-private data class Pet(
-    val id: Long,
-    val name: String,
-    val tag: String
-)
-
-private data class NewPet(
-    val name: String,
-    val tag: String
-)
-
-private data class ErrorModel(
-    val message: String
-)

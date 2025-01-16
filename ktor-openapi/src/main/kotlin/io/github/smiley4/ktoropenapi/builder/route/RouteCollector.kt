@@ -1,8 +1,8 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
-import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.config.RouteConfig
 import io.github.smiley4.ktoropenapi.DocumentedRouteSelector
+import io.github.smiley4.ktoropenapi.config.RouteConfig
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.ktor.http.HttpMethod
 import io.ktor.server.auth.AuthenticationRouteSelector
 import io.ktor.server.routing.ConstantParameterRouteSelector
@@ -49,6 +49,13 @@ internal class RouteCollector {
             .toList()
     }
 
+    private fun unroll(route: RoutingNode): List<Pair<RoutingNode, RouteSelector>> {
+        return if (route.parent != null) {
+            unroll(route.parent!!) + listOf(route to route.selector)
+        } else {
+            emptyList()
+        }
+    }
 
     private fun getDocumentation(route: RoutingNode, base: RouteConfig): RouteConfig {
         var documentation = base

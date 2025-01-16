@@ -9,6 +9,7 @@ import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationPlugin
 import io.ktor.server.application.ApplicationStarted
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.application.hooks.MonitoringEvent
@@ -20,7 +21,7 @@ import io.ktor.server.routing.get
 
 private val logger = KotlinLogging.logger {}
 
-val OpenApi = createApplicationPlugin(name = "OpenApi", createConfiguration = ::OpenApiPluginConfig) {
+val OpenApi: ApplicationPlugin<OpenApiPluginConfig> = createApplicationPlugin(name = "OpenApi", createConfiguration = ::OpenApiPluginConfig) {
     OpenApiPlugin.config = pluginConfig.build(OpenApiPluginData.DEFAULT, getRootPath(application))
     on(MonitoringEvent(ApplicationStarted)) { application ->
         try {

@@ -19,10 +19,14 @@ inline fun <reified T : Any> Route.get(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Get) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Get) {
+                    handle(body)
+                }
             }
         }
     }
@@ -37,10 +41,14 @@ inline fun <reified T : Any> Route.post(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Post) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Post) {
+                    handle(body)
+                }
             }
         }
     }
@@ -55,10 +63,14 @@ inline fun <reified T : Any> Route.put(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Put) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Put) {
+                    handle(body)
+                }
             }
         }
     }
@@ -73,10 +85,14 @@ inline fun <reified T : Any> Route.delete(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Delete) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Delete) {
+                    handle(body)
+                }
             }
         }
     }
@@ -91,10 +107,14 @@ inline fun <reified T : Any> Route.patch(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Patch) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Patch) {
+                    handle(body)
+                }
             }
         }
     }
@@ -109,10 +129,14 @@ inline fun <reified T : Any> Route.options(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Options) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Options) {
+                    handle(body)
+                }
             }
         }
     }
@@ -127,10 +151,14 @@ inline fun <reified T : Any> Route.head(
     noinline builder: RouteConfig.() -> Unit = { },
     noinline body: suspend RoutingContext.(T) -> Unit
 ): Route {
-    return documentation(builder) {
-        resource<T> {
-            method(HttpMethod.Head) {
-                handle(body)
+    val resources = plugin(Resources)
+    val extractedDocumentation = extractTypesafeDocumentation(serializer<T>(), resources.resourcesFormat)
+    return documentation(extractedDocumentation) {
+        documentation(builder) {
+            resource<T> {
+                method(HttpMethod.Head) {
+                    handle(body)
+                }
             }
         }
     }
