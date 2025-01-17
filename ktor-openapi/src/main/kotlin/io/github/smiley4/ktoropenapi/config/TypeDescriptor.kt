@@ -1,5 +1,6 @@
 package io.github.smiley4.ktoropenapi.config
 
+import io.github.smiley4.schemakenerator.core.data.AnnotationData
 import io.swagger.v3.oas.models.media.Schema
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlin.reflect.KType

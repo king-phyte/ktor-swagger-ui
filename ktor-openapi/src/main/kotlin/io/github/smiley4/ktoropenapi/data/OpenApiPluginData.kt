@@ -25,7 +25,8 @@ internal data class OpenApiPluginData(
     val securityConfig: SecurityData,
     val tagsConfig: TagsData,
     val outputFormat: OutputFormat,
-    val rootPath: String?
+    val rootPath: String?,
+    val autoDocumentResourcesRoutes: Boolean,
 ) {
 
     companion object {
@@ -44,7 +45,8 @@ internal data class OpenApiPluginData(
             securityConfig = SecurityData.DEFAULT,
             tagsConfig = TagsData.DEFAULT,
             outputFormat = OutputFormat.JSON,
-            rootPath = null
+            rootPath = null,
+            autoDocumentResourcesRoutes = false,
         )
     }
 

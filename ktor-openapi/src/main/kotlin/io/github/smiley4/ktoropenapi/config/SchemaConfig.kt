@@ -1,6 +1,7 @@
 package io.github.smiley4.ktoropenapi.config
 
 import io.github.smiley4.ktoropenapi.data.*
+import io.github.smiley4.schemakenerator.core.data.AnnotationData
 import io.github.smiley4.schemakenerator.core.data.InputType
 import io.github.smiley4.schemakenerator.swagger.data.CompiledSwaggerSchema
 import io.swagger.v3.oas.models.media.Schema

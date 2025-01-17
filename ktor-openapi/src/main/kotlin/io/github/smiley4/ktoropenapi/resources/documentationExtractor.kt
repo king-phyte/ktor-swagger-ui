@@ -2,6 +2,7 @@
 
 package io.github.smiley4.ktoropenapi.resources
 
+import io.github.smiley4.ktoropenapi.OpenApiPlugin
 import io.github.smiley4.ktoropenapi.config.ParameterLocation
 import io.github.smiley4.ktoropenapi.config.RouteConfig
 import io.github.smiley4.ktoropenapi.config.SerialTypeDescriptor
@@ -12,15 +13,25 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.elementNames
 
+private data class ParameterData(
+    val name: String,
+    val descriptor: SerialDescriptor,
+    val optional: Boolean,
+    val location: ParameterLocation
+)
+
 fun <T> extractTypesafeDocumentation(serializer: KSerializer<T>, resourcesFormat: ResourcesFormat): RouteConfig.() -> Unit {
+    if(!OpenApiPlugin.config.autoDocumentResourcesRoutes) {
+        return {}
+    }
+
     // Note: typesafe routing only defines information about path & query parameters - no other information is available
     val path = resourcesFormat.encodeToPathPattern(serializer)
     return {
         request {
-            collectParameters(serializer.descriptor).forEach { (name, parameterDescriptor) ->
-                parameter(getLocation(name, path), name, SerialTypeDescriptor(parameterDescriptor)) {
-                    // todo: if elementDescriptor is not class, see "resourcesFormat.encodeToQueryParameters")
-                    required = parameterDescriptor.isNullable
+            collectParameters(serializer.descriptor, path).forEach { parameter ->
+                parameter(parameter.location, parameter.name, SerialTypeDescriptor(parameter.descriptor)) {
+                    required = !parameter.optional
                 }
             }
         }
@@ -28,20 +39,28 @@ fun <T> extractTypesafeDocumentation(serializer: KSerializer<T>, resourcesFormat
 }
 
 
-private fun collectParameters(descriptor: SerialDescriptor): List<Pair<String, SerialDescriptor>> {
-    val parameters = mutableListOf<Pair<String, SerialDescriptor>>()
+
+private fun collectParameters(descriptor: SerialDescriptor, path: String): List<ParameterData> {
+    val parameters = mutableListOf<ParameterData>()
 
     descriptor.elementNames.forEach { name ->
         val index = descriptor.getElementIndex(name)
         val elementDescriptor = descriptor.getElementDescriptor(index)
         if (!elementDescriptor.isInline && elementDescriptor.kind is StructureKind.CLASS) {
-            parameters.addAll(collectParameters(elementDescriptor))
+            parameters.addAll(collectParameters(elementDescriptor, path))
         } else {
-            parameters.add(name to elementDescriptor)
+            parameters.add(
+                ParameterData(
+                    name = name,
+                    descriptor = elementDescriptor,
+                    optional = path.contains("{$name?}"),
+                    location = getLocation(name, path)
+                )
+            )
         }
     }
 
-    return parameters;
+    return parameters
 }
 
 

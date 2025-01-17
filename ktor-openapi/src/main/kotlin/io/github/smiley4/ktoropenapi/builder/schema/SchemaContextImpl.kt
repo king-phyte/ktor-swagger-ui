@@ -12,6 +12,7 @@ import io.github.smiley4.ktoropenapi.config.TypeDescriptor
 import io.github.smiley4.ktoropenapi.data.MultipartBodyData
 import io.github.smiley4.ktoropenapi.data.SchemaConfigData
 import io.github.smiley4.ktoropenapi.data.SimpleBodyData
+import io.github.smiley4.schemakenerator.core.data.AnnotationData
 import io.github.smiley4.schemakenerator.core.data.KTypeInput
 import io.github.smiley4.schemakenerator.core.data.WildcardTypeData
 import io.github.smiley4.schemakenerator.serialization.SerialDescriptorInput
@@ -120,7 +121,7 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
         return schemaConfig.generator(KTypeInput(type))
     }
 
-    private fun generateSchema(descriptor: SerialDescriptor): CompiledSwaggerSchema {
+    private fun generateSchema(descriptor: SerialDescriptor,): CompiledSwaggerSchema {
         return schemaConfig.generator(SerialDescriptorInput(descriptor))
     }
 
