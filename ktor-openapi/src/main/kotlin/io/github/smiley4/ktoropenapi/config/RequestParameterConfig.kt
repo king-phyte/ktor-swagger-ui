@@ -34,6 +34,7 @@ class RequestParameterConfig(
      */
     var example: ExampleDescriptor? = null
 
+
     /**
      * An example value for this parameter
      */
@@ -41,10 +42,12 @@ class RequestParameterConfig(
         this.example = example
     }
 
+
     /**
      * An example value for this parameter
      */
     fun example(name: String, example: Example) = example(SwaggerExampleDescriptor(name, example))
+
 
     /**
      * An example value for this parameter
@@ -101,6 +104,13 @@ class RequestParameterConfig(
      */
     var style: Parameter.StyleEnum? = null
 
+
+    /**
+     * Don't include this parameter in the openapi-spec
+     */
+    var hidden: Boolean = false
+
+
     /**
      * Build the data object for this config.
      */
@@ -115,7 +125,8 @@ class RequestParameterConfig(
         allowEmptyValue = allowEmptyValue,
         explode = explode ?: false,
         allowReserved = allowReserved,
-        style = style
+        style = style,
+        hidden = hidden
     )
 
 }

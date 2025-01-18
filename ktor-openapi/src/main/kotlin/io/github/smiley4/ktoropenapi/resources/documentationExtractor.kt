@@ -24,7 +24,6 @@ fun <T> extractTypesafeDocumentation(serializer: KSerializer<T>, resourcesFormat
     if(!OpenApiPlugin.config.autoDocumentResourcesRoutes) {
         return {}
     }
-
     // Note: typesafe routing only defines information about path & query parameters - no other information is available
     val path = resourcesFormat.encodeToPathPattern(serializer)
     return {

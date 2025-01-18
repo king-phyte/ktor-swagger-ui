@@ -17,6 +17,7 @@ internal class ResponsesBuilder(
     fun build(responses: List<ResponseData>, isProtected: Boolean): ApiResponses =
         ApiResponses().also {
             responses
+                .filter { !it.hidden }
                 .map { response -> responseBuilder.build(response) }
                 .forEach { (name, response) -> it.addApiResponse(name, response) }
             if (shouldAddUnauthorized(responses, isProtected)) {
@@ -29,6 +30,7 @@ internal class ResponsesBuilder(
     private fun shouldAddUnauthorized(responses: List<ResponseData>, isProtected: Boolean): Boolean {
         val unauthorizedCode = HttpStatusCode.Unauthorized.value.toString()
         return config.securityConfig.defaultUnauthorizedResponse != null
+                && !config.securityConfig.defaultUnauthorizedResponse.hidden
                 && isProtected
                 && responses.count { it.statusCode == unauthorizedCode } == 0
     }
