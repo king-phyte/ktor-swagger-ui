@@ -51,6 +51,7 @@ private fun Application.myModule() {
 
     routing {
 
+        // add the routes for  the api-spec, swagger-ui and redoc
         route("api.json") {
             openApi()
         }
@@ -61,19 +62,21 @@ private fun Application.myModule() {
             redoc("/api.json")
         }
 
-        get<PetsRoute.All>({
-            description = "custom description"
-            request {
-                queryParameter<String>("tags") {
-                    description = "sample description"
-                }
-            }
-        }) { request ->
+        // query and path parameters are picked up automatically and added to the schema with the correct name and type
+        get<PetsRoute.All> { request ->
             println("..${request.tags}, ${request.limit}")
             call.respond(HttpStatusCode.NotImplemented, Unit)
         }
 
-        get<PetsRoute.Id> { request ->
+        // additional information can be added to the route manually as usual.
+        // automatically added information can also be overwritten this way.
+        get<PetsRoute.Id>({
+            request {
+                pathParameter<Long>("id") {
+                    description = "the id of the pet"
+                }
+            }
+        }) { request ->
             println("..${request.id}")
             call.respond(HttpStatusCode.NotImplemented, Unit)
         }
@@ -99,7 +102,7 @@ class PetsRoute {
     @Resource("/")
     class All(
         val parent: PetsRoute,
-        val tags: List<String> = emptyList(),
+        val tags: List<String>?,
         val limit: Int = 100
     )
 

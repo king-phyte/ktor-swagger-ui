@@ -48,12 +48,17 @@ private fun collectParameters(descriptor: SerialDescriptor, path: String): List<
         if (!elementDescriptor.isInline && elementDescriptor.kind is StructureKind.CLASS) {
             parameters.addAll(collectParameters(elementDescriptor, path))
         } else {
+            val location = getLocation(name, path)
             parameters.add(
                 ParameterData(
                     name = name,
                     descriptor = elementDescriptor,
-                    optional = path.contains("{$name?}"),
-                    location = getLocation(name, path)
+                    optional = when(location) {
+                        ParameterLocation.PATH -> path.contains("{$name?}")
+                        ParameterLocation.QUERY -> elementDescriptor.isNullable || descriptor.isElementOptional(index)
+                        else -> false
+                    },
+                    location = location
                 )
             )
         }
