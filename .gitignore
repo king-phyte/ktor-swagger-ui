@@ -8,7 +8,7 @@
 *.jar
 
 # Dokka
-docs/dokka/**/package-list
+docs/dokka/
 
 ### Visual Studio Code
 .vscode/

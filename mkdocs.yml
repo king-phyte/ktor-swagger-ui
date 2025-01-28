@@ -121,5 +121,9 @@ nav:
       - External OpenAPI Spec: examples/external-openapi-spec.md
       - Kotlinx Serialization: examples/kotlinx-serialization.md
       - File Upload: examples/file-upload.md
+  - API Reference:
+      - ktor-openapi: dokka/ktor-openapi/index.md
+      - ktor-swagger-ui: dokka/ktor-swagger-ui/index.md
+      - ktor-redoc: dokka/ktor-redoc/index.md
   - Migration Guide: migration-guide.md
   - Changelog: changelog.md
