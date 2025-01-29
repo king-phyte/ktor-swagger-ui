@@ -103,7 +103,8 @@ class PathsBuilderTest : StringSpec({
             path = url,
             method = method,
             documentation = RouteConfig().build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
 
         private val defaultPluginConfig = OpenApiPluginConfig()

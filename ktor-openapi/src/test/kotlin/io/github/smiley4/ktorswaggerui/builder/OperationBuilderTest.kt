@@ -45,7 +45,8 @@ class OperationBuilderTest : StringSpec({
             path = "/test",
             method = HttpMethod.Get,
             documentation = RouteConfig().build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -76,7 +77,8 @@ class OperationBuilderTest : StringSpec({
                 route.operationId = "testRoute"
                 route.deprecated = true
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -108,7 +110,8 @@ class OperationBuilderTest : StringSpec({
             documentation = RouteConfig().also { route ->
                 route.tags = listOf("defaultTag")
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val routeB = RouteMeta(
             path = "b/test",
@@ -116,7 +119,8 @@ class OperationBuilderTest : StringSpec({
             documentation = RouteConfig().also { route ->
                 route.tags = listOf("defaultTag")
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(routeA, routeB), config)
         val exampleContext = exampleContext(listOf(routeA, routeB), config)
@@ -135,7 +139,8 @@ class OperationBuilderTest : StringSpec({
             documentation = RouteConfig().also { route ->
                 route.securitySchemeNames = listOf("security1", "security2")
             }.build(),
-            protected = true
+            protected = true,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -155,7 +160,8 @@ class OperationBuilderTest : StringSpec({
             path = "/test",
             method = HttpMethod.Get,
             documentation = RouteConfig().build(),
-            protected = true
+            protected = true,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -182,7 +188,8 @@ class OperationBuilderTest : StringSpec({
             documentation = RouteConfig().also { route ->
                 route.securitySchemeNames = listOf("security1", "security2")
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -214,7 +221,8 @@ class OperationBuilderTest : StringSpec({
                     body(KTypeDescriptor(typeOf<List<String>>()))
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -337,7 +345,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -410,7 +419,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -463,7 +473,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -555,7 +566,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -624,7 +636,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -671,7 +684,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -713,7 +727,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = true
+            protected = true,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route), config)
         val exampleContext = exampleContext(listOf(route), config)
@@ -754,7 +769,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = true
+            protected = true,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route), config)
         val exampleContext = exampleContext(listOf(route), config)
@@ -798,7 +814,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route), config)
         val exampleContext = exampleContext(listOf(route), config)
@@ -822,7 +839,8 @@ class OperationBuilderTest : StringSpec({
                     body(KTypeDescriptor(typeOf<List<SimpleObject>>())) {}
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route))
         val exampleContext = exampleContext(listOf(route))
@@ -895,7 +913,8 @@ class OperationBuilderTest : StringSpec({
                     body(RefTypeDescriptor("myCustomSchema"))
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route), config)
         val exampleContext = exampleContext(listOf(route), config)
@@ -957,7 +976,8 @@ class OperationBuilderTest : StringSpec({
                     }
                 }
             }.build(),
-            protected = false
+            protected = false,
+            isWebhook = false,
         )
         val schemaContext = schemaContext(listOf(route), config)
         val exampleContext = exampleContext(listOf(route), config)

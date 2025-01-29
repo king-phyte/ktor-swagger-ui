@@ -3,10 +3,12 @@ package io.github.smiley4.ktoropenapi
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.github.smiley4.ktoropenapi.builder.OpenApiSpecBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteCollector
+import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.config.OutputFormat
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationPlugin
@@ -51,7 +53,15 @@ object OpenApiPlugin {
      * Generates new openapi
      */
     fun generateOpenApiSpecs(application: Application) {
-        val routes = RouteCollector().collect({ application.plugin(RoutingRoot) }, config)
+        val routes = RouteCollector().collect({ application.plugin(RoutingRoot) }, config) + webhooks.map { (name, entry) ->
+            RouteMeta(
+                method = entry.first,
+                path = name,
+                documentation = entry.second.build(),
+                protected = false,
+                isWebhook = true
+            )
+        }
         val specs = OpenApiSpecBuilder().build(config, routes)
         openApiSpecs.clear()
         openApiSpecs.putAll(specs)
