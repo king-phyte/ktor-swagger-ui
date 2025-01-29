@@ -7,7 +7,7 @@ import io.github.smiley4.ktoropenapi.resources.get
 import io.github.smiley4.ktoropenapi.resources.post
 import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
-import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization
+import io.github.smiley4.schemakenerator.serialization.analyzeTypeUsingKotlinxSerialization
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
 import io.github.smiley4.schemakenerator.swagger.generateSwaggerSchema
@@ -40,7 +40,7 @@ private fun Application.myModule() {
         schemas {
             generator = { type ->
                 type
-                    .processKotlinxSerialization()
+                    .analyzeTypeUsingKotlinxSerialization()
                     .generateSwaggerSchema()
                     .withTitle(TitleType.SIMPLE)
                     .handleCoreAnnotations()

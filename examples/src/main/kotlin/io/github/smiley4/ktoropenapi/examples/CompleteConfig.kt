@@ -10,7 +10,7 @@ import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
 import io.github.smiley4.ktorswaggerui.swaggerUI
-import io.github.smiley4.schemakenerator.reflection.processReflection
+import io.github.smiley4.schemakenerator.reflection.analyseTypeUsingReflection
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
 import io.github.smiley4.schemakenerator.swagger.generateSwaggerSchema
@@ -107,7 +107,7 @@ private fun Application.myModule() {
             schema<String>("string")
             generator = { type ->
                 type
-                    .processReflection()
+                    .analyseTypeUsingReflection()
                     .generateSwaggerSchema()
                     .withTitle(TitleType.SIMPLE)
                     .compileReferencingRoot()

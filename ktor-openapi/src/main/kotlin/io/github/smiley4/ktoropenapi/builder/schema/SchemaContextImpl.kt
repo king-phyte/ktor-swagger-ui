@@ -12,12 +12,11 @@ import io.github.smiley4.ktoropenapi.config.TypeDescriptor
 import io.github.smiley4.ktoropenapi.data.MultipartBodyData
 import io.github.smiley4.ktoropenapi.data.SchemaConfigData
 import io.github.smiley4.ktoropenapi.data.SimpleBodyData
-import io.github.smiley4.schemakenerator.core.data.AnnotationData
 import io.github.smiley4.schemakenerator.core.data.KTypeInput
-import io.github.smiley4.schemakenerator.core.data.WildcardTypeData
-import io.github.smiley4.schemakenerator.serialization.SerialDescriptorInput
+import io.github.smiley4.schemakenerator.core.data.TypeData
+import io.github.smiley4.schemakenerator.serialization.data.SerialDescriptorInput
+import io.github.smiley4.schemakenerator.swagger.SwaggerSchemaUtils
 import io.github.smiley4.schemakenerator.swagger.data.CompiledSwaggerSchema
-import io.github.smiley4.schemakenerator.swagger.steps.SwaggerSchemaUtils
 import io.swagger.v3.oas.models.media.Schema
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlin.reflect.KType
@@ -69,7 +68,7 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
             }
             is SwaggerTypeDescriptor -> {
                 CompiledSwaggerSchema(
-                    typeData = WildcardTypeData(),
+                    typeData = TypeData.createWildcard(),
                     swagger = typeDescriptor.schema,
                     componentSchemas = emptyMap()
                 )
@@ -77,7 +76,7 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
             is ArrayTypeDescriptor -> {
                 val itemSchema = generateSchema(typeDescriptor.type)
                 CompiledSwaggerSchema(
-                    typeData = WildcardTypeData(),
+                    typeData = TypeData.createWildcard(),
                     swagger = SwaggerSchemaUtils().arraySchema(
                         itemSchema.swagger
                     ),
@@ -87,7 +86,7 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
             is AnyOfTypeDescriptor -> {
                 val optionSchemas = typeDescriptor.types.map { generateSchema(it) }
                 CompiledSwaggerSchema(
-                    typeData = WildcardTypeData(),
+                    typeData = TypeData.createWildcard(),
                     swagger = SwaggerSchemaUtils().subtypesSchema(
                         optionSchemas.map { it.swagger },
                         null,
@@ -102,14 +101,14 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
             }
             is EmptyTypeDescriptor -> {
                 CompiledSwaggerSchema(
-                    typeData = WildcardTypeData(),
+                    typeData = TypeData.createWildcard(),
                     swagger = SwaggerSchemaUtils().anyObjectSchema(),
                     componentSchemas = emptyMap()
                 )
             }
             is RefTypeDescriptor -> {
                 CompiledSwaggerSchema(
-                    typeData = WildcardTypeData(),
+                    typeData = TypeData.createWildcard(),
                     swagger = SwaggerSchemaUtils().referenceSchema(typeDescriptor.schemaId, true),
                     componentSchemas = emptyMap()
                 )
