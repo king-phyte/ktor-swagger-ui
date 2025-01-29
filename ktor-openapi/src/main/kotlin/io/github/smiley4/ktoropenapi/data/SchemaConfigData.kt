@@ -2,6 +2,8 @@ package io.github.smiley4.ktoropenapi.data
 
 import io.github.smiley4.ktoropenapi.config.TypeDescriptor
 import io.github.smiley4.schemakenerator.core.connectSubTypes
+import io.github.smiley4.schemakenerator.core.data.AnnotationData
+import io.github.smiley4.schemakenerator.core.data.InputType
 import io.github.smiley4.schemakenerator.core.handleNameAnnotation
 import io.github.smiley4.schemakenerator.reflection.collectSubTypes
 import io.github.smiley4.schemakenerator.reflection.processReflection
@@ -18,7 +20,7 @@ import kotlin.reflect.KType
  */
 internal data class SchemaConfigData(
     val schemas: Map<String, TypeDescriptor>,
-    val generator: (type: KType) -> CompiledSwaggerSchema,
+    val generator: (type: InputType) -> CompiledSwaggerSchema,
     val overwrite: Map<KType, TypeDescriptor>,
     val securitySchemas: List<TypeDescriptor>
 ) {

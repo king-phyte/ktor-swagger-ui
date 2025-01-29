@@ -24,7 +24,9 @@ internal class OperationBuilder(
             it.operationId = route.documentation.operationId
             it.deprecated = route.documentation.deprecated
             it.tags = operationTagsBuilder.build(route)
-            it.parameters = route.documentation.request.parameters.map { param -> parameterBuilder.build(param) }
+            it.parameters = route.documentation.request.parameters
+                .filter { param -> !param.hidden }
+                .map { param -> parameterBuilder.build(param) }
             route.documentation.request.body?.let { body ->
                 it.requestBody = requestBodyBuilder.build(body)
             }

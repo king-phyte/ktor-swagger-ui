@@ -6,13 +6,20 @@ import io.github.smiley4.ktoropenapi.config.ArrayTypeDescriptor
 import io.github.smiley4.ktoropenapi.config.EmptyTypeDescriptor
 import io.github.smiley4.ktoropenapi.config.KTypeDescriptor
 import io.github.smiley4.ktoropenapi.config.RefTypeDescriptor
+import io.github.smiley4.ktoropenapi.config.SerialTypeDescriptor
 import io.github.smiley4.ktoropenapi.config.SwaggerTypeDescriptor
 import io.github.smiley4.ktoropenapi.config.TypeDescriptor
-import io.github.smiley4.ktoropenapi.data.*
+import io.github.smiley4.ktoropenapi.data.MultipartBodyData
+import io.github.smiley4.ktoropenapi.data.SchemaConfigData
+import io.github.smiley4.ktoropenapi.data.SimpleBodyData
+import io.github.smiley4.schemakenerator.core.data.AnnotationData
+import io.github.smiley4.schemakenerator.core.data.KTypeInput
 import io.github.smiley4.schemakenerator.core.data.WildcardTypeData
+import io.github.smiley4.schemakenerator.serialization.SerialDescriptorInput
 import io.github.smiley4.schemakenerator.swagger.data.CompiledSwaggerSchema
 import io.github.smiley4.schemakenerator.swagger.steps.SwaggerSchemaUtils
 import io.swagger.v3.oas.models.media.Schema
+import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlin.reflect.KType
 
 internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : SchemaContext {
@@ -55,6 +62,10 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
                 } else {
                     generateSchema(typeDescriptor.type)
                 }
+            }
+            is SerialTypeDescriptor -> {
+                // todo: support schemaConfig.overwrite
+                generateSchema(typeDescriptor.descriptor)
             }
             is SwaggerTypeDescriptor -> {
                 CompiledSwaggerSchema(
@@ -107,7 +118,11 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
     }
 
     private fun generateSchema(type: KType): CompiledSwaggerSchema {
-        return schemaConfig.generator(type)
+        return schemaConfig.generator(KTypeInput(type))
+    }
+
+    private fun generateSchema(descriptor: SerialDescriptor,): CompiledSwaggerSchema {
+        return schemaConfig.generator(SerialDescriptorInput(descriptor))
     }
 
     private fun collectTypeDescriptor(routes: Collection<RouteMeta>): List<TypeDescriptor> {

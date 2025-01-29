@@ -9,6 +9,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal() // todo: remove after releasing schema-kenerator 1.7.0
     mavenCentral()
 }
 
@@ -17,6 +18,8 @@ dependencies {
     implementation(project(":ktor-swagger-ui"))
     implementation(project(":ktor-redoc"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+
     val versionKtor: String by project
     implementation("io.ktor:ktor-server-netty-jvm:$versionKtor")
     implementation("io.ktor:ktor-server-content-negotiation:$versionKtor")
@@ -24,6 +27,7 @@ dependencies {
     implementation("io.ktor:ktor-server-auth:$versionKtor")
     implementation("io.ktor:ktor-server-call-logging:$versionKtor")
     implementation("io.ktor:ktor-server-test-host:$versionKtor")
+    implementation("io.ktor:ktor-server-resources:$versionKtor")
 
     val versionSchemaKenerator: String by project
     implementation("io.github.smiley4:schema-kenerator-core:$versionSchemaKenerator")

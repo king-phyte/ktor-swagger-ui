@@ -20,4 +20,5 @@ internal data class RequestParameterData(
     val explode: Boolean,
     val allowReserved: Boolean?,
     val style: Parameter.StyleEnum?,
+    val hidden: Boolean,
 )
