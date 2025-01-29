@@ -301,3 +301,14 @@ fun Route.head(
 ): Route {
     return documentation(builder) { head(body) }
 }
+
+
+//===============================//
+//            WEBHOOK            //
+//===============================//
+
+internal val webhooks = mutableMapOf<String, Pair<HttpMethod, RouteConfig>>()
+
+fun webhook(method: HttpMethod, name: String, builder: RouteConfig.() -> Unit = { },) {
+    webhooks[name] = method to RouteConfig().apply(builder)
+}

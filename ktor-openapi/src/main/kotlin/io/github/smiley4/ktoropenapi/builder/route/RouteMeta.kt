@@ -10,5 +10,6 @@ internal data class RouteMeta(
     val path: String,
     val method: HttpMethod,
     val documentation: RouteData,
-    val protected: Boolean
+    val protected: Boolean,
+    val isWebhook: Boolean,
 )

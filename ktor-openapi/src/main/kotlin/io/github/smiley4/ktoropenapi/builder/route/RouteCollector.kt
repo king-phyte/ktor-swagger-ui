@@ -40,7 +40,8 @@ internal class RouteCollector {
                     method = getMethod(route),
                     path = getPath(route, config),
                     documentation = documentation.build(),
-                    protected = documentation.protected ?: isProtected(route)
+                    protected = documentation.protected ?: isProtected(route),
+                    isWebhook = false
                 )
             }
             .filter { !it.documentation.hidden }
