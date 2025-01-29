@@ -9,6 +9,7 @@ internal class RouteDocumentationMerger {
     /**
      * Merges "a" with "b" and returns the result as a new [RouteConfig]. "a" has priority over "b".
      */
+    @Suppress("CyclomaticComplexMethod")
     fun merge(a: RouteConfig, b: RouteConfig): RouteConfig {
         return RouteConfig().apply {
             specName = a.specName ?: b.specName

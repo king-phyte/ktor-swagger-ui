@@ -3,9 +3,9 @@ package io.github.smiley4.ktoropenapi
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.github.smiley4.ktoropenapi.builder.OpenApiSpecBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteCollector
-import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.config.OutputFormat
 import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.OutputFormat
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -21,7 +21,7 @@ import io.ktor.server.routing.get
 
 private val logger = KotlinLogging.logger {}
 
-val OpenApi: ApplicationPlugin<OpenApiPluginConfig> = createApplicationPlugin(name = "OpenApi", createConfiguration = ::OpenApiPluginConfig) {
+val OpenApi: ApplicationPlugin<OpenApiPluginConfig> = createApplicationPlugin("OpenApi", ::OpenApiPluginConfig) {
     OpenApiPlugin.config = pluginConfig.build(OpenApiPluginData.DEFAULT, getRootPath(application))
     on(MonitoringEvent(ApplicationStarted)) { application ->
         try {
@@ -33,7 +33,7 @@ val OpenApi: ApplicationPlugin<OpenApiPluginConfig> = createApplicationPlugin(na
 }
 
 private fun getRootPath(application: Application): String? {
-    if(application.rootPath.isNotBlank()) {
+    if (application.rootPath.isNotBlank()) {
         return application.rootPath
     }
     return application.environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString()

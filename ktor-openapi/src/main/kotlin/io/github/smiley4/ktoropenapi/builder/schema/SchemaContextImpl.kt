@@ -53,6 +53,7 @@ internal class SchemaContextImpl(private val schemaConfig: SchemaConfigData) : S
         }
     }
 
+    @Suppress("LongMethod")
     private fun generateSchema(typeDescriptor: TypeDescriptor): CompiledSwaggerSchema {
         return when (typeDescriptor) {
             is KTypeDescriptor -> {
