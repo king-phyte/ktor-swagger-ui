@@ -48,7 +48,8 @@ internal object Redoc {
               </style>
             </head>
             <body>
-              <redoc ${"\n"}${properties.entries.joinToString("\n") { (key, value) -> "$key=$value" }}></redoc>
+              <redoc ${"\n"}${buildProperties(config, openApiUrl)}>
+              </redoc>
               <script src="./redoc.standalone.js"> </script>
             </body>
           </html>
@@ -56,48 +57,56 @@ internal object Redoc {
         call.respondText(ContentType.Text.Html, HttpStatusCode.OK) { content }
     }
 
-    private fun buildProperties(config: RedocConfig, openApiUrl: String) = buildMap {
-        this["spec-url"] = "'$openApiUrl'"
-        config.disableSearch?.also { this["disable-search"] = it.toString() }
-        config.minCharacterLengthToInitSearch?.also { this["min-character-length-to-init-search"] = it.toString() }
-        config.expandDefaultServerVariables?.also { this["expand-default-server-variables"] = it.toString() }
-        config.expandResponses?.also {
-            val values = it.toSet()
-            if (values.any { v -> v.equals("all", ignoreCase = true) }) {
-                this["expand-responses"] = "'all'"
-            } else {
-                this["expand-responses"] = "'${values.joinToString(",")}'"
+    // see https://redocly.com/docs/redoc/confi
+    @Suppress("CyclomaticComplexMethod")
+    private fun buildProperties(config: RedocConfig, openApiUrl: String): String {
+        return PropertyBuilder().also {properties ->
+            properties["spec-url"] = openApiUrl
+            properties["disable-search"] = config.disableSearch
+            properties["min-character-length-to-init-search"] = null
+            properties["key"] = config.minCharacterLengthToInitSearch
+            properties["expand-default-server-variables"] = config.expandDefaultServerVariables
+            properties["expand-responses"] = config.expandResponses?.let {
+                if (it.any { v -> v.equals("all", ignoreCase = true) }) {
+                    "all"
+                } else {
+                    it.joinToString(",")
+                }
             }
-        }
-        config.expandSingleSchemaField?.also { this["expand-single-schema-field"] = it.toString() }
-        config.hideDownloadButton?.also { this["hide-download-button"] = it.toString() }
-        config.hideHostname?.also { this["hide-hostname"] = it.toString() }
-        config.hideLoading?.also { this["hide-loading"] = it.toString() }
-        config.hideRequestPayloadSample?.also { this["hide-request-payload-sample"] = it.toString() }
-        config.hideOneOfDescription?.also { this["hide-one-of-description"] = it.toString() }
-        config.hideSchemaPattern?.also { this["hide-schema-pattern"] = it.toString() }
-        config.hideSchemaTitles?.also { this["hide-schema-titles"] = it.toString() }
-        config.hideSecuritySection?.also { this["hide-security-section"] = it.toString() }
-        config.hideSingleRequestSampleTab?.also { this["hide-single-request-sample-tab"] = it.toString() }
-        config.htmlTemplate?.also { this["html-template"] = "'$it'" }
-        config.jsonSampleExpandLevel?.also { this["json-sample-expand-level"] = "'$it'" }
-        config.maxDisplayedEnumValues?.also { this["max-displayed-enum-values"] = it.toString() }
-        config.menuToggle?.also { this["menu-toggle"] = it.toString() }
-        config.nativeScrollbars?.also { this["native-scrollbars"] = it.toString() }
-        config.onlyRequiredInSamples?.also { this["only-required-in-samples"] = it.toString() }
-        config.pathInMiddlePanel?.also { this["path-in-middle-panel"] = it.toString() }
-        config.payloadSampleIdx?.also { this["payload-sample-idx"] = it.toString() }
-        config.requiredPropsFirst?.also { this["required-props-first"] = it.toString() }
-        config.schemaExpansionLevel?.also { this["schema-expansion-level"] = "'$it'" }
-        config.showObjectSchemaExamples?.also { this["show-object-schema-examples"] = it.toString() }
-        config.showWebhookVerb?.also { this["show-webhook-verb"] = it.toString() }
-        config.simpleOneOfTypeLabel?.also { this["simple-one-of-type-label"] = it.toString() }
-        config.sortEnumValuesAlphabetically?.also { this["sort-enum-values-alphabetically"] = it.toString() }
-        config.sortOperationsAlphabetically?.also { this["sort-operations-alphabetically"] = it.toString() }
-        config.sortPropsAlphabetically?.also { this["sort-props-alphabetically"] = it.toString() }
-        config.sortTagsAlphabetically?.also { this["sort-tags-alphabetically"] = it.toString() }
-        config.untrustedDefinition?.also { this["untrusted-definition"] = it.toString() }
-        config.theme?.also { this["theme"] = "'$it'" }
+            properties["expand-single-schema-field"] = config.expandSingleSchemaField
+            properties["hide-download-button"] = config.hideDownloadButton
+            properties["hide-hostname"] = config.hideHostname
+            properties["hide-loading"] = config.hideLoading
+            properties["hide-request-payload-sample"] = config.hideRequestPayloadSample
+            properties["hide-one-of-description"] = config.hideOneOfDescription
+            properties["hide-schema-pattern"] = config.hideSchemaPattern
+            properties["hide-schema-titles"] = config.hideSchemaTitles
+            properties["hide-security-section"] = config.hideSecuritySection
+            properties["hide-single-request-sample-tab"] = config.hideSingleRequestSampleTab
+            properties["html-template"] = config.htmlTemplate
+            properties["json-sample-expand-level"] = config.jsonSampleExpandLevel
+            properties["max-displayed-enum-values"] = config.maxDisplayedEnumValues
+            properties["menu-toggle"] = config.menuToggle
+            properties["native-scrollbars"] = config.nativeScrollbars
+            properties["only-required-in-samples"] = config.onlyRequiredInSamples
+            properties["path-in-middle-panel"] = config.pathInMiddlePanel
+            properties["payload-sample-idx"] = config.payloadSampleIdx
+            properties["required-props-first"] = config.requiredPropsFirst
+            properties["schema-expansion-level"] = config.schemaExpansionLevel
+            properties["show-object-schema-examples"] = config.showObjectSchemaExamples
+            properties["show-webhook-verb"] = config.showWebhookVerb
+            properties["simple-one-of-type-label"] = config.simpleOneOfTypeLabel
+            properties["sort-enum-values-alphabetically"] = config.sortEnumValuesAlphabetically
+            properties["sort-operations-alphabetically"] = config.sortOperationsAlphabetically
+            properties["sort-props-alphabetically"] = config.sortPropsAlphabetically
+            properties["sort-tags-alphabetically"] = config.sortTagsAlphabetically
+            properties["untrusted-definition"] = config.untrustedDefinition
+            properties["theme"] = config.theme
+        }.render(
+            prefix = "                ",
+            separator = "\n",
+            nullBehavior = "remove"
+        )
     }
 
     internal suspend fun serveStaticResource(filename: String, config: RedocConfig, call: ApplicationCall) {

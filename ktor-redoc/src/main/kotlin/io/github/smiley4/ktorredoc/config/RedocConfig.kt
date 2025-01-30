@@ -1,5 +1,9 @@
 package io.github.smiley4.ktorredoc.config
 
+/**
+ * Configuration for redoc.
+ * See https://redocly.com/docs/redoc/config
+ */
 class RedocConfig {
 
     /**

@@ -1,5 +1,9 @@
 package io.github.smiley4.ktorswaggerui.config
 
+/**
+ * Configuration for the swagger ui.
+ * See https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration
+ */
 class SwaggerUIConfig {
 
     /**

@@ -39,13 +39,11 @@ class RoutingTests {
             it.status shouldBe HttpStatusCode.OK
             it.contentType shouldBe ContentType.Application.JavaScript
             it.body.shouldNotBeEmpty()
-            it.body shouldContain "url: \"api.json\""
+            it.body shouldContain "urls: [{name: 'Api', url: 'api.json'}]"
             it.body shouldContain "withCredentials: false"
-            it.body shouldContain "validatorUrl: false"
             it.body shouldContain "displayOperationId: false"
             it.body shouldContain "filter: false"
-            it.body shouldContain "operationsSorter: undefined"
-            it.body shouldContain "syntaxHighlight: { theme: \"agate\" }"
+            it.body shouldContain "syntaxHighlight: {theme: 'agate'}"
         }
     }
 
@@ -53,8 +51,8 @@ class RoutingTests {
     fun fullConfig() = swaggerUITestApplication({
         onlineSpecValidator()
         displayOperationId = true
-        showTagFilterInput = true
-        sort = OperationsSort.ALPHANUMERICALLY
+        filter = true
+        operationsSorter = OperationsSort.ALPHANUMERICALLY
         syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
         withCredentials = true
 
@@ -76,13 +74,13 @@ class RoutingTests {
             it.status shouldBe HttpStatusCode.OK
             it.contentType shouldBe ContentType.Application.JavaScript
             it.body.shouldNotBeEmpty()
-            it.body shouldContain "url: \"api.json\""
+            it.body shouldContain "urls: [{name: 'Api', url: 'api.json'}]"
             it.body shouldContain "withCredentials: true"
-            it.body shouldContain "validatorUrl: \"https://validator.swagger.io/validator\""
+            it.body shouldContain "validatorUrl: 'https://validator.swagger.io/validator'"
             it.body shouldContain "displayOperationId: true"
             it.body shouldContain "filter: true"
-            it.body shouldContain "operationsSorter: \"alpha\""
-            it.body shouldContain "syntaxHighlight: { theme: \"monokai\" }"
+            it.body shouldContain "operationsSorter: 'alpha'"
+            it.body shouldContain "syntaxHighlight: {theme: 'monokai'}"
         }
     }
 

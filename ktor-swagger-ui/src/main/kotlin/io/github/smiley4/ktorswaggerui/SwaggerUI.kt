@@ -58,6 +58,7 @@ internal object SwaggerUI {
 
 
     // see https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration for reference
+    @Suppress("CyclomaticComplexMethod")
     private fun buildProperties(config: SwaggerUIConfig, openApiUrls: Map<String, String>): String {
         return PropertyBuilder().also { properties ->
             // Core
@@ -73,7 +74,7 @@ internal object SwaggerUI {
 
             // Display
             properties["deepLinking"] = config.deepLinking
-            properties["displayOperationId "] = config.displayOperationId
+            properties["displayOperationId"] = config.displayOperationId
             properties["defaultModelsExpandDepth"] = config.defaultModelsExpandDepth
             properties["defaultModelExpandDepth"] = config.defaultModelExpandDepth
             properties["displayRequestDuration"] = config.displayRequestDuration
@@ -100,7 +101,8 @@ internal object SwaggerUI {
             properties["oauth2RedirectUrl"] = config.oauth2RedirectUrl
             properties["requestInterceptor"] = config.requestInterceptor?.let { PropertyBuilder.Raw(it) }
             properties["responseInterceptor"] = config.responseInterceptor?.let { PropertyBuilder.Raw(it) }
-            properties["supportedSubmitMethods"] = PropertyBuilder.Raw("[" + config.supportedSubmitMethods.joinToString(",") { "'$it'" } + "]")
+            properties["supportedSubmitMethods"] =
+                PropertyBuilder.Raw("[" + config.supportedSubmitMethods.joinToString(",") { "'$it'" } + "]")
             properties["validatorUrl"] = config.validatorUrl
             properties["withCredentials"] = config.withCredentials
 
@@ -126,42 +128,3 @@ internal object SwaggerUI {
     }
 
 }
-//
-//
-//internal suspend fun OLD_serveSwaggerInitializer(call: ApplicationCall, config: SwaggerUIConfig, openApiUrls: List<String>) {
-//    // see https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md for reference
-//    val propUrls = "urls: [" + openApiUrls.joinToString(", ") { "{name: \"$it\", url: \"$it\"}" } + "]"
-//    val propValidatorUrl = config.validatorUrl?.let { "validatorUrl: \"$it\"" } ?: "validatorUrl: false"
-//    val propDisplayOperationId = "displayOperationId: ${config.displayOperationId}"
-//    val propFilter = "filter: ${config.showTagFilterInput}"
-//    val propSort = "operationsSorter: " +
-//            if (config.sort == OperationsSort.NONE) "undefined"
-//            else "\"${config.sort.value}\""
-//    val propSyntaxHighlight = "syntaxHighlight: " +
-//            if (config.syntaxHighlight == SwaggerUISyntaxHighlight.DISABLED) "false"
-//            else "{ theme: \"${config.syntaxHighlight.value}\" }"
-//    val content = """
-//			window.onload = function() {
-//			  window.ui = SwaggerUIBundle({
-//				dom_id: '#swagger-ui',
-//                $propUrls,
-//				deepLinking: true,
-//				presets: [
-//				  SwaggerUIBundle.presets.apis,
-//				  SwaggerUIStandalonePreset
-//				],
-//				plugins: [
-//				  SwaggerUIBundle.plugins.DownloadUrl
-//				],
-//				layout: "StandaloneLayout",
-//				withCredentials: ${config.withCredentials},
-//				$propValidatorUrl,
-//  				$propDisplayOperationId,
-//    		    $propFilter,
-//    		    $propSort,
-//				$propSyntaxHighlight
-//			  });
-//			};
-//		""".trimIndent()
-//    call.respondText(ContentType.Application.JavaScript, HttpStatusCode.OK) { content }
-//}
