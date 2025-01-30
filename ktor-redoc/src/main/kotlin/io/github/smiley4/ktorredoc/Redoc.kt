@@ -31,51 +31,8 @@ fun Route.redoc(openApiUrl: String, config: RedocConfig.() -> Unit = {}) {
 
 internal object Redoc {
 
-    @Suppress("LongMethod", "CyclomaticComplexMethod")
     internal suspend fun serveIndexHtml(call: ApplicationCall, config: RedocConfig, openApiUrl: String) {
-        val redocProperties = buildMap {
-            this["spec-url"] = "'$openApiUrl'"
-            config.disableSearch?.also { this["disable-search"] = it.toString() }
-            config.minCharacterLengthToInitSearch?.also { this["min-character-length-to-init-search"] = it.toString() }
-            config.expandDefaultServerVariables?.also { this["expand-default-server-variables"] = it.toString() }
-            config.expandResponses?.also {
-                val values = it.toSet()
-                if (values.any { v -> v.equals("all", ignoreCase = true) }) {
-                    this["expand-responses"] = "'all'"
-                } else {
-                    this["expand-responses"] = "'${values.joinToString(",")}'"
-                }
-            }
-            config.expandSingleSchemaField?.also { this["expand-single-schema-field"] = it.toString() }
-            config.hideDownloadButton?.also { this["hide-download-button"] = it.toString() }
-            config.hideHostname?.also { this["hide-hostname"] = it.toString() }
-            config.hideLoading?.also { this["hide-loading"] = it.toString() }
-            config.hideRequestPayloadSample?.also { this["hide-request-payload-sample"] = it.toString() }
-            config.hideOneOfDescription?.also { this["hide-one-of-description"] = it.toString() }
-            config.hideSchemaPattern?.also { this["hide-schema-pattern"] = it.toString() }
-            config.hideSchemaTitles?.also { this["hide-schema-titles"] = it.toString() }
-            config.hideSecuritySection?.also { this["hide-security-section"] = it.toString() }
-            config.hideSingleRequestSampleTab?.also { this["hide-single-request-sample-tab"] = it.toString() }
-            config.htmlTemplate?.also { this["html-template"] = "'$it'" }
-            config.jsonSampleExpandLevel?.also { this["json-sample-expand-level"] = "'$it'" }
-            config.maxDisplayedEnumValues?.also { this["max-displayed-enum-values"] = it.toString() }
-            config.menuToggle?.also { this["menu-toggle"] = it.toString() }
-            config.nativeScrollbars?.also { this["native-scrollbars"] = it.toString() }
-            config.onlyRequiredInSamples?.also { this["only-required-in-samples"] = it.toString() }
-            config.pathInMiddlePanel?.also { this["path-in-middle-panel"] = it.toString() }
-            config.payloadSampleIdx?.also { this["payload-sample-idx"] = it.toString() }
-            config.requiredPropsFirst?.also { this["required-props-first"] = it.toString() }
-            config.schemaExpansionLevel?.also { this["schema-expansion-level"] = "'$it'" }
-            config.showObjectSchemaExamples?.also { this["show-object-schema-examples"] = it.toString() }
-            config.showWebhookVerb?.also { this["show-webhook-verb"] = it.toString() }
-            config.simpleOneOfTypeLabel?.also { this["simple-one-of-type-label"] = it.toString() }
-            config.sortEnumValuesAlphabetically?.also { this["sort-enum-values-alphabetically"] = it.toString() }
-            config.sortOperationsAlphabetically?.also { this["sort-operations-alphabetically"] = it.toString() }
-            config.sortPropsAlphabetically?.also { this["sort-props-alphabetically"] = it.toString() }
-            config.sortTagsAlphabetically?.also { this["sort-tags-alphabetically"] = it.toString() }
-            config.untrustedDefinition?.also { this["untrusted-definition"] = it.toString() }
-            config.theme?.also { this["theme"] = "'$it'" }
-        }
+        val properties = buildProperties(config, openApiUrl)
         val content = """
           <!DOCTYPE html>
           <html>
@@ -91,12 +48,56 @@ internal object Redoc {
               </style>
             </head>
             <body>
-              <redoc ${"\n"}${redocProperties.entries.joinToString("\n") { (key, value) -> "$key=$value" }}></redoc>
+              <redoc ${"\n"}${properties.entries.joinToString("\n") { (key, value) -> "$key=$value" }}></redoc>
               <script src="./redoc.standalone.js"> </script>
             </body>
           </html>
 		""".trimIndent()
         call.respondText(ContentType.Text.Html, HttpStatusCode.OK) { content }
+    }
+
+    private fun buildProperties(config: RedocConfig, openApiUrl: String) = buildMap {
+        this["spec-url"] = "'$openApiUrl'"
+        config.disableSearch?.also { this["disable-search"] = it.toString() }
+        config.minCharacterLengthToInitSearch?.also { this["min-character-length-to-init-search"] = it.toString() }
+        config.expandDefaultServerVariables?.also { this["expand-default-server-variables"] = it.toString() }
+        config.expandResponses?.also {
+            val values = it.toSet()
+            if (values.any { v -> v.equals("all", ignoreCase = true) }) {
+                this["expand-responses"] = "'all'"
+            } else {
+                this["expand-responses"] = "'${values.joinToString(",")}'"
+            }
+        }
+        config.expandSingleSchemaField?.also { this["expand-single-schema-field"] = it.toString() }
+        config.hideDownloadButton?.also { this["hide-download-button"] = it.toString() }
+        config.hideHostname?.also { this["hide-hostname"] = it.toString() }
+        config.hideLoading?.also { this["hide-loading"] = it.toString() }
+        config.hideRequestPayloadSample?.also { this["hide-request-payload-sample"] = it.toString() }
+        config.hideOneOfDescription?.also { this["hide-one-of-description"] = it.toString() }
+        config.hideSchemaPattern?.also { this["hide-schema-pattern"] = it.toString() }
+        config.hideSchemaTitles?.also { this["hide-schema-titles"] = it.toString() }
+        config.hideSecuritySection?.also { this["hide-security-section"] = it.toString() }
+        config.hideSingleRequestSampleTab?.also { this["hide-single-request-sample-tab"] = it.toString() }
+        config.htmlTemplate?.also { this["html-template"] = "'$it'" }
+        config.jsonSampleExpandLevel?.also { this["json-sample-expand-level"] = "'$it'" }
+        config.maxDisplayedEnumValues?.also { this["max-displayed-enum-values"] = it.toString() }
+        config.menuToggle?.also { this["menu-toggle"] = it.toString() }
+        config.nativeScrollbars?.also { this["native-scrollbars"] = it.toString() }
+        config.onlyRequiredInSamples?.also { this["only-required-in-samples"] = it.toString() }
+        config.pathInMiddlePanel?.also { this["path-in-middle-panel"] = it.toString() }
+        config.payloadSampleIdx?.also { this["payload-sample-idx"] = it.toString() }
+        config.requiredPropsFirst?.also { this["required-props-first"] = it.toString() }
+        config.schemaExpansionLevel?.also { this["schema-expansion-level"] = "'$it'" }
+        config.showObjectSchemaExamples?.also { this["show-object-schema-examples"] = it.toString() }
+        config.showWebhookVerb?.also { this["show-webhook-verb"] = it.toString() }
+        config.simpleOneOfTypeLabel?.also { this["simple-one-of-type-label"] = it.toString() }
+        config.sortEnumValuesAlphabetically?.also { this["sort-enum-values-alphabetically"] = it.toString() }
+        config.sortOperationsAlphabetically?.also { this["sort-operations-alphabetically"] = it.toString() }
+        config.sortPropsAlphabetically?.also { this["sort-props-alphabetically"] = it.toString() }
+        config.sortTagsAlphabetically?.also { this["sort-tags-alphabetically"] = it.toString() }
+        config.untrustedDefinition?.also { this["untrusted-definition"] = it.toString() }
+        config.theme?.also { this["theme"] = "'$it'" }
     }
 
     internal suspend fun serveStaticResource(filename: String, config: RedocConfig, call: ApplicationCall) {

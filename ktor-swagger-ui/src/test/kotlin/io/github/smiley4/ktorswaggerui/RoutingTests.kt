@@ -1,7 +1,7 @@
 package io.github.smiley4.ktorswaggerui
 
 import io.github.smiley4.ktorswaggerui.config.SwaggerUIConfig
-import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
+import io.github.smiley4.ktorswaggerui.config.OperationsSort
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
@@ -54,7 +54,7 @@ class RoutingTests {
         onlineSpecValidator()
         displayOperationId = true
         showTagFilterInput = true
-        sort = SwaggerUISort.ALPHANUMERICALLY
+        sort = OperationsSort.ALPHANUMERICALLY
         syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
         withCredentials = true
 

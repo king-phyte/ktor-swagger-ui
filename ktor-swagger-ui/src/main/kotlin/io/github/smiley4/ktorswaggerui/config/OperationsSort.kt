@@ -3,7 +3,7 @@ package io.github.smiley4.ktorswaggerui.config
 /**
  * Determines the order to sort the operations in the swagger-ui.
  */
-enum class SwaggerUISort(val value: String) {
+enum class OperationsSort(val value: String) {
     /**
      * The order returned by the server unchanged
      */
