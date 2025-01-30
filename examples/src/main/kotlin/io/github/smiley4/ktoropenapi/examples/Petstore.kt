@@ -72,7 +72,9 @@ private fun Application.myModule() {
             openApi()
         }
         route("redoc") {
-            redoc("/api.json")
+            redoc("/api.json") {
+                hideLoading = true
+            }
         }
 
         route("/pets") {

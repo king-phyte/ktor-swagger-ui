@@ -1,14 +1,15 @@
 package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.config.AuthScheme
 import io.github.smiley4.ktoropenapi.config.AuthType
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorredoc.redoc
-import io.github.smiley4.ktorswaggerui.config.SwaggerUISort
+import io.github.smiley4.ktorswaggerui.config.OperationsSort
 import io.github.smiley4.ktorswaggerui.config.SwaggerUISyntaxHighlight
+import io.github.smiley4.ktorswaggerui.config.TagSort
 import io.github.smiley4.ktorswaggerui.swaggerUI
 import io.github.smiley4.schemakenerator.reflection.analyseTypeUsingReflection
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
@@ -143,53 +144,70 @@ private fun Application.myModule() {
         }
         route("swagger") {
             swaggerUI("/api.json") {
-                displayOperationId = true
-                showTagFilterInput = true
-                sort = SwaggerUISort.HTTP_METHOD
+                deepLinking = true
+                displayOperationId = false
+                defaultModelsExpandDepth = 1
+                defaultModelExpandDepth = 1
+                displayRequestDuration = false
+                filter = false
+                maxDisplayedTags = 99
+                operationsSorter = OperationsSort.HTTP_METHOD
+                showExtensions = false
+                showCommonExtensions = false
+                tagsSorter = TagSort.ALPHANUMERICALLY
                 syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
+                tryItOutEnabled = true
+                requestSnippetsEnabled = true
+                oauth2RedirectUrl = "example.com"
+                requestInterceptor = "req => { alert(JSON.stringify(req)); return req; }"
+                responseInterceptor = "res => { alert(JSON.stringify(res)); return res; }"
+                supportedSubmitMethods = setOf("get", "put", "post", "delete", "options", "head", "patch", "trace")
+                onlineSpecValidator()
                 withCredentials = false
+                persistAuthorization = false
             }
-            route("redoc") {
-                redoc("/api.json") {
-                    disableSearch = false
-                    minCharacterLengthToInitSearch = 1
-                    expandResponses = listOf("all")
-                    expandSingleSchemaField = true
-                    hideDownloadButton = false
-                    hideHostname = false
-                    hideLoading = false
-                    hideRequestPayloadSample = true
-                    hideOneOfDescription = false
-                    hideSchemaPattern = false
-                    hideSchemaTitles = true
-                    hideSecuritySection = false
-                    hideSingleRequestSampleTab = true
-                    jsonSampleExpandLevel = "1"
-                    maxDisplayedEnumValues = 3
-                    menuToggle = true
-                    nativeScrollbars = true
-                    onlyRequiredInSamples = false
-                    pathInMiddlePanel = true
-                    requiredPropsFirst = true
-                    schemaExpansionLevel = "all"
-                    showObjectSchemaExamples = true
-                    showWebhookVerb = true
-                    simpleOneOfTypeLabel = true
-                    sortEnumValuesAlphabetically = true
-                    sortOperationsAlphabetically = true
-                    sortPropsAlphabetically = true
-                    sortTagsAlphabetically = true
-                    theme = """
-                    {
-                      "sidebar": {
-                        "backgroundColor": "lightblue"
-                      },
-                      "rightPanel": {
-                        "backgroundColor": "darkblue"
-                      }
+        }
+        route("redoc") {
+            redoc("/api.json") {
+                pageTitle = "Redoc - My Api"
+                disableSearch = false
+                minCharacterLengthToInitSearch = 1
+                expandResponses = listOf("all")
+                expandSingleSchemaField = true
+                hideDownloadButton = false
+                hideHostname = false
+                hideLoading = false
+                hideRequestPayloadSample = true
+                hideOneOfDescription = false
+                hideSchemaPattern = false
+                hideSchemaTitles = true
+                hideSecuritySection = false
+                hideSingleRequestSampleTab = true
+                jsonSampleExpandLevel = "1"
+                maxDisplayedEnumValues = 3
+                menuToggle = true
+                nativeScrollbars = true
+                onlyRequiredInSamples = false
+                pathInMiddlePanel = true
+                requiredPropsFirst = true
+                schemaExpansionLevel = "all"
+                showObjectSchemaExamples = true
+                showWebhookVerb = true
+                simpleOneOfTypeLabel = true
+                sortEnumValuesAlphabetically = true
+                sortOperationsAlphabetically = true
+                sortPropsAlphabetically = true
+                sortTagsAlphabetically = true
+                theme = """
+                  {
+                    "sidebar": {
+                      "backgroundColor": "lightblue"
+                    },
+                    "rightPanel": {
+                      "backgroundColor": "darkblue"
                     }
-                    """.trimIndent()
-                }
+                  }
+                """.trimIndent()
             }
         }
 
