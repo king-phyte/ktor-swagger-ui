@@ -6,7 +6,7 @@ class SwaggerUIConfig {
      * Path to the static resources for swagger-ui in the jar-file.
      * Version must match the version of the swagger-ui-webjars dependency.
      */
-    internal val staticResourcesPath: String = "/META-INF/resources/webjars/swagger-ui/5.17.11"
+    internal val staticResourcesPath: String = "/META-INF/resources/webjars/swagger-ui/5.17.14"
 
     // DISPLAY ========================================
 

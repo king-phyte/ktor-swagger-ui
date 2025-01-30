@@ -66,10 +66,7 @@ private fun Application.myModule() {
 
         // add the routes for  the api-spec, swagger-ui and redoc
         route("swagger") {
-            swaggerUI(mapOf("api" to "/api.json")) {
-                tryItOutEnabled = true
-                requestSnippetsEnabled = true
-            }
+            swaggerUI("/api.json")
         }
         route("api.json") {
             openApi()
