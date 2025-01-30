@@ -1,9 +1,9 @@
 package io.github.smiley4.ktoropenapi.examples
 
 import io.github.smiley4.ktoropenapi.OpenApi
-import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.config.AuthScheme
 import io.github.smiley4.ktoropenapi.config.AuthType
+import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
 import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorredoc.redoc
@@ -149,47 +149,48 @@ private fun Application.myModule() {
                 syntaxHighlight = SwaggerUISyntaxHighlight.MONOKAI
                 withCredentials = false
             }
-            route("redoc") {
-                redoc("/api.json") {
-                    disableSearch = false
-                    minCharacterLengthToInitSearch = 1
-                    expandResponses = listOf("all")
-                    expandSingleSchemaField = true
-                    hideDownloadButton = false
-                    hideHostname = false
-                    hideLoading = false
-                    hideRequestPayloadSample = true
-                    hideOneOfDescription = false
-                    hideSchemaPattern = false
-                    hideSchemaTitles = true
-                    hideSecuritySection = false
-                    hideSingleRequestSampleTab = true
-                    jsonSampleExpandLevel = "1"
-                    maxDisplayedEnumValues = 3
-                    menuToggle = true
-                    nativeScrollbars = true
-                    onlyRequiredInSamples = false
-                    pathInMiddlePanel = true
-                    requiredPropsFirst = true
-                    schemaExpansionLevel = "all"
-                    showObjectSchemaExamples = true
-                    showWebhookVerb = true
-                    simpleOneOfTypeLabel = true
-                    sortEnumValuesAlphabetically = true
-                    sortOperationsAlphabetically = true
-                    sortPropsAlphabetically = true
-                    sortTagsAlphabetically = true
-                    theme = """
-                    {
-                      "sidebar": {
-                        "backgroundColor": "lightblue"
-                      },
-                      "rightPanel": {
-                        "backgroundColor": "darkblue"
-                      }
+        }
+        route("redoc") {
+            redoc("/api.json") {
+                pageTitle = "Redoc - My Api"
+                disableSearch = false
+                minCharacterLengthToInitSearch = 1
+                expandResponses = listOf("all")
+                expandSingleSchemaField = true
+                hideDownloadButton = false
+                hideHostname = false
+                hideLoading = false
+                hideRequestPayloadSample = true
+                hideOneOfDescription = false
+                hideSchemaPattern = false
+                hideSchemaTitles = true
+                hideSecuritySection = false
+                hideSingleRequestSampleTab = true
+                jsonSampleExpandLevel = "1"
+                maxDisplayedEnumValues = 3
+                menuToggle = true
+                nativeScrollbars = true
+                onlyRequiredInSamples = false
+                pathInMiddlePanel = true
+                requiredPropsFirst = true
+                schemaExpansionLevel = "all"
+                showObjectSchemaExamples = true
+                showWebhookVerb = true
+                simpleOneOfTypeLabel = true
+                sortEnumValuesAlphabetically = true
+                sortOperationsAlphabetically = true
+                sortPropsAlphabetically = true
+                sortTagsAlphabetically = true
+                theme = """
+                  {
+                    "sidebar": {
+                      "backgroundColor": "lightblue"
+                    },
+                    "rightPanel": {
+                      "backgroundColor": "darkblue"
                     }
-                    """.trimIndent()
-                }
+                  }
+                """.trimIndent()
             }
         }
 

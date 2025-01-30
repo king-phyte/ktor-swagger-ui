@@ -20,11 +20,11 @@ fun Route.redoc(openApiUrl: String, config: RedocConfig.() -> Unit = {}) {
         get {
             call.respondRedirect("${call.request.uri}/index.html")
         }
-        get("{filename}") {
-            Redoc.serveStaticResource(call.parameters["filename"]!!, redocConfig, call)
-        }
         get("index.html") {
             Redoc.serveIndexHtml(call, redocConfig, openApiUrl)
+        }
+        get("{filename}") {
+            Redoc.serveStaticResource(call.parameters["filename"]!!, redocConfig, call)
         }
     }
 }
@@ -80,10 +80,9 @@ internal object Redoc {
           <!DOCTYPE html>
           <html>
             <head>
-              <title>Redoc</title>
+              <title>${config.pageTitle}</title>
               <meta charset="utf-8"/>
               <meta name="viewport" content="width=device-width, initial-scale=1">
-              <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
               <style>
                 body {
                   margin: 0;

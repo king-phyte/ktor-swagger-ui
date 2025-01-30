@@ -23,11 +23,11 @@ fun Route.swaggerUI(openApiUrl: String, config: SwaggerUIConfig.() -> Unit = {})
         get {
             call.respondRedirect("${call.request.uri}/index.html")
         }
-        get("{filename}") {
-            SwaggerUI.serveStaticResource(call.parameters["filename"]!!, swaggerUIConfig, call)
-        }
         get("swagger-initializer.js") {
             SwaggerUI.serveSwaggerInitializer(call, swaggerUIConfig, openApiUrl)
+        }
+        get("{filename}") {
+            SwaggerUI.serveStaticResource(call.parameters["filename"]!!, swaggerUIConfig, call)
         }
     }
 }

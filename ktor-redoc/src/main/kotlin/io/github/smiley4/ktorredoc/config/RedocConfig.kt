@@ -10,6 +10,11 @@ class RedocConfig {
 
 
     /**
+     * The title of the page
+     */
+    var pageTitle: String = "Redoc"
+
+    /**
      * Disables search indexing and hides the search box from the API documentation page.
      * https://redocly.com/docs/redoc/config#disablesearch
      */
