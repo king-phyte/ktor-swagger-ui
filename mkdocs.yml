@@ -1,5 +1,5 @@
 site_name: Ktor Swagger UI
-site_url: https://smiley4.github.io/ktor-swagger-ui
+site_url: https://smiley4.github.io/ktor-swagger-ui/
 repo_name: ktor-swagger-ui
 repo_url: https://github.com/SMILEY4/ktor-swagger-ui
 theme:
@@ -82,10 +82,14 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
-#  - pymdownx.blocks.caption
+
+extra:
+  version:
+    provider: mike
 
 # https://www.mkdocs.org/user-guide/configuration/#validation
 validation:
+  not_found: info
   omitted_files: warn
   absolute_links: warn
   unrecognized_links: warn
@@ -122,8 +126,6 @@ nav:
       - Kotlinx Serialization: examples/kotlinx-serialization.md
       - File Upload: examples/file-upload.md
   - API Reference:
-      - ktor-openapi: dokka/ktor-openapi/index.md
-      - ktor-swagger-ui: dokka/ktor-swagger-ui/index.md
-      - ktor-redoc: dokka/ktor-redoc/index.md
+      - ktor-openapi: dokka/ktor-openapi/index.html
   - Migration Guide: migration-guide.md
   - Changelog: changelog.md
