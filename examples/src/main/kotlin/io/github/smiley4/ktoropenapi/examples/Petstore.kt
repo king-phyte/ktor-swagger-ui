@@ -22,10 +22,25 @@ fun main() {
 
 
 /**
- * Uses the OpenApi-Example "petstore-simple" to demonstrate ktor with swagger-ui
+ * Uses the OpenAPI example "petstore simple" to demonstrate ktor with swagger-ui
  * https://github.com/OAI/OpenAPI-Specification/blob/main/examples/v2.0/json/petstore-simple.json
  */
 private fun Application.myModule() {
+
+    data class Pet(
+        val id: Long,
+        val name: String,
+        val tag: String
+    )
+
+    data class NewPet(
+        val name: String,
+        val tag: String
+    )
+
+    data class ErrorModel(
+        val message: String
+    )
 
     install(OpenApi) {
         info {
@@ -57,7 +72,9 @@ private fun Application.myModule() {
             openApi()
         }
         route("redoc") {
-            redoc("/api.json")
+            redoc("/api.json") {
+                hideLoading = true
+            }
         }
 
         route("/pets") {
@@ -241,25 +258,7 @@ private fun Application.myModule() {
                 }) {
                     call.respond(HttpStatusCode.NotImplemented, Unit)
                 }
-
             }
         }
-
     }
-
 }
-
-private data class Pet(
-    val id: Long,
-    val name: String,
-    val tag: String
-)
-
-private data class NewPet(
-    val name: String,
-    val tag: String
-)
-
-private data class ErrorModel(
-    val message: String
-)

@@ -103,7 +103,6 @@ class RouteDocumentationMergerTest : StringSpec({
                     "query",
                     "pathA1",
                     "pathA2",
-                    "query",
                     "pathB1",
                     "pathB2"
                 )

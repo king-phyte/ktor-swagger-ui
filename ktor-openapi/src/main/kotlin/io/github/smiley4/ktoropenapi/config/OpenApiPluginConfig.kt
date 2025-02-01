@@ -1,6 +1,7 @@
 package io.github.smiley4.ktoropenapi.config
 
 import io.github.smiley4.ktoropenapi.data.DataUtils.merge
+import io.github.smiley4.ktoropenapi.data.DataUtils.mergeBoolean
 import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.github.smiley4.ktoropenapi.data.ServerData
 import io.ktor.server.routing.RouteSelector
@@ -144,6 +145,11 @@ class OpenApiPluginConfig {
 
 
     /**
+     * Whether to automatically extract and add documentation from routes created using the resources-plugin.
+     */
+    var autoDocumentResourcesRoutes: Boolean = OpenApiPluginData.DEFAULT.autoDocumentResourcesRoutes
+
+    /**
      * Build the data object for this config.
      * @param base the base config to "inherit" from. Values from the base should be copied, replaced or merged together.
      */
@@ -173,7 +179,8 @@ class OpenApiPluginConfig {
             specConfigs = mutableMapOf(),
             postBuild = merge(base.postBuild, postBuild),
             outputFormat = outputFormat,
-            rootPath = merge(rootPath ?: ktorRootPath, base.rootPath)
+            rootPath = merge(rootPath ?: ktorRootPath, base.rootPath),
+            autoDocumentResourcesRoutes = mergeBoolean(base.autoDocumentResourcesRoutes, autoDocumentResourcesRoutes),
         ).also {
             specConfigs.forEach { (specName, config) ->
                 it.specConfigs[specName] = config.build(it, ktorRootPath)

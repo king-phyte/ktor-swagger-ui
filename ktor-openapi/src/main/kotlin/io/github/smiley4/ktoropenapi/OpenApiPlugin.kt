@@ -3,12 +3,15 @@ package io.github.smiley4.ktoropenapi
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.github.smiley4.ktoropenapi.builder.OpenApiSpecBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteCollector
-import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
-import io.github.smiley4.ktoropenapi.config.OutputFormat
+import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.config.OpenApiPluginConfig
+import io.github.smiley4.ktoropenapi.config.OutputFormat
+import io.github.smiley4.ktoropenapi.data.OpenApiPluginData
 import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
+import io.ktor.server.application.ApplicationPlugin
 import io.ktor.server.application.ApplicationStarted
 import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.application.hooks.MonitoringEvent
@@ -20,7 +23,7 @@ import io.ktor.server.routing.get
 
 private val logger = KotlinLogging.logger {}
 
-val OpenApi = createApplicationPlugin(name = "OpenApi", createConfiguration = ::OpenApiPluginConfig) {
+val OpenApi: ApplicationPlugin<OpenApiPluginConfig> = createApplicationPlugin("OpenApi", ::OpenApiPluginConfig) {
     OpenApiPlugin.config = pluginConfig.build(OpenApiPluginData.DEFAULT, getRootPath(application))
     on(MonitoringEvent(ApplicationStarted)) { application ->
         try {
@@ -32,7 +35,7 @@ val OpenApi = createApplicationPlugin(name = "OpenApi", createConfiguration = ::
 }
 
 private fun getRootPath(application: Application): String? {
-    if(application.rootPath.isNotBlank()) {
+    if (application.rootPath.isNotBlank()) {
         return application.rootPath
     }
     return application.environment.config.propertyOrNull("ktor.deployment.rootPath")?.getString()
@@ -50,7 +53,15 @@ object OpenApiPlugin {
      * Generates new openapi
      */
     fun generateOpenApiSpecs(application: Application) {
-        val routes = RouteCollector().collect({ application.plugin(RoutingRoot) }, config)
+        val routes = RouteCollector().collect({ application.plugin(RoutingRoot) }, config) + webhooks.map { (name, entry) ->
+            RouteMeta(
+                method = entry.first,
+                path = name,
+                documentation = entry.second.build(),
+                protected = false,
+                isWebhook = true
+            )
+        }
         val specs = OpenApiSpecBuilder().build(config, routes)
         openApiSpecs.clear()
         openApiSpecs.putAll(specs)

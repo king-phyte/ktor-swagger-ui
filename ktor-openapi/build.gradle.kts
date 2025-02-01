@@ -20,6 +20,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    mavenLocal() // todo: remove after releasing schema-kenerator 1.7.0
 }
 
 dependencies {
@@ -44,6 +45,7 @@ dependencies {
     val versionSchemaKenerator: String by project
     implementation("io.github.smiley4:schema-kenerator-core:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-reflection:$versionSchemaKenerator")
+    implementation("io.github.smiley4:schema-kenerator-serialization:$versionSchemaKenerator")
     implementation("io.github.smiley4:schema-kenerator-swagger:$versionSchemaKenerator")
 
     val versionKotlinLogging: String by project

@@ -24,6 +24,7 @@ import io.github.smiley4.ktoropenapi.builder.openapi.SecuritySchemesBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.ServerBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.TagBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.TagExternalDocumentationBuilder
+import io.github.smiley4.ktoropenapi.builder.openapi.WebhooksBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContextImpl
@@ -141,6 +142,38 @@ class OpenApiBuilderTest : StringSpec({
                 ),
                 pathsBuilder = PathsBuilder(
                     config = pluginConfigData,
+                    pathBuilder = PathBuilder(
+                        operationBuilder = OperationBuilder(
+                            operationTagsBuilder = OperationTagsBuilder(pluginConfigData),
+                            parameterBuilder = ParameterBuilder(
+                                schemaContext = schemaContext,
+                                exampleContext = exampleContext
+                            ),
+                            requestBodyBuilder = RequestBodyBuilder(
+                                contentBuilder = ContentBuilder(
+                                    schemaContext = schemaContext,
+                                    exampleContext = exampleContext,
+                                    headerBuilder = HeaderBuilder(schemaContext)
+                                )
+                            ),
+                            responsesBuilder = ResponsesBuilder(
+                                responseBuilder = ResponseBuilder(
+                                    headerBuilder = HeaderBuilder(schemaContext),
+                                    contentBuilder = ContentBuilder(
+                                        schemaContext = schemaContext,
+                                        exampleContext = exampleContext,
+                                        headerBuilder = HeaderBuilder(schemaContext)
+                                    )
+                                ),
+                                config = pluginConfigData
+                            ),
+                            securityRequirementsBuilder = SecurityRequirementsBuilder(pluginConfigData),
+                            externalDocumentationBuilder = ExternalDocumentationBuilder(),
+                            serverBuilder = ServerBuilder()
+                        )
+                    )
+                ),
+                webhooksBuilder = WebhooksBuilder(
                     pathBuilder = PathBuilder(
                         operationBuilder = OperationBuilder(
                             operationTagsBuilder = OperationTagsBuilder(pluginConfigData),

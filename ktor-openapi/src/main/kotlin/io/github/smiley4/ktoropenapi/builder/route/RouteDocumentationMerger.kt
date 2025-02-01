@@ -1,5 +1,7 @@
 package io.github.smiley4.ktoropenapi.builder.route
 
+import io.github.smiley4.ktoropenapi.config.RequestConfig
+import io.github.smiley4.ktoropenapi.config.RequestParameterConfig
 import io.github.smiley4.ktoropenapi.config.RouteConfig
 
 internal class RouteDocumentationMerger {
@@ -7,10 +9,11 @@ internal class RouteDocumentationMerger {
     /**
      * Merges "a" with "b" and returns the result as a new [RouteConfig]. "a" has priority over "b".
      */
+    @Suppress("CyclomaticComplexMethod")
     fun merge(a: RouteConfig, b: RouteConfig): RouteConfig {
         return RouteConfig().apply {
             specName = a.specName ?: b.specName
-            tags = mutableListOf<String>().also {
+            tags = mutableSetOf<String>().also {
                 it.addAll(a.tags)
                 it.addAll(b.tags)
             }
@@ -25,15 +28,17 @@ internal class RouteDocumentationMerger {
             hidden = a.hidden || b.hidden
             protected = a.protected ?: b.protected
             request {
-                parameters.also {
-                    it.addAll(a.getRequest().parameters)
-                    it.addAll(b.getRequest().parameters)
-                }
+                buildMap {
+                    b.getRequest().parameters.forEach { this[it.name] = it }
+                    a.getRequest().parameters.forEach { this[it.name] = it }
+                }.values.forEach { parameters.add(it) }
                 setBody(a.getRequest().getBody() ?: b.getRequest().getBody())
             }
             response {
-                b.getResponses().getResponses().forEach { response -> addResponse(response) }
-                a.getResponses().getResponses().forEach { response -> addResponse(response) }
+                buildMap {
+                    b.getResponses().getResponses().forEach { this[it.statusCode] = it }
+                    a.getResponses().getResponses().forEach { this[it.statusCode] = it }
+                }.values.forEach { addResponse(it) }
             }
         }
     }

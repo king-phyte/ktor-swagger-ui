@@ -9,9 +9,9 @@ import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
-import io.github.smiley4.schemakenerator.core.connectSubTypes
+import io.github.smiley4.schemakenerator.core.addMissingSupertypeSubtypeRelations
 import io.github.smiley4.schemakenerator.jackson.collectJacksonSubTypes
-import io.github.smiley4.schemakenerator.reflection.processReflection
+import io.github.smiley4.schemakenerator.reflection.analyseTypeUsingReflection
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
 import io.github.smiley4.schemakenerator.swagger.generateSwaggerSchema
@@ -54,9 +54,9 @@ private fun Application.myModule() {
             // customized schema generation pipeline
             generator = { type ->
                 type
-                    .collectJacksonSubTypes(typeProcessing = { types -> types.processReflection() }) // include types from jackson subtype-annotation
-                    .processReflection()
-                    .connectSubTypes() // connect the supertypes with their subtypes
+                    .collectJacksonSubTypes(typeProcessing = { types -> types.analyseTypeUsingReflection() }) // include types from jackson subtype-annotation
+                    .analyseTypeUsingReflection()
+                    .addMissingSupertypeSubtypeRelations()
                     .generateSwaggerSchema()
                     .withTitle(TitleType.SIMPLE)
                     .compileReferencingRoot()

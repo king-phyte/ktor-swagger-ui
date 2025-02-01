@@ -1,6 +1,7 @@
 package io.github.smiley4.ktoropenapi.builder
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.smiley4.ktoropenapi.OpenApiPlugin.config
 import io.github.smiley4.ktoropenapi.builder.example.ExampleContext
 import io.github.smiley4.ktoropenapi.builder.example.ExampleContextImpl
 import io.github.smiley4.ktoropenapi.builder.openapi.ComponentsBuilder
@@ -25,6 +26,7 @@ import io.github.smiley4.ktoropenapi.builder.openapi.SecuritySchemesBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.ServerBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.TagBuilder
 import io.github.smiley4.ktoropenapi.builder.openapi.TagExternalDocumentationBuilder
+import io.github.smiley4.ktoropenapi.builder.openapi.WebhooksBuilder
 import io.github.smiley4.ktoropenapi.builder.route.RouteMeta
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContext
 import io.github.smiley4.ktoropenapi.builder.schema.SchemaContextImpl
@@ -88,6 +90,36 @@ internal class OpenApiSpecBuilder {
         schemaContext: SchemaContext,
         exampleContext: ExampleContext,
     ): OpenApiBuilder {
+        val pathBuilder = PathBuilder(
+            operationBuilder = OperationBuilder(
+                operationTagsBuilder = OperationTagsBuilder(config),
+                parameterBuilder = ParameterBuilder(
+                    schemaContext = schemaContext,
+                    exampleContext = exampleContext,
+                ),
+                requestBodyBuilder = RequestBodyBuilder(
+                    contentBuilder = ContentBuilder(
+                        schemaContext = schemaContext,
+                        exampleContext = exampleContext,
+                        headerBuilder = HeaderBuilder(schemaContext)
+                    )
+                ),
+                responsesBuilder = ResponsesBuilder(
+                    responseBuilder = ResponseBuilder(
+                        headerBuilder = HeaderBuilder(schemaContext),
+                        contentBuilder = ContentBuilder(
+                            schemaContext = schemaContext,
+                            exampleContext = exampleContext,
+                            headerBuilder = HeaderBuilder(schemaContext)
+                        )
+                    ),
+                    config = config
+                ),
+                securityRequirementsBuilder = SecurityRequirementsBuilder(config),
+                externalDocumentationBuilder = ExternalDocumentationBuilder(),
+                serverBuilder = ServerBuilder()
+            )
+        )
         return OpenApiBuilder(
             config = config,
             schemaContext = schemaContext,
@@ -103,36 +135,10 @@ internal class OpenApiSpecBuilder {
             ),
             pathsBuilder = PathsBuilder(
                 config = config,
-                pathBuilder = PathBuilder(
-                    operationBuilder = OperationBuilder(
-                        operationTagsBuilder = OperationTagsBuilder(config),
-                        parameterBuilder = ParameterBuilder(
-                            schemaContext = schemaContext,
-                            exampleContext = exampleContext,
-                        ),
-                        requestBodyBuilder = RequestBodyBuilder(
-                            contentBuilder = ContentBuilder(
-                                schemaContext = schemaContext,
-                                exampleContext = exampleContext,
-                                headerBuilder = HeaderBuilder(schemaContext)
-                            )
-                        ),
-                        responsesBuilder = ResponsesBuilder(
-                            responseBuilder = ResponseBuilder(
-                                headerBuilder = HeaderBuilder(schemaContext),
-                                contentBuilder = ContentBuilder(
-                                    schemaContext = schemaContext,
-                                    exampleContext = exampleContext,
-                                    headerBuilder = HeaderBuilder(schemaContext)
-                                )
-                            ),
-                            config = config
-                        ),
-                        securityRequirementsBuilder = SecurityRequirementsBuilder(config),
-                        externalDocumentationBuilder = ExternalDocumentationBuilder(),
-                        serverBuilder = ServerBuilder()
-                    )
-                )
+                pathBuilder = pathBuilder
+            ),
+            webhooksBuilder = WebhooksBuilder(
+                pathBuilder = pathBuilder
             ),
             componentsBuilder = ComponentsBuilder(
                 config = config,

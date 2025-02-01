@@ -59,22 +59,23 @@ class ResponseConfig(val statusCode: String) {
         body = SimpleBodyConfig(type).apply(block)
     }
 
+
     /**
      * The body returned with this response
      */
     fun body(type: Schema<*>, block: SimpleBodyConfig.() -> Unit = {}) = body(SwaggerTypeDescriptor(type), block)
+
 
     /**
      * The body returned with this response
      */
     fun body(type: KType, block: SimpleBodyConfig.() -> Unit = {}) = body(KTypeDescriptor(type), block)
 
+
     /**
      * The body returned with this response
      */
     inline fun <reified T> body(noinline block: SimpleBodyConfig.() -> Unit = {}) = body(KTypeDescriptor(typeOf<T>()), block)
-
-
 
 
     /**
@@ -84,12 +85,20 @@ class ResponseConfig(val statusCode: String) {
         body = MultipartBodyConfig().apply(block)
     }
 
+
+    /**
+     * Don't include this response in the openapi-spec
+     */
+    var hidden: Boolean = false
+
+
     /**
      * Build the data object for this config.
      */
     internal fun build() = ResponseData(
         statusCode = statusCode,
         description = description,
+        hidden = hidden,
         headers = headers.mapValues { it.value.build() },
         body = body?.build()
     )

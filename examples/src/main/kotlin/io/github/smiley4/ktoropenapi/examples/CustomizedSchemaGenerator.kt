@@ -5,7 +5,7 @@ import io.github.smiley4.ktoropenapi.get
 import io.github.smiley4.ktoropenapi.openApi
 import io.github.smiley4.ktorredoc.redoc
 import io.github.smiley4.ktorswaggerui.swaggerUI
-import io.github.smiley4.schemakenerator.serialization.processKotlinxSerialization
+import io.github.smiley4.schemakenerator.serialization.analyzeTypeUsingKotlinxSerialization
 import io.github.smiley4.schemakenerator.swagger.compileReferencingRoot
 import io.github.smiley4.schemakenerator.swagger.data.TitleType
 import io.github.smiley4.schemakenerator.swagger.generateSwaggerSchema
@@ -35,7 +35,7 @@ private fun Application.myModule() {
                     // process type using kotlinx-serialization instead of reflection
                     // requires additional dependency "io.github.smiley4:schema-kenerator-kotlinx-serialization:<VERSION>"
                     // see https://github.com/SMILEY4/schema-kenerator for more information
-                    .processKotlinxSerialization()
+                    .analyzeTypeUsingKotlinxSerialization()
                     .generateSwaggerSchema()
                     .withTitle(TitleType.SIMPLE)
                     .compileReferencingRoot()

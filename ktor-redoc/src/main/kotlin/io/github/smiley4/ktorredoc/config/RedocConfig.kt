@@ -1,5 +1,9 @@
 package io.github.smiley4.ktorredoc.config
 
+/**
+ * Configuration for redoc.
+ * See https://redocly.com/docs/redoc/config
+ */
 class RedocConfig {
 
     /**
@@ -8,6 +12,11 @@ class RedocConfig {
      */
     internal val staticResourcesPath: String = "/META-INF/resources/webjars/redoc/2.1.5"
 
+
+    /**
+     * The title of the page
+     */
+    var pageTitle: String = "Redoc"
 
     /**
      * Disables search indexing and hides the search box from the API documentation page.
